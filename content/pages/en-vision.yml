@@ -1,0 +1,17 @@
+lang: en
+id: vision
+path: /about/vision/
+image: real-1.jpg
+title: Vision, Mission, and Values
+eyebrow: About
+summary: >-
+  We help learners become happy, thoughtful, multilingual, and socially
+  responsible global citizens.
+sections:
+  - title: Vision
+    body: To be a trusted bilingual school for the region.
+  - title: Mission
+    body: To balance academics, languages, character, and future skills.
+  - title: Values
+    body: Care, Curiosity, Confidence, Community
+nav: about

@@ -1,0 +1,15 @@
+lang: th
+id: approach
+path: /academics/approach/
+image: real-6.png
+title: แนวการสอนของเรา
+eyebrow: Active Learning / PBL / AI
+summary: >-
+  การสอนของเราผสม active learning, project-based learning และ AI integration
+  อย่างเหมาะสมกับวัย ไม่ใช่เทคโนโลยีเพื่อโชว์ แต่เพื่อช่วยให้เด็กคิดและสร้าง
+sections:
+  - title: Active Learning
+    body: เด็กมีส่วนร่วม ตั้งคำถาม ทดลอง และสะท้อนสิ่งที่เรียนรู้
+  - title: AI Integration
+    body: ใช้เครื่องมือดิจิทัลเพื่อฝึกคิด ไม่แทนที่ครูหรือประสบการณ์จริง
+nav: academics

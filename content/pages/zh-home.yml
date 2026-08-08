@@ -1,0 +1,18 @@
+lang: zh
+id: home
+path: /
+image: real-1.jpg
+title: 从第一步开始培养世界公民
+eyebrow: Somkidvittaya School 66周年
+summary: 位于罗勇府的双语学校，涵盖幼儿预备班至小学，融合 MEP、主动学习、项目式学习与科技应用。
+sections:
+  - title: SV 特色
+    body: MEP 课程、主动学习课堂、项目式学习，以及关注每位学生发展的数据化支持。
+  - title: 学段
+    body: 幼儿预备班、幼儿园和小学课程，帮助孩子建立语言、自信与生活能力。
+  - title: 家长声音
+    body: 预留真实家长评价区域，让新家庭更具体地了解校园体验。
+seo:
+  - Somkidvittaya School — 罗勇府双语学校
+  - Somkidvittaya School 是罗勇府双语学校，提供幼儿预备班至小学课程，融合主动学习与项目式学习。
+type: home

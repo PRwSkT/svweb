@@ -1,0 +1,13 @@
+lang: zh
+id: approach
+path: /academics/approach/
+image: real-6.png
+title: 我们的教学方法
+eyebrow: 主动学习 / 项目式学习 / AI
+summary: 我们结合主动学习、项目式学习与适龄 AI 应用，帮助孩子思考与创造。
+sections:
+  - title: 主动学习
+    body: 孩子参与、提问、实验并反思。
+  - title: AI 应用
+    body: 数字工具支持思考，不取代教师与真实经验。
+nav: academics

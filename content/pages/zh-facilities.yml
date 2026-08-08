@@ -1,0 +1,13 @@
+lang: zh
+id: facilities
+path: /about/facilities/
+image: real-4.jpg
+title: 校园设施
+eyebrow: 关于我们
+summary: 学习空间、教室、操场与活动区域将以清晰图库展示。
+sections:
+  - title: 教室
+    body: 适合年龄特点与实践学习的空间。
+  - title: 活动区域
+    body: 支持体育、艺术、语言与社区活动。
+nav: about

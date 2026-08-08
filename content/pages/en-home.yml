@@ -1,0 +1,28 @@
+lang: en
+id: home
+path: /
+image: real-1.jpg
+title: Nurturing Global Citizens from Day One
+eyebrow: Somkidvittaya School, 66 years
+summary: >-
+  A bilingual school in Rayong for Pre-Kindergarten to Primary, combining MEP,
+  active learning, PBL, and thoughtful technology.
+sections:
+  - title: Why SV
+    body: >-
+      MEP, active learning classrooms, PBL, and data-informed care for each
+      learner.
+  - title: Programs
+    body: >-
+      Pre-Kindergarten, Kindergarten, and Primary pathways designed for
+      confidence, language, and life skills.
+  - title: Parent Voices
+    body: >-
+      A dedicated area for real testimonials that make the school experience
+      tangible for new families.
+seo:
+  - Somkidvittaya School — Bilingual School in Rayong
+  - >-
+    Somkidvittaya School is a bilingual MEP school in Rayong for
+    Pre-Kindergarten to Primary with active learning and PBL.
+type: home

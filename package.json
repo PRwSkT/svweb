@@ -1,0 +1,14 @@
+{
+  "name": "somkid-vittaya-website",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "assets": "python3 tools/generate-assets.py",
+    "build": "node tools/build-site.mjs",
+    "dev": "npm run build && python3 -m http.server 4173 --directory dist"
+  },
+  "dependencies": {
+    "js-yaml": "^5.2.3"
+  }
+}

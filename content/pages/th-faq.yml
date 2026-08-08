@@ -1,0 +1,9 @@
+lang: th
+id: faq
+path: /admissions/faq/
+image: real-6.png
+title: คำถามที่พบบ่อย
+eyebrow: รับสมัคร
+summary: รวมคำถามที่ผู้ปกครองมักถามก่อนตัดสินใจสมัครเรียน
+type: faq
+nav: admissions

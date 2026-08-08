@@ -1,0 +1,54 @@
+backend:
+  name: git-gateway
+  branch: main
+
+local_backend: true
+media_folder: "src/assets/images"
+public_folder: "/assets/images"
+
+collections:
+  - name: "pages"
+    label: "Pages"
+    folder: "content/pages"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - {label: "Language", name: "lang", widget: "select", options: ["th", "en", "zh"], default: "th"}
+      - {label: "Page ID", name: "id", widget: "string"}
+      - {label: "Path", name: "path", widget: "string"}
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Eyebrow", name: "eyebrow", widget: "string", required: false}
+      - {label: "Summary", name: "summary", widget: "text", required: false}
+      - {label: "Image", name: "image", widget: "image", required: false}
+      - {label: "Sections", name: "sections", widget: "list", required: false, fields: [
+          {label: "Section Title", name: "title", widget: "string"},
+          {label: "Section Body", name: "body", widget: "text"}
+        ]}
+
+  - name: "news"
+    label: "News & Events"
+    folder: "content/news"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - {label: "Language", name: "lang", widget: "select", options: ["th", "en", "zh"], default: "th"}
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Date", name: "date", widget: "datetime"}
+      - {label: "Tag", name: "tag", widget: "string"}
+      - {label: "Summary", name: "summary", widget: "text"}
+      - {label: "Featured Image", name: "image", widget: "image", required: false}
+      - {label: "Body", name: "body", widget: "markdown"}
+
+  - name: "settings"
+    label: "Settings"
+    files:
+      - label: "Global Site Settings"
+        name: "site"
+        file: "content/settings/site.yml"
+        fields:
+          - {label: "Site Phone", name: "phone", widget: "string"}
+          - {label: "Site Email", name: "email", widget: "string"}
+          - {label: "Address", name: "address", widget: "string"}
+          - {label: "Facebook URL", name: "facebook", widget: "string", required: false}
+          - {label: "Instagram URL", name: "instagram", widget: "string", required: false}
+          - {label: "YouTube URL", name: "youtube", widget: "string", required: false}

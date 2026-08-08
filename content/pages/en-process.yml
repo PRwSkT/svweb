@@ -1,0 +1,11 @@
+lang: en
+id: process
+path: /admissions/process/
+image: real-3.jpg
+title: Application Process
+eyebrow: Admissions
+summary: >-
+  Four clear steps: inquiry, school tour, readiness review, and enrollment
+  confirmation.
+type: steps
+nav: admissions

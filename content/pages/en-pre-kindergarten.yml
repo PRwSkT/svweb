@@ -1,0 +1,17 @@
+lang: en
+id: pre-kindergarten
+path: /academics/pre-kindergarten/
+image: real-4.jpg
+title: Pre-Kindergarten
+eyebrow: First Steps
+summary: >-
+  Gentle routines and safe spaces help young children adapt and learn through
+  play.
+sections:
+  - title: Play-based Learning
+    body: >-
+      Age-appropriate activities for motor, language, emotional, and social
+      growth.
+  - title: Care
+    body: Close attention and regular family communication.
+nav: academics

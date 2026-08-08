@@ -1,0 +1,15 @@
+lang: en
+id: primary
+path: /academics/primary/
+image: real-3.jpg
+title: Primary
+eyebrow: Strong Foundations
+summary: >-
+  Primary builds academics, languages, analytical thinking, and project work for
+  the next stage.
+sections:
+  - title: Core Subjects
+    body: Thai, English, math, science, social studies, and digital skills.
+  - title: PBL
+    body: Learning through real questions and student presentations.
+nav: academics

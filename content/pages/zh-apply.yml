@@ -1,0 +1,9 @@
+lang: zh
+id: apply
+path: /admissions/apply/
+image: real-3.jpg
+title: 在线申请
+eyebrow: 招生
+summary: 通过 Netlify Forms 提交初步信息，招生团队将联系下一步。
+type: form
+nav: admissions

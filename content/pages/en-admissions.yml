@@ -1,0 +1,11 @@
+lang: en
+id: admissions
+path: /admissions/
+image: real-3.jpg
+title: Start Your Admissions Journey
+eyebrow: Admissions
+summary: >-
+  Admissions is designed so families can understand steps, fees, documents, and
+  tour booking in minutes.
+type: admissions
+nav: admissions

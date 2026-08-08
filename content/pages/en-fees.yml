@@ -1,0 +1,11 @@
+lang: en
+id: fees
+path: /admissions/fees/
+image: real-5.jpg
+title: Fees and Tuition
+eyebrow: Admissions
+summary: >-
+  A clear fee table ready for the school team to add final figures and
+  conditions before launch.
+type: fees
+nav: admissions

@@ -1,0 +1,9 @@
+lang: zh
+id: fees
+path: /admissions/fees/
+image: real-5.jpg
+title: 费用与学费
+eyebrow: 招生
+summary: 费用表结构清晰，方便学校团队在上线前填写最新金额与条件。
+type: fees
+nav: admissions

@@ -1,0 +1,11 @@
+lang: th
+id: apply
+path: /admissions/apply/
+image: real-3.jpg
+title: สมัครออนไลน์
+eyebrow: รับสมัคร
+summary: >-
+  ส่งข้อมูลเบื้องต้นผ่าน Netlify Forms
+  เพื่อให้ฝ่ายรับสมัครติดต่อกลับและนัดหมายขั้นตอนต่อไป
+type: form
+nav: admissions

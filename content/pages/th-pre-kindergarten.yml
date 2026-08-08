@@ -1,0 +1,15 @@
+lang: th
+id: pre-kindergarten
+path: /academics/pre-kindergarten/
+image: real-4.jpg
+title: เตรียมอนุบาล
+eyebrow: ก้าวแรกของการเรียนรู้
+summary: >-
+  ออกแบบกิจวัตรและสภาพแวดล้อมให้เด็กเล็กค่อย ๆ ปรับตัว รู้สึกปลอดภัย
+  และเริ่มเรียนรู้ผ่านการเล่น
+sections:
+  - title: Play-based Learning
+    body: เสริมกล้ามเนื้อ ภาษา อารมณ์ และสังคมผ่านกิจกรรมที่เหมาะกับวัย
+  - title: Care
+    body: ดูแลใกล้ชิด สื่อสารกับผู้ปกครองสม่ำเสมอ
+nav: academics

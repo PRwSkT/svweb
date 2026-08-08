@@ -1,0 +1,13 @@
+lang: zh
+id: primary
+path: /academics/primary/
+image: real-3.jpg
+title: 小学
+eyebrow: 扎实基础
+summary: 小学阶段建立学术、语言、分析思维与项目学习能力。
+sections:
+  - title: 核心科目
+    body: 泰语、英语、数学、科学、社会与数字技能。
+  - title: 项目式学习
+    body: 通过真实问题与成果展示学习。
+nav: academics

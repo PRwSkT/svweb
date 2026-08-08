@@ -1,0 +1,13 @@
+lang: en
+id: kindergarten
+path: /academics/kindergarten/
+image: real-2.jpg
+title: Kindergarten
+eyebrow: Learning Through Exploration
+summary: SV Kindergarten builds language, creativity, collaboration, and confidence.
+sections:
+  - title: Living Classroom
+    body: Children ask, experiment, tell stories, and create.
+  - title: Development
+    body: Teachers monitor growth and keep families informed.
+nav: academics

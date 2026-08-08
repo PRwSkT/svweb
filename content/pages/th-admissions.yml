@@ -1,0 +1,11 @@
+lang: th
+id: admissions
+path: /admissions/
+image: real-3.jpg
+title: เริ่มต้นเส้นทางสมัครเรียน
+eyebrow: รับสมัคร
+summary: >-
+  หน้ารับสมัครออกแบบให้ผู้ปกครองเข้าใจขั้นตอน ค่าใช้จ่าย เอกสาร
+  และนัดเยี่ยมชมโรงเรียนได้ง่ายในไม่กี่นาที
+type: admissions
+nav: admissions

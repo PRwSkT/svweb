@@ -1,0 +1,17 @@
+lang: en
+id: approach
+path: /academics/approach/
+image: real-6.png
+title: Our Learning Approach
+eyebrow: Active Learning / PBL / AI
+summary: >-
+  Our approach blends active learning, PBL, and age-appropriate AI integration
+  to help children think and create.
+sections:
+  - title: Active Learning
+    body: Children participate, question, experiment, and reflect.
+  - title: AI Integration
+    body: >-
+      Digital tools support thinking without replacing teachers or real
+      experience.
+nav: academics

@@ -1,0 +1,17 @@
+lang: th
+id: vision
+path: /about/vision/
+image: real-1.jpg
+title: วิสัยทัศน์ พันธกิจ และค่านิยม
+eyebrow: เกี่ยวกับเรา
+summary: >-
+  เรามุ่งสร้างผู้เรียนที่มีความสุข คิดเป็น สื่อสารได้หลายภาษา
+  และพร้อมเป็นพลเมืองโลกที่รับผิดชอบต่อสังคม
+sections:
+  - title: Vision
+    body: เป็นโรงเรียนสองภาษาที่ได้รับความไว้วางใจในระดับภูมิภาค
+  - title: Mission
+    body: สร้างประสบการณ์เรียนรู้ที่สมดุลระหว่างวิชาการ ภาษา คุณธรรม และทักษะอนาคต
+  - title: Values
+    body: Care, Curiosity, Confidence, Community
+nav: about

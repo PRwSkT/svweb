@@ -1,0 +1,17 @@
+lang: en
+id: about
+path: /about/
+image: real-2.jpg
+title: 66 Years of Learning and Growth
+eyebrow: About
+summary: >-
+  Somkidvittaya was built to be a warm, safe, future-facing learning community
+  for families in Rayong.
+sections:
+  - title: School Story
+    body: >-
+      A 66-year timeline highlights the school journey from a community
+      foundation to a modern bilingual school.
+  - title: What We Believe
+    body: Children learn best when they feel safe, active, and personally seen.
+nav: about

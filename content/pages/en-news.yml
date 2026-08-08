@@ -1,0 +1,11 @@
+lang: en
+id: news
+path: /news/
+image: real-6.png
+title: News and Events
+eyebrow: News & Events
+summary: >-
+  Updates from the school community that keep the website active and support
+  SEO.
+type: news
+nav: news

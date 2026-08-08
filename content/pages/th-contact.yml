@@ -1,0 +1,9 @@
+lang: th
+id: contact
+path: /contact/
+image: real-1.jpg
+title: ติดต่อโรงเรียนสมคิดวิทยา
+eyebrow: Contact
+summary: ติดต่อ สอบถามข้อมูลสมัครเรียน หรือนัดเยี่ยมชมโรงเรียนได้จากหน้านี้
+type: contact
+nav: contact

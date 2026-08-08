@@ -1,0 +1,9 @@
+lang: zh
+id: parents
+path: /parents/
+image: real-5.jpg
+title: 家长信息中心
+eyebrow: 家长
+summary: 整合 SV Portal、活动日历、下载文件与重要通知。
+type: parents
+nav: parents

@@ -1,0 +1,9 @@
+lang: zh
+id: process
+path: /admissions/process/
+image: real-3.jpg
+title: 申请流程
+eyebrow: 招生
+summary: 四个清晰步骤：提交咨询、预约参观、入学评估、确认入学。
+type: steps
+nav: admissions

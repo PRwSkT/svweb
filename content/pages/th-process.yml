@@ -1,0 +1,11 @@
+lang: th
+id: process
+path: /admissions/process/
+image: real-3.jpg
+title: ขั้นตอนสมัครเรียน
+eyebrow: รับสมัคร
+summary: >-
+  4 ขั้นตอนชัดเจน: ส่งข้อมูล นัดเยี่ยมชม ประเมินความพร้อม
+  และยืนยันสิทธิ์เข้าเรียน
+type: steps
+nav: admissions

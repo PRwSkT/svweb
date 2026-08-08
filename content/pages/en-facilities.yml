@@ -1,0 +1,15 @@
+lang: en
+id: facilities
+path: /about/facilities/
+image: real-4.jpg
+title: Facilities
+eyebrow: About
+summary: >-
+  Learning spaces, classrooms, playgrounds, and activity areas are presented in
+  a clear visual gallery.
+sections:
+  - title: Classrooms
+    body: Age-appropriate spaces for hands-on learning.
+  - title: Activity Areas
+    body: Spaces for sports, arts, languages, and community events.
+nav: about

@@ -1,0 +1,9 @@
+lang: en
+id: apply
+path: /admissions/apply/
+image: real-3.jpg
+title: Apply Online
+eyebrow: Admissions
+summary: Submit an initial inquiry through Netlify Forms so admissions can follow up.
+type: form
+nav: admissions

@@ -1,0 +1,11 @@
+lang: th
+id: news
+path: /news/
+image: real-6.png
+title: ข่าวสารและกิจกรรม
+eyebrow: News & Events
+summary: >-
+  พื้นที่อัปเดตความเคลื่อนไหวของโรงเรียน ช่วยให้เว็บไซต์มีชีวิตและสนับสนุน SEO
+  ระยะยาว
+type: news
+nav: news

@@ -1,0 +1,13 @@
+lang: zh
+id: team
+path: /about/team/
+image: real-5.jpg
+title: 管理团队与教师
+eyebrow: 关于我们
+summary: 教师团队页面可展示照片、职位与简介，帮助家长建立信任。
+sections:
+  - title: 管理团队
+    body: 展示校长与管理团队欢迎信息。
+  - title: 教师
+    body: 按学段展示泰国教师、外籍教师与支持人员。
+nav: about

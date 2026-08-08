@@ -1,0 +1,13 @@
+lang: zh
+id: kindergarten
+path: /academics/kindergarten/
+image: real-2.jpg
+title: 幼儿园
+eyebrow: 在探索中学习
+summary: SV 幼儿园培养语言、创造力、协作与自信。
+sections:
+  - title: 有生命的课堂
+    body: 孩子提问、实验、讲述并创作。
+  - title: 发展
+    body: 教师跟踪成长并与家庭持续沟通。
+nav: academics

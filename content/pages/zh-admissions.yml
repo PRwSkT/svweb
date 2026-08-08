@@ -1,0 +1,9 @@
+lang: zh
+id: admissions
+path: /admissions/
+image: real-3.jpg
+title: 开启入学申请
+eyebrow: 招生
+summary: 招生页面帮助家庭快速了解流程、费用、文件与预约参观。
+type: admissions
+nav: admissions

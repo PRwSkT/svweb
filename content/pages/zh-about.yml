@@ -1,0 +1,13 @@
+lang: zh
+id: about
+path: /about/
+image: real-2.jpg
+title: 66年学习与成长
+eyebrow: 关于我们
+summary: Somkidvittaya 致力于为罗勇家庭打造温暖、安全、面向未来的学习社区。
+sections:
+  - title: 学校故事
+    body: 66年时间轴呈现学校从社区基础到现代双语学校的发展。
+  - title: 我们的信念
+    body: 孩子在安全、主动参与且被个别关注的环境中学习最好。
+nav: about

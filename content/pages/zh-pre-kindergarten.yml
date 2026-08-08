@@ -1,0 +1,13 @@
+lang: zh
+id: pre-kindergarten
+path: /academics/pre-kindergarten/
+image: real-4.jpg
+title: 幼儿预备班
+eyebrow: 学习第一步
+summary: 温和的日常与安全空间帮助幼儿适应，并通过游戏学习。
+sections:
+  - title: 游戏化学习
+    body: 通过适龄活动发展动作、语言、情绪与社交能力。
+  - title: 关怀
+    body: 细致照护并定期与家庭沟通。
+nav: academics

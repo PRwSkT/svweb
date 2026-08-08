@@ -1,0 +1,11 @@
+lang: th
+id: fees
+path: /admissions/fees/
+image: real-5.jpg
+title: ค่าธรรมเนียมและค่าใช้จ่าย
+eyebrow: รับสมัคร
+summary: >-
+  โครงสร้างตารางค่าใช้จ่ายพร้อมช่องหมายเหตุ
+  เพื่อให้ทีมโรงเรียนเติมตัวเลขจริงและเงื่อนไขล่าสุดก่อนเปิดตัว
+type: fees
+nav: admissions

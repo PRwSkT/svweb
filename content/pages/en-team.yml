@@ -1,0 +1,15 @@
+lang: en
+id: team
+path: /about/team/
+image: real-5.jpg
+title: Leadership and Teachers
+eyebrow: About
+summary: >-
+  A people-first team page for photos, roles, and short bios that build
+  confidence before a family visit.
+sections:
+  - title: Leadership
+    body: A welcome area for school leadership.
+  - title: Teachers
+    body: Profiles for Thai teachers, international teachers, and support staff.
+nav: about
