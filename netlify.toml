@@ -11,6 +11,12 @@
     Permissions-Policy = "camera=(), microphone=(), geolocation=(self)"
 
 [[redirects]]
+  from = "https://somkidvittaya.netlify.app/*"
+  to = "https://somkidvittaya.ac.th/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
   from = "/th/*"
   to = "/:splat"
   status = 301
