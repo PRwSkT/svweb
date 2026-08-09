@@ -440,6 +440,7 @@ function html(page, locale) {
   
   <link rel="preload" as="image" href="/assets/images/${page.image}">
   <link rel="icon" href="/favicon.ico">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <link rel="stylesheet" href="/styles.css">
   ${structuredData(page, locale)}
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
@@ -508,6 +509,7 @@ for (const page of pages) {
 copyAsset("src/styles.css", "styles.css");
 copyAsset("src/main.js", "main.js");
 copyAsset("src/assets/favicon.ico", "favicon.ico");
+copyAsset("src/assets/apple-touch-icon.png", "apple-touch-icon.png");
 for (const image of readdirSync(join(root, "src/assets/images"))) {
   if (image.startsWith('.')) continue;
   copyAsset(`src/assets/images/${image}`, `assets/images/${image}`);
