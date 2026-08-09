@@ -431,15 +431,15 @@ function html(page, locale) {
   <meta property="og:description" content="${escapeHtml(description)}">
   <meta property="og:type" content="website">
   <meta property="og:url" content="${pageUrl(page.path, locale)}">
-  <meta property="og:image" content="${siteUrl}/assets/images/${page.image}">
+  <meta property="og:image" content="${siteUrl}/assets/images/${page.image || "real-1.jpg"}">
   <meta property="og:locale" content="${locale === "th" ? "th_TH" : locale === "en" ? "en_US" : "zh_CN"}">
   
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="${escapeHtml(title)}">
   <meta name="twitter:description" content="${escapeHtml(description)}">
-  <meta name="twitter:image" content="${siteUrl}/assets/images/${page.image}">
+  <meta name="twitter:image" content="${siteUrl}/assets/images/${page.image || "real-1.jpg"}">
   
-  <link rel="preload" as="image" href="/assets/images/${page.image}">
+  <link rel="preload" as="image" href="/assets/images/${page.image || "real-1.jpg"}">
   <link rel="icon" href="/favicon.ico">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <link rel="stylesheet" href="/styles.css">
