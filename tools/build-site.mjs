@@ -226,8 +226,9 @@ function hero(page, locale) {
 
   const isHome = page.id === "home";
   const slidesHtml = isHome ? `data-slides='["/assets/images/real-1.jpg","/assets/images/real-2.jpg","/assets/images/real-3.jpg","/assets/images/real-4.jpg","/assets/images/real-5.jpg","/assets/images/real-6.png"]'` : "";
+  const pageImage = page.image || 'real-1.jpg';
 
-  return `<section class="hero" style="--hero-image: url('/assets/images/${page.image}')" ${slidesHtml}>
+  return `<section class="hero" style="--hero-image: url('/assets/images/${pageImage}')" ${slidesHtml}>
     <div class="hero-content">
       <div class="hero-copy">
         <p class="eyebrow">${escapeHtml(t(page, "eyebrow", locale))}</p>
