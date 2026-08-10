@@ -351,8 +351,8 @@ function contact(locale) {
   </section><div id="contact-form">${formSection(locale, "contact")}</div>`;
 }
 
-function homeSections(locale) {
-  return `${stats(locale)}${quickLinks(locale)}${programCards(locale)}${textSections(pages[0], locale)}${news(locale)}${formSection(locale, "quick-inquiry")}`;
+function homeSections(page, locale) {
+  return `${stats(locale)}${quickLinks(locale)}${programCards(locale)}${textSections(page, locale)}${news(locale)}${formSection(locale, "quick-inquiry")}`;
 }
 
 function aboutSections(page, locale) {
@@ -397,7 +397,7 @@ function aboutSections(page, locale) {
 
 function bodyContent(page, locale) {
   if (page.type === "success") return "";
-  if (page.type === "home") return homeSections(locale);
+  if (page.type === "home") return homeSections(page, locale);
   if (page.type === "about") return aboutSections(page, locale);
   if (page.type === "programs") return `${programCards(locale)}${textSections({ ...page, sections: { [locale]: [[locale === "th" ? "ภาพรวมหลักสูตร" : "Overview", t(page, "summary", locale)]] } }, locale)}`;
   if (page.type === "admissions") return admissions(locale);
