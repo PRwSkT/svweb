@@ -377,26 +377,26 @@ function textSections(page, locale) {
     const restSections = sections.slice(1);
     
     contentHtml = `
-      <div class="curriculum-grid" style="margin-bottom: 40px;">
-        <div class="text-item featured-item" style="height: 100%; display: flex; flex-direction: column; justify-content: center; box-shadow: 0 20px 50px rgba(139, 29, 50, 0.08); border-color: rgba(139, 29, 50, 0.1);">
+      <div class="featured-program-card">
+        <div class="text-item featured-text" style="animation: none; transform: none; opacity: 1;">
           <div class="text-item-header">
             ${featuredSection.icon ? `<i data-feather="${featuredSection.icon}"></i>` : ""}
-            <h3 style="font-size: 1.6rem;">${escapeHtml(featuredSection.title || featuredSection[0])}</h3>
+            <h3 style="font-size: 1.8rem; margin: 0; color: var(--sv-deep);">${escapeHtml(featuredSection.title || featuredSection[0])}</h3>
           </div>
-          <p style="font-size: 1.15rem;">${escapeHtml(featuredSection.body || featuredSection[1])}</p>
+          <p style="font-size: 1.15rem; margin-top: 16px; color: var(--muted); line-height: 1.7;">${escapeHtml(featuredSection.body || featuredSection[1])}</p>
         </div>
         ${chartHtml}
       </div>
       
       ${restSections.length > 0 ? `
-        <div class="text-list secondary-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 32px;">
+        <div class="text-list secondary-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 40px; margin-top: 60px;">
           ${restSections.map((sec, i) => `
-            <div class="text-item" style="animation-delay: ${(i+1) * 0.1}s; height: 100%;">
+            <div class="text-item" style="animation-delay: ${(i+1) * 0.1}s;">
               <div class="text-item-header">
                 ${sec.icon ? `<i data-feather="${sec.icon}"></i>` : ""}
-                <h3>${escapeHtml(sec.title || sec[0])}</h3>
+                <h3 style="font-size: 1.5rem; margin: 0; color: var(--sv-deep);">${escapeHtml(sec.title || sec[0])}</h3>
               </div>
-              <p>${escapeHtml(sec.body || sec[1])}</p>
+              <p style="margin-top: 12px; color: var(--muted); line-height: 1.7;">${escapeHtml(sec.body || sec[1])}</p>
             </div>
           `).join("")}
         </div>
@@ -404,14 +404,14 @@ function textSections(page, locale) {
     `;
   } else {
     contentHtml = `
-      <div class="text-list secondary-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 32px;">
+      <div class="text-list secondary-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 40px;">
         ${sections.map((sec, i) => `
-          <div class="text-item" style="animation-delay: ${i * 0.1}s; height: 100%;">
+          <div class="text-item" style="animation-delay: ${i * 0.1}s;">
             <div class="text-item-header">
               ${sec.icon ? `<i data-feather="${sec.icon}"></i>` : ""}
-              <h3>${escapeHtml(sec.title || sec[0])}</h3>
+              <h3 style="font-size: 1.5rem; margin: 0; color: var(--sv-deep);">${escapeHtml(sec.title || sec[0])}</h3>
             </div>
-            <p>${escapeHtml(sec.body || sec[1])}</p>
+            <p style="margin-top: 12px; color: var(--muted); line-height: 1.7;">${escapeHtml(sec.body || sec[1])}</p>
           </div>
         `).join("")}
       </div>
@@ -510,7 +510,7 @@ function contact(locale) {
   return `<section class="section contact-grid">
     <div class="contact-card"><h2>${locale === "th" ? "ข้อมูลติดต่อ" : locale === "en" ? "Contact Information" : "联系方式"}</h2><p>Somkidvittaya School<br>${escapeHtml(l.address || siteSettings.address).replace(/\n/g, "<br>")}<br>Tel: ${escapeHtml(siteSettings.phone)}<br>Email: ${escapeHtml(siteSettings.email)}</p><div class="hero-actions">${button(locales[locale].ctaTour, "#contact-form", "primary")}${button(locale === "th" ? "โทรหาเรา" : locale === "en" ? "Call Us" : "致电", `tel:${siteSettings.phone.replace(/[^0-9+]/g, '')}`, "secondary")}</div></div>
     <div class="map-wrapper" style="width: 100%; height: 100%; min-height: 400px; background: #e0e0e0; border-radius: 12px; overflow: hidden; box-shadow: var(--shadow);">
-      <iframe title="Map to Somkidvittaya School Rayong" loading="lazy" style="width:100%; height:100%; border:0;" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3877.202377317789!2d101.27551007584166!3d12.67840132034947!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3102d978a6350f95%3A0x6b772c21213f59e6!2sSomkidvittaya%20School!5e0!3m2!1sen!2sth!4v1723300000000!5m2!1sen!2sth" allowfullscreen="" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      <iframe title="Map to Somkidvittaya School Rayong" loading="lazy" style="width:100%; height:100%; border:0;" src="https://maps.google.com/maps?q=Somkidvittaya%20School%20Rayong&t=&z=16&ie=UTF8&iwloc=&output=embed" allowfullscreen="" referrerpolicy="no-referrer-when-downgrade"></iframe>
     </div>
   </section><div id="contact-form">${formSection(locale, "contact")}</div>`;
 }
@@ -676,6 +676,8 @@ function html(page, locale) {
   </main>
   ${footer(locale)}
   <script src="/main.js" defer></script>
+  <script src="https://unpkg.com/feather-icons"></script>
+  <script>window.addEventListener('DOMContentLoaded', () => feather.replace());</script>
 </body>
 </html>`;
 }
