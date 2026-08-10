@@ -1,17 +1,115 @@
-lang: en
-id: about
-path: /about/
-image: real-2.jpg
-title: 66 Years of Learning and Growth
-eyebrow: About
-summary: >-
-  Somkidvittaya was built to be a warm, safe, future-facing learning community
-  for families in Rayong.
-sections:
-  - title: School Story
-    body: >-
-      A 66-year timeline highlights the school journey from a community
-      foundation to a modern bilingual school.
-  - title: What We Believe
-    body: Children learn best when they feel safe, active, and personally seen.
-nav: about
+{
+  "lang": "en",
+  "id": "about",
+  "path": "/about/",
+  "image": "real-2.jpg",
+  "type": "about",
+  "nav": "about",
+  "title": "Somkidvittaya: An Institution of Value, Cultivating Timeless Wisdom",
+  "eyebrow": "The Legacy of Somkidvittaya",
+  "summary": "Somkidvittaya School is more than just an educational institution; it is an “Institution of Value and Time” born from a heart of compassion and profound vision. Over the course of more than six decades, we have nurtured youth by seamlessly blending our beautiful cultural foundations with the educational innovations of the future.",
+  "sections": [
+    {
+      "subtitle": "Chapter I (1960 - 1986)",
+      "title": "The Genesis of Wisdom and the Eternal Foundation",
+      "body": "Amidst the landscape of Rayong province during an era when the light of education had not yet reached everywhere, Mr. Thongyoo Suksiri (then Mayor of Rayong) sparked a vision that became a crucial taproot for the community. He sought not merely to build a school, but to forge an 'Intellectual Legacy' that would take deep root and grow alongside the people of Rayong for eternity.",
+      "events": [
+        {
+          "year": "1960",
+          "title": "The Birth of the First Home of Wisdom",
+          "text": "Somkidvittaya School officially recorded the first page of its history on May 17. With Mr. Thongyoo Suksiri as the Founder and Manager, Mrs. Somkid Supap as the Licensee, and Mr. Pan Insee serving as the first Principal. It began by nurturing seeds at the early childhood level within a half-concrete, half-wooden structure, the \"Thongyoo Suksiri Memorial Building (503),\" which stands as a monument of dedication, weaving love and hope into every atom."
+        },
+        {
+          "year": "1965",
+          "title": "Growth from a Resilient Root",
+          "text": "Stemming from unwavering resolve, which garnered the profound trust and faith of the Rayong community, Mr. Sommai Suksiri took the baton to carry the vision forward (as Manager and Licensee Representative), alongside Mr. Uthai Phumarin (Principal). Together, they made a monumental leap by expanding the educational scope to encompass Primary and Lower Secondary levels, accommodating the growth of local youth and ensuring they received continuous, top-tier education under the canopy of Somkidvittaya."
+        },
+        {
+          "year": "The Rooted Legacy",
+          "title": "The Path of Stability",
+          "text": "From the very first ring of the school bell, Somkidvittaya has served as a “compass” guiding the youth. The pioneering management established discipline and moral integrity as pillars as steadfast as mountains, passing down the ethos from generation to generation that this is not merely a place to impart knowledge, but an institution that “builds people” of true value and dignity."
+        }
+      ]
+    },
+    {
+      "subtitle": "Chapter II (1987 - 2000)",
+      "title": "The Architecture of Learning and the Continuity of Identity",
+      "body": "An era of transforming the campus infrastructure into spaces that incubate potential, while simultaneously putting down deep roots in the elegance of Thai arts and culture, thereby forging a distinctive identity for the institution.",
+      "events": [
+        {
+          "year": "1987",
+          "title": "",
+          "text": "The administration made the strategic decision to scale back to exclusively offer early childhood education, addressing spatial constraints and prioritizing the highest quality of close, personalized care."
+        },
+        {
+          "year": "1990 - 1993",
+          "title": "",
+          "text": "Under the leadership of Mrs. Sasithorn Suksiri (Principal), the school embarked on a major infrastructure development master plan."
+        },
+        {
+          "year": "1994",
+          "title": "",
+          "text": "Responding to the resounding voices and the trust of parents who desired a continuous educational journey for their children, the school proudly reinstated its Primary education level."
+        },
+        {
+          "year": "1995 - 2000",
+          "title": "The Golden Age of \"Smart Infrastructure\" and Aesthetic Spaces",
+          "text": "The construction of Siritham Building 1 (1995) and Siritham Building 2 (1997)—spacious and modern reinforced concrete structures.<br><br>1998 - 2000: Comprehensive development of life-skills enhancement areas, including the cafeteria, the developmental training building (Mahasanook Building), the swimming pool, and the administrative building."
+        },
+        {
+          "year": "1999",
+          "title": "The Genesis of an Elegant Identity",
+          "text": "The construction of the Thai Classical Dance and Music Activity Building to serve as a center for molding the Thai spirit. Specifically, this marked the initiation and preservation of the high classical performing art of “Khon,” which has become a vital instrument in cultivating refinement, concentration, and graceful discipline in Somkidvittaya students to this day."
+        }
+      ]
+    },
+    {
+      "subtitle": "Chapter III (2011 - 2024)",
+      "title": "The Transition Toward Global Standards and Corporate Solidity",
+      "body": "In an era of a borderless world, Somkidvittaya School transcended its former boundaries to elevate the potential of its learners to match the global stage, while reinforcing its strength in corporate-level management:",
+      "events": [
+        {
+          "year": "2011",
+          "title": "The Dawn of Bilingual Education",
+          "text": "Recognizing that English is not merely an elective subject but a “second language” that children must be as familiar with as their mother tongue, the school pioneered the Mini English Program (MEP) to create an environment conducive to the natural absorption of language skills."
+        },
+        {
+          "year": "2022",
+          "title": "The Era of Modern Leadership",
+          "text": "Mr. Natthawat Songkhrotham assumed the role of School Director, bringing a 21st-century educational vision to propel the school toward modernized administration, embracing innovation, and answering the needs of modern learners."
+        },
+        {
+          "year": "2024",
+          "title": "Corporate Solidification",
+          "text": "To support sustainable growth, the school advanced into a corporate structure by transferring its operations to Siritham Co., Ltd. as the licensee. This underscored its professionalism and elevated management standards to an international level."
+        }
+      ]
+    },
+    {
+      "subtitle": "Chapter IV (2025 - Present)",
+      "title": "Stepping into the Future of Innovators",
+      "body": "The year 2025 marks a milestone in fully elevating the quality of education to international standards. Under the management of Ms. Atipha Suksiri (Manager), Somkidvittaya School announced a strategy focused on unlocking the maximum potential of its learners. The goal is to cultivate \"Innovators\" who are ready to drive society forward in the Eastern Economic Corridor (EEC) era and on the global stage.\nThis transformation is propelled by 3 visionary pillars:",
+      "events": [
+        {
+          "year": "Bilingual Excellence",
+          "title": "Bilingual Excellence",
+          "text": "The school restructured to become a 100% full-fledged Bilingual Program (MEP), intensifying English and foreign language skills to international standards, enabling students to communicate naturally and seamlessly."
+        },
+        {
+          "year": "Modern Pedagogies",
+          "title": "Modern Pedagogies",
+          "text": "Transitioning pedagogical approaches to a Child-Centric model, integrating Active Learning and Project-Based Learning. This empowers children to engage in hands-on practice, critical thinking, and independent problem-solving, thereby incubating vital 21st-century skills."
+        },
+        {
+          "year": "Smart Ecosystem",
+          "title": "Data-Driven Smart Ecosystem",
+          "text": "Introducing technology and a Data-Driven approach to play a pivotal role in analyzing development. This allows for deep insights into the potential and skills that need to be fulfilled on an individual basis via a modern management platform, ensuring every child receives precise and targeted advancement."
+        }
+      ]
+    }
+  ],
+  "epilogue": {
+    "title": "“A Stable Foundation, A Future Without Limits”",
+    "body": "No matter how far Somkidvittaya advances with innovation and technology, our spirit remains deeply rooted in the eternal philosophy:\n\n**\"Excellent Education, Outstanding Activities, Strict Discipline, Firm Morals, Stepping Towards Global Citizenship.\"**\n\nThis is our solemn promise that Somkidvittaya School will continue to be an **\"Institution of Value\"** that harmonizes the aesthetics of Thai identity with a vision of the future, to shape youth imbued with **wisdom, virtue, and self-pride** for all time."
+  }
+}
