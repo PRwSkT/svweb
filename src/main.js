@@ -137,13 +137,16 @@
       if (entry.isIntersecting) {
         entry.target.classList.add("is-visible");
         
-        // Counter Animation for Chart
-        const counter = entry.target.querySelector(".counter");
-        if (counter && !counter.dataset.animated) {
-          counter.dataset.animated = "true";
-          const target = parseInt(counter.getAttribute("data-target"), 10);
-          animateCounter(counter, target, 1800);
-        }
+        // Counter Animations
+        entry.target.querySelectorAll(".counter").forEach(counter => {
+          if (!counter.dataset.animated) {
+            counter.dataset.animated = "true";
+            const target = parseInt(counter.getAttribute("data-target"), 10);
+            if (!isNaN(target)) {
+              animateCounter(counter, target, 1800);
+            }
+          }
+        });
 
         // Animate legend values too
         entry.target.querySelectorAll(".legend-value").forEach((el, i) => {

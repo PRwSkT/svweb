@@ -299,7 +299,12 @@ function hero(page, locale) {
 }
 
 function stats(locale) {
-  return `<section class="stats" aria-label="School highlights" data-animate="fade-up">${globals.stats.map(([n, th, en, zh]) => `<div><strong>${n}</strong><span>${escapeHtml(locale === "th" ? th : locale === "en" ? en : zh)}</span></div>`).join("")}</section>`;
+  return `<section class="stats" aria-label="School highlights" data-animate="fade-up">${globals.stats.map(([n, th, en, zh]) => {
+    const numMatch = n.match(/^(\\d+)(.*)$/);
+    const num = numMatch ? numMatch[1] : n;
+    const suffix = numMatch ? numMatch[2] : "";
+    return `<div><strong><span class="counter" data-target="${num}">0</span>${suffix}</strong><span>${escapeHtml(locale === "th" ? th : locale === "en" ? en : zh)}</span></div>`;
+  }).join("")}</section>`;
 }
 
 function quickLinks(locale) {
