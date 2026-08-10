@@ -155,11 +155,16 @@ function button(label, href, variant = "primary") {
 }
 
 function languageSelect(page, locale) {
+  const flags = {
+    th: `<svg viewBox="0 0 900 600" width="24" height="16"><rect fill="#A51931" width="900" height="600"/><rect fill="#F4F5F8" y="100" width="900" height="400"/><rect fill="#2D2A4A" y="200" width="900" height="200"/></svg>`,
+    en: `<svg viewBox="0 0 60 30" width="24" height="16"><clipPath id="s"><path d="M0,0 v30 h60 v-30 z"/></clipPath><clipPath id="t"><path d="M30,15 h30 v15 z v-15 h-30 z h-30 v-15 z v15 h30 z"/></clipPath><g clip-path="url(#s)"><path d="M0,0 v30 h60 v-30 z" fill="#012169"/><path d="M0,0 L60,30 M60,0 L0,30" stroke="#fff" stroke-width="6"/><path d="M0,0 L60,30 M60,0 L0,30" clip-path="url(#t)" stroke="#C8102E" stroke-width="4"/><path d="M30,0 v30 M0,15 h60" stroke="#fff" stroke-width="10"/><path d="M30,0 v30 M0,15 h60" stroke="#C8102E" stroke-width="6"/></g></svg>`,
+    zh: `<svg viewBox="0 0 900 600" width="24" height="16"><rect fill="#ee1c25" width="900" height="600"/><g fill="#ffdf00" transform="translate(150,150)"><path d="M0,-90 L26.4,5.4 L-72.1,-33.5 L72.1,-33.5 L-26.4,5.4 Z"/><path d="M0,-90 L26.4,5.4 L-72.1,-33.5 L72.1,-33.5 L-26.4,5.4 Z" transform="translate(150,-60) scale(0.33) rotate(22.5)"/><path d="M0,-90 L26.4,5.4 L-72.1,-33.5 L72.1,-33.5 L-26.4,5.4 Z" transform="translate(210,30) scale(0.33) rotate(-22.5)"/><path d="M0,-90 L26.4,5.4 L-72.1,-33.5 L72.1,-33.5 L-26.4,5.4 Z" transform="translate(210,120) scale(0.33) rotate(0)"/><path d="M0,-90 L26.4,5.4 L-72.1,-33.5 L72.1,-33.5 L-26.4,5.4 Z" transform="translate(150,210) scale(0.33) rotate(22.5)"/></g></svg>`
+  };
   const options = Object.keys(locales).map((code) => {
-    const selected = code === locale ? " selected" : "";
-    return `<option value="${localizedPath(page.path, code)}"${selected}>${locales[code].label}</option>`;
+    const active = code === locale ? ' active' : '';
+    return `<a href="${localizedPath(page.path, code)}" class="lang-flag${active}" aria-label="${locales[code].label}" title="${locales[code].label}">${flags[code]}</a>`;
   }).join("");
-  return `<label class="language-switch"><span>${locales[locale].langTitle}</span><select data-language-select aria-label="${locales[locale].langTitle}">${options}</select></label>`;
+  return `<div class="language-switch">${options}</div>`;
 }
 
 function header(page, locale) {
@@ -180,9 +185,9 @@ function header(page, locale) {
       <a class="brand" href="${l.home}" aria-label="Somkidvittaya School home">
         <img src="/assets/images/logo.png" alt="Somkidvittaya School Logo" class="brand-logo" width="60" height="60">
       </a>
-      <button class="menu-button" data-menu-button aria-expanded="false" aria-controls="site-nav"><span></span><span></span><span></span></button>
       <nav id="site-nav" class="site-nav" data-site-nav>${navLinks}</nav>
       <div class="header-actions">${languageSelect(page, locale)}${button(l.ctaApply, localizedPath("/admissions/apply/", locale), "primary small")}</div>
+      <button class="menu-button" data-menu-button aria-expanded="false" aria-controls="site-nav"><span></span><span></span><span></span></button>
     </div>
   </header>`;
 }

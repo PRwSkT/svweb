@@ -141,25 +141,19 @@ a { color: inherit; }
 
 .header-actions { display: flex; align-items: center; gap: 10px; }
 
-.language-switch { display: inline-flex; align-items: center; gap: 7px; color: var(--muted); font-size: 0.74rem; }
-
-.language-switch select {
-  min-height: 36px;
-  border: 0;
-  background: transparent;
-  color: var(--sv-deep);
-  font: inherit;
-  font-weight: 700;
-}
+.language-switch { display: inline-flex; align-items: center; gap: 8px; }
+.lang-flag { display: block; width: 24px; height: 16px; border-radius: 2px; overflow: hidden; opacity: 0.4; transition: opacity 0.2s, transform 0.2s; box-shadow: 0 1px 3px rgba(0,0,0,0.15); line-height: 0; }
+.lang-flag:hover { opacity: 0.8; }
+.lang-flag.active { opacity: 1; transform: scale(1.1); box-shadow: 0 2px 6px rgba(0,0,0,0.25); border: 1px solid rgba(255,255,255,0.8); }
 
 .menu-button {
   display: none;
   width: 42px;
   height: 42px;
   margin-left: auto;
-  border: 1px solid var(--line);
-  border-radius: 4px;
-  background: var(--white);
+  border: none;
+  background: transparent;
+  cursor: pointer;
 }
 
 .menu-button span { display: block; width: 19px; height: 2px; margin: 5px auto; background: var(--sv-deep); }
