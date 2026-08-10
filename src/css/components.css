@@ -378,11 +378,11 @@ textarea { resize: vertical; }
 
 .footer-giant-graphic {
   position: absolute;
-  bottom: -20px;
+  bottom: 0;
   right: 0;
   width: 100%;
-  max-width: 900px;
-  opacity: 0.05;
+  max-width: 450px;
+  opacity: 0.04;
   pointer-events: none;
   z-index: 1;
 }
