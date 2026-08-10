@@ -189,29 +189,40 @@ function header(page, locale) {
 
 function footer(locale) {
   const l = locales[locale];
-  return `<footer class="site-footer">
-    <div class="footer-grid">
-      <div>
-        <img src="/assets/images/logo-white.png" alt="Somkidvittaya School" width="180" height="80" style="height: 80px; width: auto; max-width: 100%; display: block; margin-bottom: 1rem;">
-        <p style="margin-bottom: 2rem; font-size: 0.95rem; opacity: 0.9; line-height: 1.5;">${escapeHtml(l.footer)}</p>
-      </div>
-      <div class="footer-col">
-        <img src="/assets/images/siritham-logo.png" alt="Siritham Co., Ltd." width="180" height="80" style="height: 80px; width: auto; max-width: 100%; display: block; margin-bottom: 1rem;">
-        <p style="font-size: 0.95rem; opacity: 0.9; line-height: 1.5;">${locale === "th" ? "บริษัท ศิริธรรม จำกัด" : "Siritham Co., Ltd."}</p>
-      </div>
-      <div>
-        <h3>${locale === "th" ? "ติดต่อ" : locale === "en" ? "Contact" : "联系"}</h3>
-        <p>${escapeHtml(siteSettings.address).replace(/\n/g, "<br>")}<br>Tel: ${escapeHtml(siteSettings.phone)}<br>Email: ${escapeHtml(siteSettings.email)}</p>
-      </div>
-      <div>
-        <h3>${locale === "th" ? "ทางลัด" : locale === "en" ? "Quick Links" : "快捷链接"}</h3>
-        <a href="${localizedPath("/admissions/", locale)}">${l.ctaApply}</a>
-        <a href="${localizedPath("/parents/", locale)}">${l.portal}</a>
-        <a href="${localizedPath("/contact/", locale)}">${l.ctaTour}</a>
+  const addressLine = locale === "th" 
+    ? "อาคาร The 1960 Bldg., " + escapeHtml(siteSettings.address).replace(/\n/g, " ")
+    : "The 1960 Bldg., " + escapeHtml(siteSettings.address).replace(/\n/g, " ");
+  
+  return `<footer class="site-footer yonsei-style">
+    <div class="footer-top">
+      <div class="footer-links">
         <a href="${localizedPath("/privacy/", locale)}">${locale === "th" ? "ประกาศความเป็นส่วนตัว" : locale === "en" ? "Privacy Policy" : "隐私声明"}</a>
+        <a href="${localizedPath("/contact/", locale)}">${locale === "th" ? "ร่วมงานกับเรา" : locale === "en" ? "Recruit" : "招聘"}</a>
+        <a href="${localizedPath("/admissions/", locale)}">${locale === "th" ? "การรับสมัคร" : locale === "en" ? "Admissions" : "招生"}</a>
+        <a href="${localizedPath("/", locale)}">${locale === "th" ? "แผนผังเว็บไซต์" : locale === "en" ? "Site Map" : "网站地图"}</a>
+      </div>
+      <div class="footer-related">
+        <button class="related-sites-btn">Somkidvittaya Related Sites <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 15l-6-6-6 6"/></svg></button>
       </div>
     </div>
-    <p class="footer-note">© 2026 Somkidvittaya School.</p>
+    
+    <div class="footer-main">
+      <div class="footer-logo-watermark">
+        <img src="/assets/images/logo-white.png" alt="Somkidvittaya School" width="120" height="120" aria-hidden="true">
+      </div>
+      <div class="footer-info">
+        <strong>${locale === "th" ? "โรงเรียนสมคิดวิทยา / บริษัท ศิริธรรม จำกัด" : "Somkidvittaya School / Siritham Co., Ltd."}</strong>
+        <p>${addressLine}</p>
+        <p class="copyright">COPYRIGHT © SOMKIDVITTAYA SCHOOL. ALL RIGHTS RESERVED.</p>
+      </div>
+      <div class="footer-social">
+        <a href="#" aria-label="Facebook"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg></a>
+        <a href="#" aria-label="Instagram"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a>
+      </div>
+    </div>
+    
+    <div class="footer-giant-text">SOMKIDVITTAYA</div>
+    <button class="scroll-top-btn" onclick="window.scrollTo({top:0, behavior:'smooth'})" aria-label="Scroll to top">↑<br>TOP</button>
   </footer>
   <div class="mobile-cta">${button(locale === "th" ? "โทร" : locale === "en" ? "Call" : "电话", `tel:${siteSettings.phone.replace(/[^0-9+]/g, '')}`, "ghost")}${button(l.ctaApply, localizedPath("/admissions/apply/", locale), "primary")}${button(l.ctaTour, localizedPath("/contact/", locale), "secondary")}</div>`;
 }

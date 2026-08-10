@@ -345,13 +345,103 @@ textarea { resize: vertical; }
 .closing-cta { width: min(100% - 40px, var(--max)); margin: 24px auto 96px; padding: 54px; background: var(--sv-crimson); color: var(--white); }
 .closing-cta h2, .closing-cta .eyebrow { color: var(--white); }
 
-.site-footer { padding: 70px 20px 98px; background: var(--sv-deep); color: var(--white); }
-.footer-grid { width: min(100%, var(--max)); margin: 0 auto; display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 40px; }
-.site-footer h2, .site-footer h3 { color: var(--white); }
-.site-footer h2 { margin-top: 18px; font-size: 1.8rem; }
-.site-footer p, .footer-note { color: rgba(255, 255, 255, 0.72); }
-.site-footer a { display: block; margin: 8px 0; color: rgba(255, 255, 255, 0.92); text-decoration: none; }
-.footer-note { width: min(100%, var(--max)); margin: 42px auto 0; padding-top: 20px; border-top: 1px solid rgba(255, 255, 255, 0.2); font-size: 0.84rem; }
+/* Yonsei-Style Footer */
+.site-footer { 
+  background: var(--sv-deep); 
+  color: var(--white); 
+  position: relative; 
+  overflow: hidden; 
+  padding-bottom: 0;
+}
+.site-footer p { color: rgba(255, 255, 255, 0.72); font-size: 0.85rem; line-height: 1.6; margin-bottom: 0.5rem; }
+.site-footer a { color: rgba(255, 255, 255, 0.92); text-decoration: none; transition: color 0.2s; }
+.site-footer a:hover { color: #fff; }
+
+.footer-top {
+  width: min(100%, var(--max));
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30px 20px;
+  border-bottom: 1px solid rgba(255,255,255,0.15);
+}
+.footer-links { display: flex; gap: 30px; flex-wrap: wrap; }
+.footer-links a { font-size: 0.9rem; font-weight: 500; }
+.footer-links a:first-child { font-weight: 700; }
+.related-sites-btn { 
+  background: rgba(255,255,255,0.05); 
+  border: 1px solid rgba(255,255,255,0.2); 
+  color: #fff; 
+  padding: 8px 16px; 
+  border-radius: 4px; 
+  display: flex; 
+  align-items: center; 
+  gap: 10px; 
+  cursor: pointer; 
+  font-size: 0.85rem; 
+}
+
+.footer-main {
+  width: min(100%, var(--max));
+  margin: 0 auto;
+  display: flex;
+  align-items: flex-start;
+  padding: 50px 20px;
+  position: relative;
+  z-index: 2;
+}
+.footer-logo-watermark {
+  opacity: 0.2;
+  margin-right: 40px;
+  flex-shrink: 0;
+}
+.footer-info { flex-grow: 1; }
+.footer-info strong { display: block; font-size: 1.1rem; margin-bottom: 12px; font-weight: 600; letter-spacing: 0.5px; }
+.footer-info .copyright { margin-top: 15px; font-size: 0.75rem; letter-spacing: 0.5px; text-transform: uppercase; color: rgba(255,255,255,0.5); }
+
+.footer-social {
+  display: flex;
+  gap: 15px;
+}
+.footer-social a {
+  opacity: 0.7;
+}
+.footer-social a:hover {
+  opacity: 1;
+}
+
+.footer-giant-text {
+  font-family: Georgia, serif;
+  font-size: clamp(60px, 12vw, 220px);
+  font-weight: 700;
+  color: rgba(255,255,255,0.03);
+  text-transform: uppercase;
+  line-height: 0.75;
+  text-align: center;
+  position: relative;
+  top: 10px;
+  z-index: 1;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+.scroll-top-btn {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 60px;
+  height: 60px;
+  background: #091b30;
+  border: 1px solid rgba(255,255,255,0.1);
+  color: #fff;
+  font-size: 0.7rem;
+  line-height: 1.2;
+  cursor: pointer;
+  z-index: 10;
+  transition: background 0.2s;
+}
+.scroll-top-btn:hover { background: rgba(255,255,255,0.1); }
 
 .mobile-cta { position: fixed; right: 0; bottom: 0; left: 0; z-index: 35; display: none; gap: 6px; padding: 8px; background: rgba(255, 255, 255, 0.97); border-top: 1px solid var(--line); box-shadow: 0 -8px 26px rgba(9, 27, 48, 0.1); }
 .mobile-cta .button { flex: 1; min-width: 0; padding-inline: 6px; font-size: 0.76rem; }
@@ -426,7 +516,11 @@ textarea { resize: vertical; }
   .split > div { padding: 28px; }
   .contact-grid iframe { min-height: 300px; }
   .closing-cta { margin-bottom: 82px; padding: 28px; }
-  .site-footer { padding: 54px 20px 112px; }
+  .site-footer { padding-bottom: 72px; }
+  .footer-top { flex-direction: column; align-items: flex-start; gap: 20px; }
+  .footer-main { flex-direction: column; padding-top: 30px; }
+  .footer-logo-watermark { margin: 0 0 20px 0; }
+  .footer-social { margin-top: 20px; }
   .mobile-cta { display: flex; }
 }
 
