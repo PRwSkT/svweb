@@ -25,7 +25,8 @@ const locales = {
     formMessage: "ข้อความ",
     submit: "ส่งข้อมูล",
     footer: "โรงเรียนสองภาษา เตรียมอนุบาล-ประถมศึกษา จ.ระยอง",
-    langTitle: "ภาษา"
+    langTitle: "ภาษา",
+    address: "80/5 ถ.หลังวัดป่าประดู่ ต.ท่าประดู่ อ.เมืองระยอง จ.ระยอง 21000"
   },
   en: {
     label: "English",
@@ -44,7 +45,8 @@ const locales = {
     formMessage: "Message",
     submit: "Submit",
     footer: "Bilingual school for Pre-Kindergarten to Primary in Rayong",
-    langTitle: "Language"
+    langTitle: "Language",
+    address: "80/5 Lhang Wat Pa Pradu Rd., Tha Pradu, Mueang Rayong, Rayong 21000"
   },
   zh: {
     label: "中文",
@@ -63,7 +65,8 @@ const locales = {
     formMessage: "留言",
     submit: "提交",
     footer: "位于罗勇府的双语学校，涵盖幼儿预备班至小学",
-    langTitle: "语言"
+    langTitle: "语言",
+    address: "罗勇府直辖县 Tha Pradu 区 Lhang Wat Pa Pradu 路 80/5 号，邮编 21000"
   }
 };
 
@@ -203,7 +206,7 @@ function header(page, locale) {
 
 function footer(locale) {
   const l = locales[locale];
-  const schoolAddress = escapeHtml(siteSettings.address).replace(/\n/g, " ");
+  const schoolAddress = escapeHtml(l.address || siteSettings.address).replace(/\n/g, " ");
   const companyAddressLine = locale === "th" 
     ? "อาคาร The 1960 Bldg., " + schoolAddress
     : "The 1960 Bldg., " + schoolAddress;
@@ -390,8 +393,9 @@ function formSection(locale, name = "contact") {
 }
 
 function contact(locale) {
+  const l = locales[locale];
   return `<section class="section contact-grid">
-    <div class="contact-card"><h2>${locale === "th" ? "ข้อมูลติดต่อ" : locale === "en" ? "Contact Information" : "联系方式"}</h2><p>Somkidvittaya School<br>${escapeHtml(siteSettings.address).replace(/\n/g, "<br>")}<br>Tel: ${escapeHtml(siteSettings.phone)}<br>Email: ${escapeHtml(siteSettings.email)}</p><div class="hero-actions">${button(locales[locale].ctaTour, "#contact-form", "primary")}${button(locale === "th" ? "โทรหาเรา" : locale === "en" ? "Call Us" : "致电", `tel:${siteSettings.phone.replace(/[^0-9+]/g, '')}`, "secondary")}</div></div>
+    <div class="contact-card"><h2>${locale === "th" ? "ข้อมูลติดต่อ" : locale === "en" ? "Contact Information" : "联系方式"}</h2><p>Somkidvittaya School<br>${escapeHtml(l.address || siteSettings.address).replace(/\n/g, "<br>")}<br>Tel: ${escapeHtml(siteSettings.phone)}<br>Email: ${escapeHtml(siteSettings.email)}</p><div class="hero-actions">${button(locales[locale].ctaTour, "#contact-form", "primary")}${button(locale === "th" ? "โทรหาเรา" : locale === "en" ? "Call Us" : "致电", `tel:${siteSettings.phone.replace(/[^0-9+]/g, '')}`, "secondary")}</div></div>
     <iframe title="Map to Somkidvittaya School Rayong" loading="lazy" src="https://www.google.com/maps?q=Somkid%20Vittaya%20School%20Rayong&output=embed"></iframe>
   </section><div id="contact-form">${formSection(locale, "contact")}</div>`;
 }
@@ -458,6 +462,7 @@ function bodyContent(page, locale) {
 }
 
 function structuredData(page, locale) {
+  const l = locales[locale];
   const org = {
     "@context": "https://schema.org",
     "@type": "School",
@@ -470,7 +475,7 @@ function structuredData(page, locale) {
       "@type": "PostalAddress",
       addressLocality: "Rayong",
       addressCountry: "TH",
-      streetAddress: siteSettings.address
+      streetAddress: l.address || siteSettings.address
     },
     telephone: siteSettings.phone,
     email: siteSettings.email,
