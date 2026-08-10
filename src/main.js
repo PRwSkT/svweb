@@ -119,6 +119,30 @@
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         entry.target.classList.add("is-visible");
+        
+        // Counter Animation for Chart
+        if (entry.target.classList.contains("chart-container")) {
+          const counter = entry.target.querySelector(".counter");
+          if (counter) {
+            const target = parseInt(counter.getAttribute("data-target"), 10);
+            let count = 0;
+            const duration = 1200;
+            
+            const easeOutQuart = t => 1 - Math.pow(1 - t, 4);
+            let startTime = null;
+            
+            const updateCount = (timestamp) => {
+              if (!startTime) startTime = timestamp;
+              const progress = Math.min((timestamp - startTime) / duration, 1);
+              count = Math.floor(easeOutQuart(progress) * target);
+              counter.textContent = count;
+              if (progress < 1) requestAnimationFrame(updateCount);
+              else counter.textContent = target;
+            };
+            requestAnimationFrame(updateCount);
+          }
+        }
+        
         observer.unobserve(entry.target);
       }
     });

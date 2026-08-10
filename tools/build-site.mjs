@@ -352,7 +352,7 @@ function textSections(page, locale) {
             ${paths}
           </svg>
           <div class="donut-center">
-            <strong>100%</strong>
+            <strong><span class="counter" data-target="100">0</span>%</strong>
             <span>${locale === "th" ? "พัฒนาการ" : "Development"}</span>
           </div>
         </div>
