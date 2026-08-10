@@ -199,7 +199,7 @@ function footer(locale) {
       <div class="footer-col">
         <img src="/assets/images/logo-white.png" alt="Somkidvittaya School" height="55" style="height: 55px; width: auto; margin-bottom: 15px;">
         <strong>${locale === "th" ? "โรงเรียนสมคิดวิทยา" : "Somkidvittaya School"}</strong>
-        <p>${schoolAddress}</p>
+        <p>${schoolAddress}<br>Tel: <a href="tel:${siteSettings.phone.replace(/[^0-9+]/g, '')}">${escapeHtml(siteSettings.phone)}</a><br>Email: <a href="mailto:${siteSettings.email}">${escapeHtml(siteSettings.email)}</a></p>
         <div class="footer-social" style="margin-top: 20px;">
           <a href="${escapeHtml(siteSettings.facebook)}" target="_blank" aria-label="Facebook"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg></a>
           <a href="${escapeHtml(siteSettings.instagram)}" target="_blank" aria-label="Instagram"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a>
@@ -212,15 +212,13 @@ function footer(locale) {
         <p class="copyright" style="margin-top: 30px;">COPYRIGHT © SIRITHAM CO., LTD. ALL RIGHTS RESERVED.</p>
       </div>
       <div class="footer-col">
-        <h3>${locale === "th" ? "ติดต่อ" : locale === "en" ? "Contact" : "联系"}</h3>
-        <p>${escapeHtml(siteSettings.address).replace(/\n/g, "<br>")}<br>Tel: <a href="tel:${siteSettings.phone.replace(/[^0-9+]/g, '')}">${escapeHtml(siteSettings.phone)}</a><br>Email: <a href="mailto:${siteSettings.email}">${escapeHtml(siteSettings.email)}</a></p>
-      </div>
-      <div class="footer-col">
         <h3>${locale === "th" ? "ทางลัด" : locale === "en" ? "Quick Links" : "快捷链接"}</h3>
-        <a href="${localizedPath("/admissions/", locale)}">${l.ctaApply}</a>
-        <a href="${localizedPath("/parents/", locale)}">${l.portal}</a>
-        <a href="${localizedPath("/contact/", locale)}">${l.ctaTour}</a>
-        <a href="${localizedPath("/privacy/", locale)}">${locale === "th" ? "ประกาศความเป็นส่วนตัว" : locale === "en" ? "Privacy Policy" : "隐私声明"}</a>
+        <ul style="list-style: none; padding: 0; margin: 0;">
+          <li style="margin-bottom: 12px;"><a href="${localizedPath("/admissions/", locale)}">${l.ctaApply}</a></li>
+          <li style="margin-bottom: 12px;"><a href="${localizedPath("/parents/", locale)}">${l.portal}</a></li>
+          <li style="margin-bottom: 12px;"><a href="${localizedPath("/contact/", locale)}">${l.ctaTour}</a></li>
+          <li style="margin-bottom: 12px;"><a href="${localizedPath("/privacy/", locale)}">${locale === "th" ? "ประกาศความเป็นส่วนตัว" : locale === "en" ? "Privacy Policy" : "隐私声明"}</a></li>
+        </ul>
       </div>
     </div>
     
