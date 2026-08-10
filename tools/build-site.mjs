@@ -394,14 +394,14 @@ function textSections(page, locale) {
       </div>
       
       ${restSections.length > 0 ? `
-        <div class="text-list secondary-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 40px; margin-top: 60px;">
+        <div class="text-list secondary-grid" style="display: flex; flex-wrap: wrap; gap: 40px; margin-top: 60px;">
           ${restSections.map((sec, i) => `
-            <div class="text-item" style="animation-delay: ${(i+1) * 0.1}s;">
+            <div class="text-item" style="animation-delay: ${(i+1) * 0.1}s; flex: 1 1 320px;">
               <div class="text-item-header">
                 ${sec.icon ? `<i data-feather="${sec.icon}"></i>` : ""}
                 <h3 style="font-size: 1.5rem; margin: 0; color: var(--sv-deep);">${escapeHtml(sec.title || sec[0])}</h3>
               </div>
-              <p style="margin-top: 12px; color: var(--muted); line-height: 1.7;">${escapeHtml(sec.body || sec[1])}</p>
+              <p style="margin-top: 12px; color: var(--muted); line-height: 1.7; flex-grow: 1;">${escapeHtml(sec.body || sec[1])}</p>
             </div>
           `).join("")}
         </div>
