@@ -543,7 +543,7 @@ function html(page, locale) {
   ${structuredData(page, locale)}
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 </head>
-<body>
+<body class="${page.path === '/' ? 'is-home' : ''}">
   ${header(page, locale)}
   <main id="main">
     ${hero(page, locale)}
