@@ -840,7 +840,6 @@ textarea { resize: vertical; }
 .quick-link-box svg {
   width: 32px;
   height: 32px;
-  fill: var(--sv-crimson);
   transition: transform 0.3s ease;
 }
 .quick-link-box:hover svg {
