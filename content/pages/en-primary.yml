@@ -8,25 +8,32 @@ summary: >-
   Our Primary level offers two distinct tracks: the Bilingual Program and the General Program, catering to diverse learning styles and future goals.
 chart:
   en:
-    title: "Curriculum Breakdown (Bilingual Program)"
+    title: "Curriculum Breakdown"
     data:
       - label: "English (Native Teachers)"
         value: 50
         color: "var(--sv-crimson)"
       - label: "Thai (Core Subjects)"
         value: 50
-        color: "var(--sv-deep)"
+        color: "var(--sv-navy)"
       - label: "Integrated / Activities"
         value: 25
-        color: "#e5cd77"
+        color: "var(--sv-gold)"
 sections:
   - title: Bilingual Program
+    icon: book-open
     body: >-
-      Building upon our Kindergarten curriculum, this program offers a 50/50 balance of English and Thai. Core subjects (Math, Science, Phonics, Art) are taught in English by native speakers to ensure global academic excellence.
+      Building upon our Kindergarten curriculum, this program offers a 50/50 balance of English and Thai. Core subjects (Math, Science, Phonics, Art) are taught in English by native speakers to ensure global academic excellence and unleash students' full potential.
   - title: General Program
+    icon: award
     body: >-
       A well-rounded curriculum focusing on English for communication, while encouraging individual talents through specialized subjects such as Thai/Western Music, Visual Arts, Sports (Football, Swimming, Taekwondo), Robotics & Computers, and Mental Math.
   - title: Chinese Skills Enhancement
+    icon: message-circle
     body: >-
-      Students in the General Program also receive Chinese language training to broaden their perspectives and enhance their competitiveness in the digital era.
+      Students in the General Program also receive Chinese language training to broaden their perspectives and enhance their competitiveness in the digital era, preparing them for global education.
+  - title: Leadership Development
+    icon: star
+    body: >-
+      In primary school, we encourage students to discover themselves and express their ideas through Project-Based Learning, developing critical thinking and real-world problem-solving skills.
 nav: academics

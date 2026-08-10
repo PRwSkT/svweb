@@ -15,18 +15,25 @@ chart:
         color: "var(--sv-crimson)"
       - label: "泰语 (核心科目)"
         value: 50
-        color: "var(--sv-deep)"
+        color: "var(--sv-navy)"
       - label: "综合与活动"
         value: 25
-        color: "#e5cd77"
+        color: "var(--sv-gold)"
 sections:
   - title: 双语课程 (Bilingual Program)
+    icon: book-open
     body: >-
-      延续幼儿园的双语环境，实行 50% 泰语和 50% 英语的教学比例。核心科目（数学、科学、自然拼读、美术）均由英语母语教师授课，确保卓越的国际化学术水平。
+      延续幼儿园的双语环境，实行 50% 泰语和 50% 英语的教学比例。核心科目（数学、科学、自然拼读、美术）均由英语母语教师授课，确保卓越的国际化学术水平并激发学生的全部潜能。
   - title: 普通课程 (General Program)
+    icon: award
     body: >-
       侧重于沟通英语的全面发展课程，同时通过丰富多样的科目培养个人特长，如泰式/西方音乐、视觉艺术、体育（足球、游泳、跆拳道）、机器人与计算机以及珠心算。
   - title: 中文技能提升
+    icon: message-circle
     body: >-
-      普通课程的学生还将接受中文培训，以开阔视野并提升在数字化时代的竞争力。
+      普通课程的学生还将接受中文培训，以开阔视野并提升在数字化时代的竞争力，为接受全球化教育做好准备。
+  - title: 领导力发展
+    icon: star
+    body: >-
+      在小学阶段，我们鼓励学生通过项目制学习 (Project-Based Learning) 发现自我并表达想法，培养批判性思维和解决现实问题的能力。
 nav: academics

@@ -8,25 +8,32 @@ summary: >-
   A full Bilingual Program designed to foster all four developmental areas through Play-Based Learning, supported by close guidance under our Co-Teaching system.
 chart:
   en:
-    title: "Curriculum Breakdown (Bilingual Program)"
+    title: "Curriculum Breakdown"
     data:
       - label: "English (Native Teachers)"
         value: 50
         color: "var(--sv-crimson)"
       - label: "Thai (Core Subjects)"
         value: 50
-        color: "var(--sv-deep)"
-      - label: "Integrated & Activities"
+        color: "var(--sv-navy)"
+      - label: "Integrated / Activities"
         value: 25
-        color: "#e5cd77"
+        color: "var(--sv-gold)"
 sections:
-  - title: Why the Bilingual Program at SV?
+  - title: Confidence via Bilingual Program
+    icon: globe
     body: >-
-      Because English is the gateway to future opportunities. We implement a Co-Teaching model (1 Thai teacher and 1 native English teacher) in every classroom, allowing children to absorb accents and grammar as naturally as their mother tongue.
+      Because English is the gateway to future opportunities, we implement a Co-Teaching model (1 Thai teacher and 1 native English teacher) in every classroom. This allows children to absorb natural accents and grammar, building their confidence in daily communication.
   - title: The 50:50:25 Ratio
+    icon: pie-chart
     body: >-
-      We allocate time intensively to maximize effectiveness: 50% for core Thai subjects, 50% for English subjects (e.g., Math, Science, Phonics, Art) taught by native speakers, and 25% for integrated activities to build life skills.
-  - title: Confident Communication
+      We maximize learning efficiency by allocating 50% for core Thai subjects, 50% for English subjects (e.g., Math, Science, Phonics, Art) taught by native speakers, and 25% for integrated activities designed to build essential life skills.
+  - title: Social & Critical Thinking
+    icon: users
     body: >-
-      We encourage students to express themselves through real-life language input and play. We foster social skills and critical thinking to prepare them for the wider world.
+      Through real-life language input and play-based learning, we foster critical thinking and social skills, preparing students for the wider world and ensuring they can solve problems effectively.
+  - title: Safe & Nurturing Environment
+    icon: heart
+    body: >-
+      Our classrooms and play areas are designed to stimulate learning while prioritizing safety. With close supervision from our teachers, every child feels like they are in a happy second home.
 nav: academics

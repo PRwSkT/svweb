@@ -323,47 +323,85 @@ function quickLinks(locale) {
   </div>`;
 }
 
-function chartSection(page, locale) {
-  const chart = page.chart?.[locale] || page.chart?.th || page.chart;
-  if (!chart || !chart.data || chart.data.length === 0) return "";
-  
-  const total = chart.data.reduce((sum, item) => sum + item.value, 0);
-  let currentAngle = 0;
-  const gradients = chart.data.map(item => {
-    const percentage = (item.value / total) * 100;
-    const start = currentAngle;
-    currentAngle += percentage;
-    return `${item.color} ${start}% ${currentAngle}%`;
-  }).join(", ");
-
-  const chartStyle = `background: conic-gradient(${gradients}); border-radius: 50%; width: 250px; height: 250px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);`;
-
-  return `<section class="section chart-section" data-animate="fade-up">
-    <div class="section-heading">
-      <h2>${escapeHtml(chart.title)}</h2>
-    </div>
-    <div class="chart-container" style="display: flex; gap: 60px; align-items: center; flex-wrap: wrap; margin-top: 40px;">
-      <div class="pie-chart-wrapper">
-        <div class="pie-chart" style="${chartStyle}"></div>
-      </div>
-      <div class="chart-legend" style="display: flex; flex-direction: column; gap: 16px;">
-        ${chart.data.map(item => `
-          <div class="legend-item" style="display: flex; align-items: center; gap: 12px; font-size: 1.1rem;">
-            <span class="legend-color" style="background: ${item.color}; width: 20px; height: 20px; border-radius: 4px; display: inline-block;"></span>
-            <span class="legend-label" style="color: var(--sv-deep); flex-grow: 1; min-width: 150px;">${escapeHtml(item.label)}</span>
-            <strong class="legend-value" style="color: var(--sv-crimson); font-size: 1.2rem;">${item.value}%</strong>
-          </div>
-        `).join("")}
-      </div>
-    </div>
-  </section>`;
-}
-
 function textSections(page, locale) {
   const sections = page.sections?.[locale] || page.sections?.th || page.sections || [];
   if (sections.length === 0) return "";
   const eyebrowText = page.eyebrow?.[locale] || page.eyebrow?.th || page.eyebrow || (locale === "th" ? "รายละเอียด" : locale === "en" ? "Details" : "详情");
-  return `<section class="section" data-animate="fade-up"><div class="section-heading"><p class="eyebrow">${escapeHtml(eyebrowText)}</p><h2>${escapeHtml(t(page, "title", locale))}</h2></div><div class="text-list">${sections.map(sec => `<div class="text-item"><h3>${escapeHtml(sec.title || sec[0])}</h3><p>${escapeHtml(sec.body || sec[1])}</p></div>`).join("")}</div></section>`;
+  
+  const chart = page.chart?.[locale] || page.chart?.th || page.chart;
+  let chartHtml = "";
+  
+  if (chart && chart.data && chart.data.length > 0) {
+    const total = chart.data.reduce((sum, item) => sum + item.value, 0);
+    let currentOffset = 0;
+    const radius = 15.9155;
+    
+    const paths = chart.data.map((item, index) => {
+      const percentage = (item.value / total) * 100;
+      const strokeDasharray = percentage + " " + (100 - percentage);
+      const strokeDashoffset = 100 - currentOffset + 25; // +25 to start at top (12 o'clock)
+      currentOffset += percentage;
+      return `<circle cx="21" cy="21" r="${radius}" fill="transparent" stroke="${item.color}" stroke-width="8" stroke-dasharray="${strokeDasharray}" stroke-dashoffset="${strokeDashoffset}" class="chart-segment" style="animation-delay: ${index * 0.15}s" />`;
+    }).join("");
+
+    chartHtml = `
+      <div class="chart-container" data-animate="fade-in">
+        <div class="donut-wrapper">
+          <svg viewBox="0 0 42 42" class="donut-chart">
+            <circle cx="21" cy="21" r="${radius}" fill="transparent" stroke="rgba(0,0,0,0.05)" stroke-width="8" />
+            ${paths}
+          </svg>
+          <div class="donut-center">
+            <strong>100%</strong>
+            <span>${locale === "th" ? "พัฒนาการ" : "Development"}</span>
+          </div>
+        </div>
+        <div class="chart-legend">
+          <h3>${escapeHtml(chart.title)}</h3>
+          ${chart.data.map(item => `
+            <div class="legend-item">
+              <span class="legend-color" style="background: ${item.color};"></span>
+              <span class="legend-label">${escapeHtml(item.label)}</span>
+              <strong class="legend-value" style="color: ${item.color};">${item.value}%</strong>
+            </div>
+          `).join("")}
+        </div>
+      </div>
+    `;
+  }
+
+  const sectionsHtml = `<div class="text-list">
+    ${sections.map(sec => `
+      <div class="text-item">
+        <div class="text-item-header">
+          ${sec.icon ? `<i data-feather="${sec.icon}"></i>` : ""}
+          <h3>${escapeHtml(sec.title || sec[0])}</h3>
+        </div>
+        <p>${escapeHtml(sec.body || sec[1])}</p>
+      </div>
+    `).join("")}
+  </div>`;
+
+  if (chartHtml) {
+    return `<section class="section curriculum-section" data-animate="fade-up">
+      <div class="section-heading">
+        <p class="eyebrow">${escapeHtml(eyebrowText)}</p>
+        <h2>${escapeHtml(t(page, "title", locale))}</h2>
+      </div>
+      <div class="curriculum-grid">
+        ${sectionsHtml}
+        ${chartHtml}
+      </div>
+    </section>`;
+  }
+
+  return `<section class="section" data-animate="fade-up">
+    <div class="section-heading">
+      <p class="eyebrow">${escapeHtml(eyebrowText)}</p>
+      <h2>${escapeHtml(t(page, "title", locale))}</h2>
+    </div>
+    ${sectionsHtml}
+  </section>`;
 }
 
 function programCards(locale) {
@@ -448,7 +486,9 @@ function contact(locale) {
   const l = locales[locale];
   return `<section class="section contact-grid">
     <div class="contact-card"><h2>${locale === "th" ? "ข้อมูลติดต่อ" : locale === "en" ? "Contact Information" : "联系方式"}</h2><p>Somkidvittaya School<br>${escapeHtml(l.address || siteSettings.address).replace(/\n/g, "<br>")}<br>Tel: ${escapeHtml(siteSettings.phone)}<br>Email: ${escapeHtml(siteSettings.email)}</p><div class="hero-actions">${button(locales[locale].ctaTour, "#contact-form", "primary")}${button(locale === "th" ? "โทรหาเรา" : locale === "en" ? "Call Us" : "致电", `tel:${siteSettings.phone.replace(/[^0-9+]/g, '')}`, "secondary")}</div></div>
-    <iframe title="Map to Somkidvittaya School Rayong" loading="lazy" src="https://maps.google.com/maps?q=Somkidvittaya%20School%20Rayong&t=&z=16&ie=UTF8&iwloc=&output=embed"></iframe>
+    <div class="map-wrapper" style="width: 100%; height: 100%; min-height: 400px; background: #e0e0e0;">
+      <iframe title="Map to Somkidvittaya School Rayong" loading="lazy" style="width:100%; height:100%; border:0;" src="https://maps.google.com/maps?q=Somkidvittaya%20School%20Rayong&t=&z=16&ie=UTF8&iwloc=&output=embed"></iframe>
+    </div>
   </section><div id="contact-form">${formSection(locale, "contact")}</div>`;
 }
 
@@ -510,7 +550,7 @@ function bodyContent(page, locale) {
   if (page.type === "parents") return parents(locale);
   if (page.type === "news") return news(locale);
   if (page.type === "contact") return contact(locale);
-  return `${chartSection(page, locale)}${textSections(page, locale)}`;
+  return textSections(page, locale);
 }
 
 function structuredData(page, locale) {
