@@ -254,10 +254,10 @@ function footer(locale) {
 function hero(page, locale) {
   const l = locales[locale];
   const feature = locale === "th"
-    ? ["MEP", "Active Learning", "PBL", "AI Integration"]
+    ? ["Bilingual Program", "Active Learning", "PBL", "AI Integration"]
     : locale === "en"
-      ? ["MEP", "Active Learning", "PBL", "AI Integration"]
-      : ["MEP", "主动学习", "项目式学习", "AI 应用"];
+      ? ["Bilingual Program", "Active Learning", "PBL", "AI Integration"]
+      : ["Bilingual Program", "主动学习", "项目式学习", "AI 应用"];
 
   const isHome = page.id === "home";
   const slides = ["/assets/images/real-1.jpg","/assets/images/real-2.jpg","/assets/images/real-3.jpg","/assets/images/real-4.jpg","/assets/images/real-5.jpg","/assets/images/real-6.png"];
@@ -317,6 +317,42 @@ function quickLinks(locale) {
       <span>${locale === "th" ? "สอบถามข้อมูลเพิ่มเติม" : locale === "en" ? "Get in touch with us" : "获取更多信息"}</span>
     </a>
   </div>`;
+}
+
+function chartSection(page, locale) {
+  const chart = page.chart?.[locale] || page.chart?.th || page.chart;
+  if (!chart || !chart.data || chart.data.length === 0) return "";
+  
+  const total = chart.data.reduce((sum, item) => sum + item.value, 0);
+  let currentAngle = 0;
+  const gradients = chart.data.map(item => {
+    const percentage = (item.value / total) * 100;
+    const start = currentAngle;
+    currentAngle += percentage;
+    return `${item.color} ${start}% ${currentAngle}%`;
+  }).join(", ");
+
+  const chartStyle = `background: conic-gradient(${gradients}); border-radius: 50%; width: 250px; height: 250px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);`;
+
+  return `<section class="section chart-section" data-animate="fade-up">
+    <div class="section-heading">
+      <h2>${escapeHtml(chart.title)}</h2>
+    </div>
+    <div class="chart-container" style="display: flex; gap: 60px; align-items: center; flex-wrap: wrap; margin-top: 40px;">
+      <div class="pie-chart-wrapper">
+        <div class="pie-chart" style="${chartStyle}"></div>
+      </div>
+      <div class="chart-legend" style="display: flex; flex-direction: column; gap: 16px;">
+        ${chart.data.map(item => `
+          <div class="legend-item" style="display: flex; align-items: center; gap: 12px; font-size: 1.1rem;">
+            <span class="legend-color" style="background: ${item.color}; width: 20px; height: 20px; border-radius: 4px; display: inline-block;"></span>
+            <span class="legend-label" style="color: var(--sv-deep); flex-grow: 1; min-width: 150px;">${escapeHtml(item.label)}</span>
+            <strong class="legend-value" style="color: var(--sv-crimson); font-size: 1.2rem;">${item.value}%</strong>
+          </div>
+        `).join("")}
+      </div>
+    </div>
+  </section>`;
 }
 
 function textSections(page, locale) {
@@ -470,7 +506,7 @@ function bodyContent(page, locale) {
   if (page.type === "parents") return parents(locale);
   if (page.type === "news") return news(locale);
   if (page.type === "contact") return contact(locale);
-  return textSections(page, locale);
+  return `${chartSection(page, locale)}${textSections(page, locale)}`;
 }
 
 function structuredData(page, locale) {

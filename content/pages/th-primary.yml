@@ -6,6 +6,19 @@ title: ประถมศึกษา (Primary School)
 eyebrow: รับนักเรียนอายุ 6 ปีขึ้นไป
 summary: >-
   ระดับประถมศึกษาเปิดสอน 2 โครงการ ได้แก่ ภาคสองภาษา (Bilingual Program) และ ภาคสามัญ (General Program) เพื่อรองรับเป้าหมายและสไตล์การเรียนรู้ที่หลากหลายของนักเรียนแต่ละคน
+chart:
+  th:
+    title: "สัดส่วนเวลาเรียน (Bilingual Program)"
+    data:
+      - label: "English (Native Teachers)"
+        value: 50
+        color: "var(--sv-crimson)"
+      - label: "Thai (Core Subjects)"
+        value: 50
+        color: "var(--sv-deep)"
+      - label: "Integrated / Activities"
+        value: 25
+        color: "#e5cd77"
 sections:
   - title: ภาคสองภาษา (Bilingual Program)
     body: >-

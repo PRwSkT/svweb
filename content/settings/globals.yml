@@ -1,22 +1,22 @@
 stats:
   - ["66", "ปีแห่งความไว้วางใจ", "Years of trust", "年办学传承"]
-  - ["200+", "นักเรียนในชุมชน SV", "Students in the SV community", "SV 学习社区学生"]
+  - ["170+", "นักเรียนในชุมชน SV", "Students in the SV community", "SV 学习社区学生"]
   - ["3", "ภาษาเพื่อโลกกว้าง", "Languages for global readiness", "三语学习环境"]
-  - ["MEP", "Modern English Program", "Modern English Program", "现代英语课程"]
+  - ["Bilingual", "Bilingual Program", "Bilingual Program", "双语课程"]
 
 quickLinks:
   th:
-    - ["ว่าที่ผู้ปกครอง", "หลักสูตร ค่าใช้จ่าย และนัดเยี่ยมชม", "/admissions/"]
+    - ["ผู้ปกครองที่สนใจ", "เรียนรู้หลักสูตร ค่าเทอม และเยี่ยมชม", "/admissions/"]
     - ["ผู้ปกครองปัจจุบัน", "SV Portal ปฏิทิน และเอกสาร", "/parents/"]
-    - ["สำรวจหลักสูตร", "MEP เตรียมอนุบาล อนุบาล ประถม", "/academics/"]
+    - ["สำรวจหลักสูตร", "Bilingual, สามภาษา, ปฐมวัย, ประถม", "/academics/"]
   en:
     - ["Prospective Parents", "Programs, fees, and tours", "/admissions/"]
     - ["Current Parents", "SV Portal, calendar, and documents", "/parents/"]
-    - ["Explore Academics", "MEP, early years, kindergarten, primary", "/academics/"]
+    - ["Explore Academics", "Bilingual, Trilingual, early years, primary", "/academics/"]
   zh:
     - ["准家长", "课程、费用与预约参观", "/admissions/"]
     - ["在校家长", "SV Portal、日历与文件", "/parents/"]
-    - ["了解课程", "MEP、幼儿阶段、幼儿园、小学", "/academics/"]
+    - ["了解课程", "双语、三语、幼儿阶段、小学", "/academics/"]
 
 programCards:
   th:
@@ -38,31 +38,31 @@ programCards:
 news:
   th:
     - ["เตรียมพื้นที่ข่าวเปิดภาคเรียน", "ข่าวสาร", "ใช้สำหรับสรุปกิจกรรมต้อนรับนักเรียนและผู้ปกครอง", "real-4.jpg"]
-    - ["กิจกรรมภาษาอังกฤษประจำเดือน", "กิจกรรม", "พื้นที่สำหรับเล่ากิจกรรม MEP และภาพบรรยากาศ", "real-2.jpg"]
+    - ["กิจกรรมภาษาอังกฤษประจำเดือน", "กิจกรรม", "พื้นที่สำหรับเล่ากิจกรรม Bilingual และภาพบรรยากาศ", "real-2.jpg"]
     - ["บทความเลือกโรงเรียนสองภาษา", "บทความ", "คอนเทนต์ SEO สำหรับผู้ปกครองในระยอง", "real-3.jpg"]
   en:
     - ["New Term Updates", "News", "A place for welcome activities and family updates.", "real-4.jpg"]
-    - ["Monthly English Activities", "Events", "Stories from the MEP classroom.", "real-2.jpg"]
+    - ["Monthly English Activities", "Events", "Stories from the Bilingual classroom.", "real-2.jpg"]
     - ["Choosing a Bilingual School", "Article", "SEO content for families in Rayong.", "real-3.jpg"]
   zh:
     - ["新学期动态", "新闻", "发布迎新活动与家庭信息。", "real-4.jpg"]
-    - ["每月英语活动", "活动", "展示 MEP 课堂故事。", "real-2.jpg"]
+    - ["每月英语活动", "活动", "展示双语课堂故事。", "real-2.jpg"]
     - ["如何选择双语学校", "文章", "面向罗勇家庭的 SEO 内容。", "real-3.jpg"]
 
 faq:
   th:
     - ["รับสมัครนักเรียนช่วงไหนบ้าง?", "โรงเรียนเปิดรับสมัครนักเรียนใหม่ตั้งแต่เดือนมกราคมของทุกปี สามารถติดต่อเพื่อนัดหมายเข้าชมโรงเรียนได้ตลอดปีการศึกษา"]
-    - ["หลักสูตร MEP แตกต่างอย่างไร?", "เราจัดการเรียนการสอนภาษาอังกฤษผ่านกิจกรรม (Active Learning) กับครูต่างชาติ 5-7 คาบต่อสัปดาห์ พร้อมเสริม phonics และทักษะการสนทนาในบริบทจริง"]
+    - ["หลักสูตร Bilingual แตกต่างอย่างไร?", "เราจัดการเรียนการสอนภาษาอังกฤษผ่านกิจกรรม (Active Learning) กับครูต่างชาติ 5-7 คาบต่อสัปดาห์ พร้อมเสริม phonics และทักษะการสนทนาในบริบทจริง"]
     - ["มีบริการรถรับส่งหรือไม่?", "ทางโรงเรียนมีเครือข่ายรถตู้รับส่งนักเรียนที่ปลอดภัย ครอบคลุมหลายพื้นที่ในจังหวัดระยอง สามารถสอบถามเส้นทางได้ที่ธุรการ"]
     - ["เปิดสอนระดับชั้นใดบ้าง?", "รับนักเรียนตั้งแต่ระดับเตรียมอนุบาล (อายุ 2 ขวบขึ้นไป) จนถึงระดับชั้นประถมศึกษาปีที่ 6"]
   en:
     - ["When is the admission period?", "Admissions open in January every year. School tours can be scheduled throughout the academic year."]
-    - ["How is the MEP program different?", "We teach English through Active Learning with foreign teachers for 5-7 periods a week, emphasizing phonics and real-world conversation skills."]
+    - ["How is the Bilingual program different?", "We teach English through Active Learning with foreign teachers for 5-7 periods a week, emphasizing phonics and real-world conversation skills."]
     - ["Is school transportation available?", "We coordinate with safe, reliable van services covering most areas in Rayong. Contact the office for specific routes."]
     - ["What grades do you offer?", "We accept students from Pre-Kindergarten (2 years old) through Primary 6 (Grade 6)."]
   zh:
     - ["招生时间是什么时候？", "每年一月开放新生报名。整个学年均可预约参观学校。"]
-    - ["MEP 课程有何不同？", "我们通过外教的活动式教学（Active Learning）教授英语，每周5-7节课，强化自然拼读和真实语境中的会话技能。"]
+    - ["双语课程有何不同？", "我们通过外教的活动式教学（Active Learning）教授英语，每周5-7节课，强化自然拼读和真实语境中的会话技能。"]
     - ["提供校车服务吗？", "学校协调安全可靠的校车服务，覆盖罗勇府大部分地区。请联系行政办公室查询具体路线。"]
     - ["提供哪些年级的课程？", "我们招收从幼儿预备班（2岁起）至小学六年级的学生。"]
 

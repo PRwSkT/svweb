@@ -6,6 +6,19 @@ title: Primary School
 eyebrow: Age 6 and up
 summary: >-
   Our Primary level offers two distinct tracks: the Bilingual Program and the General Program, catering to diverse learning styles and future goals.
+chart:
+  en:
+    title: "Curriculum Breakdown (Bilingual Program)"
+    data:
+      - label: "English (Native Teachers)"
+        value: 50
+        color: "var(--sv-crimson)"
+      - label: "Thai (Core Subjects)"
+        value: 50
+        color: "var(--sv-deep)"
+      - label: "Integrated / Activities"
+        value: 25
+        color: "#e5cd77"
 sections:
   - title: Bilingual Program
     body: >-

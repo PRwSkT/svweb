@@ -6,6 +6,19 @@ title: 小学 (Primary School)
 eyebrow: 招收 6 岁及以上学生
 summary: >-
   小学阶段提供两大课程：双语课程 (Bilingual Program) 与普通课程 (General Program)，以满足不同学生的学习风格和未来目标。
+chart:
+  zh:
+    title: "课程比例 (双语课程)"
+    data:
+      - label: "英语 (母语外教)"
+        value: 50
+        color: "var(--sv-crimson)"
+      - label: "泰语 (核心科目)"
+        value: 50
+        color: "var(--sv-deep)"
+      - label: "综合与活动"
+        value: 25
+        color: "#e5cd77"
 sections:
   - title: 双语课程 (Bilingual Program)
     body: >-

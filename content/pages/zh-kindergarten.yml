@@ -3,17 +3,30 @@ id: kindergarten
 path: /academics/kindergarten/
 image: real-2.jpg
 title: 幼儿园 (Kindergarten)
-eyebrow: 适合 3-6 岁
+eyebrow: 招收 3-6 岁儿童
 summary: >-
-  我们的双语课程 (Bilingual Program) 注重在模拟真实生活场景中输入语言 (Real-life Language Input)，通过在玩中学 (Play & Learn) 培养自信和领导力。
+  全面的双语课程，通过基于游戏的学习 (Play-Based Learning) 促进儿童四大领域的发展，并在联合教学系统 (Co-Teaching) 的密切指导下进行。
+chart:
+  zh:
+    title: "课程比例 (双语课程)"
+    data:
+      - label: "英语 (母语外教)"
+        value: 50
+        color: "var(--sv-crimson)"
+      - label: "泰语 (核心科目)"
+        value: 50
+        color: "var(--sv-deep)"
+      - label: "综合与活动"
+        value: 25
+        color: "#e5cd77"
 sections:
-  - title: 双语课程 (Bilingual Program)
+  - title: 为什么选择 SV 的双语课程？
     body: >-
-      由1名泰籍班主任和1名英语母语教师协同授课。每周课程包含泰语 50%、英语 50% 以及综合课程 25%。涵盖英语、数学(英)、科学(英)、自然拼读(英)和美术(英)。
-  - title: 增强自信，敢于表达 (Builds Confident English Speaking)
+      因为英语是通向未来机遇的窗口。我们在每个教室实施联合教学模式（1名泰籍教师和1名母语为英语的外籍教师），让孩子们像学习母语一样自然吸收口音和语法。
+  - title: 50:50:25 比例
     body: >-
-      鼓励孩子自信交流，将英语融入日常活动中，从小培养领导力和表达能力。
-  - title: 培养社交能力及批判性思维 (Develops Social & Critical Thinking Skills)
+      我们集中分配时间以实现最大效率：50% 为泰语基础科目，50% 为英语科目（如数学、科学、自然拼读、美术）由外教授课，另外 25% 为综合活动以培养生活技能。
+  - title: 自信沟通
     body: >-
-      注重团队协作与适龄的批判性思维，使孩子能够有效解决问题并从环境中学习。
+      我们鼓励学生通过真实的语言输入和游戏来表达自己，培养社交技能和批判性思维，为走向更广阔的世界做好准备。
 nav: academics
