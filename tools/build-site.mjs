@@ -358,7 +358,6 @@ function textSections(page, locale) {
           </svg>
           <div class="donut-center">
             <strong><span class="counter" data-target="100">0</span>%</strong>
-            <span>${locale === "th" ? "พัฒนาการ" : "Development"}</span>
           </div>
         </div>
         <div class="chart-legend">
@@ -394,7 +393,7 @@ function textSections(page, locale) {
       </div>
       
       ${restSections.length > 0 ? `
-        <div class="text-list secondary-grid" style="display: flex; flex-wrap: wrap; gap: 40px; margin-top: 60px;">
+        <div class="text-list secondary-grid" style="display: flex; flex-direction: row; flex-wrap: wrap; gap: 40px; margin-top: 60px;">
           ${restSections.map((sec, i) => `
             <div class="text-item" style="animation-delay: ${(i+1) * 0.1}s; flex: 1 1 320px;">
               <div class="text-item-header">
