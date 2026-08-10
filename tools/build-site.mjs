@@ -219,8 +219,11 @@ function footer(locale) {
         </a>
         <strong>${locale === "th" ? "บริษัท ศิริธรรม จำกัด" : "Siritham Co., Ltd."}</strong>
         <p>${companyAddressLine}<br>Email: <a href="mailto:mail@siritham.com">mail@siritham.com</a></p>
-        <p class="copyright" style="margin-top: 30px;">COPYRIGHT © SIRITHAM CO., LTD. ALL RIGHTS RESERVED.</p>
       </div>
+    </div>
+    
+    <div class="footer-bottom" style="position: relative; z-index: 2; padding: 20px 20px 30px; width: min(100%, var(--max)); margin: 0 auto; border-top: 1px solid rgba(255,255,255,0.05); margin-top: 20px;">
+      <p class="copyright" style="font-size: 0.75rem; letter-spacing: 0.5px; text-transform: uppercase; color: rgba(255,255,255,0.5); margin: 0;">COPYRIGHT © SIRITHAM CO., LTD. ALL RIGHTS RESERVED.</p>
     </div>
     
     <div class="footer-giant-graphic">

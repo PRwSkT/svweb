@@ -390,14 +390,16 @@ textarea { resize: vertical; }
   bottom: 0;
   right: 0;
   width: clamp(320px, 70vw, 450px);
-  height: auto;
+  height: 100%;
   opacity: 0.05;
   pointer-events: none;
   z-index: 1;
 }
 .footer-giant-graphic img {
   width: 100%;
-  height: auto;
+  height: 100%;
+  object-fit: contain;
+  object-position: bottom right;
   display: block;
 }
 
