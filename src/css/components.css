@@ -940,6 +940,7 @@ textarea { resize: vertical; }
 }
 .is-home .hero {
   padding-top: 242px; /* 120 + 122 */
+  min-height: 100vh;
 }
 @media (max-width: 820px) {
   .is-home main {
@@ -947,6 +948,7 @@ textarea { resize: vertical; }
   }
   .is-home .hero {
     padding-top: 198px; /* 88 + 110 */
+    min-height: 100vh;
   }
 }
 .is-home .site-header {
