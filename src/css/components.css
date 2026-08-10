@@ -372,7 +372,7 @@ textarea { resize: vertical; }
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 40px;
-  padding: 50px 20px 100px;
+  padding: 50px 20px 0;
   position: relative;
   z-index: 2;
 }
