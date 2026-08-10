@@ -195,6 +195,14 @@ function footer(locale) {
     : "The 1960 Bldg., " + schoolAddress;
   
   return `<footer class="site-footer">
+    <div class="footer-top">
+      <div class="footer-links">
+        <a href="${localizedPath("/admissions/", locale)}">${l.ctaApply}</a>
+        <a href="${localizedPath("/parents/", locale)}">${l.portal}</a>
+        <a href="${localizedPath("/contact/", locale)}">${l.ctaTour}</a>
+        <a href="${localizedPath("/privacy/", locale)}">${locale === "th" ? "ประกาศความเป็นส่วนตัว" : locale === "en" ? "Privacy Policy" : "隐私声明"}</a>
+      </div>
+    </div>
     <div class="footer-grid">
       <div class="footer-col">
         <img src="/assets/images/logo-white.png" alt="Somkidvittaya School" height="55" style="height: 55px; width: auto; margin-bottom: 15px;">
@@ -206,19 +214,12 @@ function footer(locale) {
         </div>
       </div>
       <div class="footer-col">
-        <img src="/assets/images/siritham-logo.png" alt="Siritham Co., Ltd." height="55" style="height: 55px; width: auto; margin-bottom: 15px;">
+        <a href="https://siritham.com" target="_blank">
+          <img src="/assets/images/siritham-logo.png" alt="Siritham Co., Ltd." height="55" style="height: 55px; width: auto; margin-bottom: 15px;">
+        </a>
         <strong>${locale === "th" ? "บริษัท ศิริธรรม จำกัด" : "Siritham Co., Ltd."}</strong>
-        <p>${companyAddressLine}</p>
+        <p>${companyAddressLine}<br>Email: <a href="mailto:mail@siritham.com">mail@siritham.com</a></p>
         <p class="copyright" style="margin-top: 30px;">COPYRIGHT © SIRITHAM CO., LTD. ALL RIGHTS RESERVED.</p>
-      </div>
-      <div class="footer-col">
-        <h3>${locale === "th" ? "ทางลัด" : locale === "en" ? "Quick Links" : "快捷链接"}</h3>
-        <ul style="list-style: none; padding: 0; margin: 0;">
-          <li style="margin-bottom: 12px;"><a href="${localizedPath("/admissions/", locale)}">${l.ctaApply}</a></li>
-          <li style="margin-bottom: 12px;"><a href="${localizedPath("/parents/", locale)}">${l.portal}</a></li>
-          <li style="margin-bottom: 12px;"><a href="${localizedPath("/contact/", locale)}">${l.ctaTour}</a></li>
-          <li style="margin-bottom: 12px;"><a href="${localizedPath("/privacy/", locale)}">${locale === "th" ? "ประกาศความเป็นส่วนตัว" : locale === "en" ? "Privacy Policy" : "隐私声明"}</a></li>
-        </ul>
       </div>
     </div>
     
