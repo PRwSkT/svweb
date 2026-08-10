@@ -266,7 +266,7 @@ h3 { font-size: 1.4rem; }
   color: var(--white);
 }
 
-.stats div { min-height: 143px; padding: 30px clamp(18px, 3vw, 46px); border-right: 1px solid rgba(255, 255, 255, 0.18); }
+.stats div { min-height: 143px; padding: 30px clamp(18px, 3vw, 46px) 90px; border-right: 1px solid rgba(255, 255, 255, 0.18); }
 .stats div:last-child { border-right: 0; }
 .stats strong { display: block; color: #e5cd77; font-family: Georgia, "Times New Roman", serif; font-size: 2.55rem; line-height: 1; }
 .stats span { display: block; max-width: 190px; margin-top: 9px; color: rgba(255, 255, 255, 0.8); font-size: 0.82rem; line-height: 1.4; }
@@ -410,7 +410,7 @@ textarea { resize: vertical; }
   .hero-actions .button:last-child { grid-column: 1 / -1; }
   .hero-index { gap: 7px 15px; }
   .hero-index span { font-size: 0.72rem; }
-  .stats div { min-height: 128px; padding: 23px 17px; }
+  .stats div { min-height: 128px; padding: 23px 17px 60px; }
   .stats strong { font-size: 2.15rem; }
   .stats span { font-size: 0.74rem; }
   .quick-links, .section, .closing-cta { width: min(100% - 28px, var(--max)); }
@@ -840,6 +840,7 @@ textarea { resize: vertical; }
 .news-featured-content h3 {
   font-size: 1.6rem;
   margin-bottom: 8px;
+  color: var(--white);
 }
 .news-list {
   display: flex;
