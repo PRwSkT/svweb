@@ -393,9 +393,9 @@ function textSections(page, locale) {
       </div>
       
       ${restSections.length > 0 ? `
-        <div class="text-list secondary-grid" style="display: flex; flex-direction: row; flex-wrap: wrap; gap: 40px; margin-top: 60px;">
+        <div class="secondary-grid">
           ${restSections.map((sec, i) => `
-            <div class="text-item" style="animation-delay: ${(i+1) * 0.1}s; flex: 1 1 320px;">
+            <div class="text-item" style="animation-delay: ${(i+1) * 0.1}s;">
               <div class="text-item-header">
                 ${sec.icon ? `<i data-feather="${sec.icon}"></i>` : ""}
                 <h3 style="font-size: 1.5rem; margin: 0; color: var(--sv-deep);">${escapeHtml(sec.title || sec[0])}</h3>
