@@ -5,9 +5,9 @@
   "image": "real-2.jpg",
   "type": "about",
   "nav": "about",
-  "title": "Somkidvittaya: An Institution of Value, Cultivating Timeless Wisdom",
-  "eyebrow": "The Legacy of Somkidvittaya",
-  "summary": "Somkidvittaya School is more than just an educational institution; it is an “Institution of Value and Time” born from a heart of compassion and profound vision. Over the course of more than six decades, we have nurtured youth by seamlessly blending our beautiful cultural foundations with the educational innovations of the future.",
+  "title": "An Institution of Value, Cultivating Timeless Wisdom",
+  "eyebrow": "About Us",
+  "summary": "Somkidvittaya School is dedicated to building a stable foundation for the limitless future of every youth.",
   "sections": [
     {
       "subtitle": "Chapter I (1960 - 1986)",
@@ -111,5 +111,6 @@
   "epilogue": {
     "title": "“A Stable Foundation, A Future Without Limits”",
     "body": "No matter how far Somkidvittaya advances with innovation and technology, our spirit remains deeply rooted in the eternal philosophy:\n\n**\"Excellent Education, Outstanding Activities, Strict Discipline, Firm Morals, Stepping Towards Global Citizenship.\"**\n\nThis is our solemn promise that Somkidvittaya School will continue to be an **\"Institution of Value\"** that harmonizes the aesthetics of Thai identity with a vision of the future, to shape youth imbued with **wisdom, virtue, and self-pride** for all time."
-  }
+  },
+  "intro": "Somkidvittaya School is more than just an educational institution; it is an “Institution of Value and Time” born from a heart of compassion and profound vision. Over the course of more than six decades, we have nurtured youth by seamlessly blending our beautiful cultural foundations with the educational innovations of the future."
 }

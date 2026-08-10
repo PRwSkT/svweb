@@ -116,6 +116,8 @@ for (const file of readdirSync(join(root, 'content/pages'))) {
   if (data.sections) p.sections[l] = data.sections;
   if (data.epilogue) p.epilogue = p.epilogue || {};
   if (data.epilogue) p.epilogue[l] = data.epilogue;
+  if (data.intro) p.intro = p.intro || {};
+  if (data.intro) p.intro[l] = data.intro;
   if (data.type && !p.type) p.type = data.type;
   
   // Get file modification time for sitemap
@@ -356,11 +358,10 @@ function aboutSections(page, locale) {
   const epilogue = page.epilogue?.[locale] || page.epilogue?.th || page.epilogue || null;
   
   return `<section class="section about-history">
+    ${page.intro ? `
     <div class="section-heading">
-      <p class="eyebrow">${escapeHtml(t(page, "eyebrow", locale))}</p>
-      <h2>${escapeHtml(t(page, "title", locale))}</h2>
-      <p class="lead">${escapeHtml(t(page, "summary", locale))}</p>
-    </div>
+      <p class="lead">${escapeHtml(t(page, "intro", locale))}</p>
+    </div>` : ""}
     <div class="history-timeline">
       ${sections.map(sec => `
         <div class="history-chapter">
