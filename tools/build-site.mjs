@@ -235,21 +235,27 @@ function hero(page, locale) {
 
   return `<section class="hero ${isHome ? "home" : ""}" style="--hero-image: url('/assets/images/${pageImage}')" ${slidesHtml}>
     <div class="hero-content">
-      <div class="hero-copy">
+      <div class="hero-copy" data-animate="reveal-stagger">
         <p class="eyebrow">${escapeHtml(t(page, "eyebrow", locale))}</p>
         <h1>${escapeHtml(t(page, "title", locale))}</h1>
         <p class="lead">${escapeHtml(t(page, "summary", locale))}</p>
         ${page.type !== 'success' ? `<div class="hero-actions">${button(l.ctaTour, localizedPath("/contact/", locale), "secondary")}${button(l.ctaApply, localizedPath("/admissions/apply/", locale), "primary")}${button(l.ctaGuide, localizedPath("/academics/", locale), "ghost inverse")}</div>` : ""}
       </div>
-      ${page.type !== 'success' ? `<aside class="hero-index" aria-label="Program highlights">
+      ${page.type !== 'success' ? `<aside class="hero-index" aria-label="Program highlights" data-animate="fade-up">
         ${feature.map((item) => `<span>${escapeHtml(item)}</span>`).join("")}
       </aside>` : ""}
     </div>
+    ${isHome ? `<div class="slider-controls">
+      <span class="slider-indicator">01 / 06</span>
+      <div class="slider-arrow prev"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></div>
+      <div class="slider-pause"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg></div>
+      <div class="slider-arrow next"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></div>
+    </div>` : ""}
   </section>`;
 }
 
 function stats(locale) {
-  return `<section class="stats" aria-label="School highlights">${sharedStats.map(([n, th, en, zh]) => `<div><strong>${n}</strong><span>${escapeHtml(locale === "th" ? th : locale === "en" ? en : zh)}</span></div>`).join("")}</section>`;
+  return `<section class="stats" aria-label="School highlights" data-animate="fade-up">${sharedStats.map(([n, th, en, zh]) => `<div><strong>${n}</strong><span>${escapeHtml(locale === "th" ? th : locale === "en" ? en : zh)}</span></div>`).join("")}</section>`;
 }
 
 function quickLinks(locale) {
@@ -271,14 +277,30 @@ function quickLinks(locale) {
       ["了解课程", "MEP、幼儿阶段、幼儿园、小学", "/academics/"]
     ]
   };
-  return `<section class="quick-links"><div><p class="eyebrow">SV Pathways</p><h2>${escapeHtml(heading)}</h2></div><div class="quick-link-grid">${items[locale].map(([title, body, href]) => `<a href="${localizedPath(href, locale)}"><strong>${escapeHtml(title)}</strong><span>${escapeHtml(body)}</span></a>`).join("")}</div></section>`;
+  const icons = [
+    `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>`,
+    `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>`,
+    `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>`
+  ];
+  return `<div class="floating-quick-links" data-animate="fade-up">
+    ${items[locale].map(([title, body, href], i) => `<a class="quick-link-box" href="${localizedPath(href, locale)}">
+      ${icons[i]}
+      <strong>${escapeHtml(title)}</strong>
+      <span>${escapeHtml(body)}</span>
+    </a>`).join("")}
+    <a class="quick-link-box" href="${localizedPath('/contact/', locale)}">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+      <strong>${locale === "th" ? "ติดต่อสอบถาม" : locale === "en" ? "Contact Us" : "联系我们"}</strong>
+      <span>${locale === "th" ? "สอบถามข้อมูลเพิ่มเติม" : locale === "en" ? "Get in touch with us" : "获取更多信息"}</span>
+    </a>
+  </div>`;
 }
 
 function textSections(page, locale) {
   const sections = page.sections?.[locale] || page.sections?.th || page.sections || [];
   if (sections.length === 0) return "";
   const eyebrowText = page.eyebrow?.[locale] || page.eyebrow?.th || page.eyebrow || (locale === "th" ? "รายละเอียด" : locale === "en" ? "Details" : "详情");
-  return `<section class="section"><div class="section-heading"><p class="eyebrow">${escapeHtml(eyebrowText)}</p><h2>${escapeHtml(t(page, "title", locale))}</h2></div><div class="text-list">${sections.map(sec => `<div class="text-item"><h3>${escapeHtml(sec.title || sec[0])}</h3><p>${escapeHtml(sec.body || sec[1])}</p></div>`).join("")}</div></section>`;
+  return `<section class="section" data-animate="fade-up"><div class="section-heading"><p class="eyebrow">${escapeHtml(eyebrowText)}</p><h2>${escapeHtml(t(page, "title", locale))}</h2></div><div class="text-list">${sections.map(sec => `<div class="text-item"><h3>${escapeHtml(sec.title || sec[0])}</h3><p>${escapeHtml(sec.body || sec[1])}</p></div>`).join("")}</div></section>`;
 }
 
 function programCards(locale) {
@@ -287,7 +309,7 @@ function programCards(locale) {
     en: [["MEP Program", "English in real contexts with Thai foundations.", "/academics/mep/"], ["Pre-Kindergarten", "Gentle first steps through play.", "/academics/pre-kindergarten/"], ["Kindergarten", "Explore, create, and communicate.", "/academics/kindergarten/"], ["Primary", "Academics, language, and future skills.", "/academics/primary/"]],
     zh: [["MEP 课程", "真实语境英语与泰国课程基础。", "/academics/mep/"], ["幼儿预备班", "通过游戏温和开启学习。", "/academics/pre-kindergarten/"], ["幼儿园", "探索、创造与沟通。", "/academics/kindergarten/"], ["小学", "学术、语言与未来技能。", "/academics/primary/"]]
   };
-  return `<section class="section"><div class="section-heading"><p class="eyebrow">Academics</p><h2>${locale === "th" ? "เลือกดูหลักสูตรตามช่วงวัย" : locale === "en" ? "Explore by Program" : "按学段了解课程"}</h2></div><div class="card-grid">${copy[locale].map(([title, body, href]) => `<a class="info-card link-card" href="${localizedPath(href, locale)}"><h3>${escapeHtml(title)}</h3><p>${escapeHtml(body)}</p><span>→</span></a>`).join("")}</div></section>`;
+  return `<section class="section" data-animate="fade-up"><div class="section-heading"><p class="eyebrow">Academics</p><h2>${locale === "th" ? "เลือกดูหลักสูตรตามช่วงวัย" : locale === "en" ? "Explore by Program" : "按学段了解课程"}</h2></div><div class="card-grid reveal-stagger" data-animate="reveal-stagger">${copy[locale].map(([title, body, href]) => `<a class="info-card link-card" href="${localizedPath(href, locale)}"><h3>${escapeHtml(title)}</h3><p>${escapeHtml(body)}</p><span>→</span></a>`).join("")}</div></section>`;
 }
 
 function admissions(locale) {
@@ -316,7 +338,31 @@ function news(locale) {
     en: [["New Term Updates", "News", "A place for welcome activities and family updates."], ["Monthly English Activities", "Events", "Stories from the MEP classroom."], ["Choosing a Bilingual School", "Article", "SEO content for families in Rayong."]],
     zh: [["新学期动态", "新闻", "发布迎新活动与家庭信息。"], ["每月英语活动", "活动", "展示 MEP 课堂故事。"], ["如何选择双语学校", "文章", "面向罗勇家庭的 SEO 内容。"]]
   };
-  return `<section class="section"><div class="news-grid">${items[locale].map(([title, tag, body]) => `<article class="news-card"><span>${escapeHtml(tag)}</span><h3>${escapeHtml(title)}</h3><p>${escapeHtml(body)}</p><a href="${localizedPath("/news/", locale)}">${locales[locale].readMore}</a></article>`).join("")}</div></section>`;
+  const listItems = items[locale].slice(1);
+  return `<section class="section" data-animate="fade-up">
+    <div class="section-heading">
+      <p class="eyebrow">News & Updates</p>
+      <h2>${locale === "th" ? "ข่าวสารและกิจกรรม" : locale === "en" ? "Latest Announcements" : "最新动态"}</h2>
+    </div>
+    <div class="news-board">
+      <a href="${localizedPath("/news/", locale)}" class="news-featured">
+        <img src="/assets/images/real-4.jpg" alt="${escapeHtml(items[locale][0][0])}" loading="lazy">
+        <div class="news-featured-content">
+          <span style="font-size: 0.8rem; font-weight: 700; color: var(--sv-gold); letter-spacing: 1px; text-transform: uppercase;">${escapeHtml(items[locale][0][1])}</span>
+          <h3>${escapeHtml(items[locale][0][0])}</h3>
+        </div>
+      </a>
+      <div class="news-list">
+        ${listItems.map(([title, tag, body]) => `<a href="${localizedPath("/news/", locale)}" class="news-row">
+          <div class="news-date">Jul 15</div>
+          <div class="news-title">${escapeHtml(title)}</div>
+        </a>`).join("")}
+        <a href="${localizedPath("/news/", locale)}" class="news-row" style="margin-top: auto; border: none;">
+          <div class="news-title" style="color: var(--sv-crimson);">${locales[locale].readMore} &rarr;</div>
+        </a>
+      </div>
+    </div>
+  </section>`;
 }
 
 function parents(locale) {
