@@ -157,14 +157,23 @@ function button(label, href, variant = "primary") {
 function languageSelect(page, locale) {
   const flags = {
     th: `<svg viewBox="0 0 900 600" width="24" height="16"><rect fill="#A51931" width="900" height="600"/><rect fill="#F4F5F8" y="100" width="900" height="400"/><rect fill="#2D2A4A" y="200" width="900" height="200"/></svg>`,
-    en: `<svg viewBox="0 0 60 30" width="24" height="16"><clipPath id="s"><path d="M0,0 v30 h60 v-30 z"/></clipPath><clipPath id="t"><path d="M30,15 h30 v15 z v-15 h-30 z h-30 v-15 z v15 h30 z"/></clipPath><g clip-path="url(#s)"><path d="M0,0 v30 h60 v-30 z" fill="#012169"/><path d="M0,0 L60,30 M60,0 L0,30" stroke="#fff" stroke-width="6"/><path d="M0,0 L60,30 M60,0 L0,30" clip-path="url(#t)" stroke="#C8102E" stroke-width="4"/><path d="M30,0 v30 M0,15 h60" stroke="#fff" stroke-width="10"/><path d="M30,0 v30 M0,15 h60" stroke="#C8102E" stroke-width="6"/></g></svg>`,
+    en: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 30" width="24" height="16"><rect width="60" height="30" fill="#012169"/><path d="M0,0 l60,30 m0,-30 l-60,30" stroke="#fff" stroke-width="6"/><path d="M0,0 l30,15 m30,-15 l-30,15 m0,15 l-30,-15 m60,0 l-30,-15" stroke="#C8102E" stroke-width="4"/><path d="M30,0 v30 M0,15 h60" stroke="#fff" stroke-width="10"/><path d="M30,0 v30 M0,15 h60" stroke="#C8102E" stroke-width="6"/></svg>`,
     zh: `<svg viewBox="0 0 900 600" width="24" height="16"><rect fill="#ee1c25" width="900" height="600"/><g fill="#ffdf00" transform="translate(150,150)"><path d="M0,-90 L26.4,5.4 L-72.1,-33.5 L72.1,-33.5 L-26.4,5.4 Z"/><path d="M0,-90 L26.4,5.4 L-72.1,-33.5 L72.1,-33.5 L-26.4,5.4 Z" transform="translate(150,-60) scale(0.33) rotate(22.5)"/><path d="M0,-90 L26.4,5.4 L-72.1,-33.5 L72.1,-33.5 L-26.4,5.4 Z" transform="translate(210,30) scale(0.33) rotate(-22.5)"/><path d="M0,-90 L26.4,5.4 L-72.1,-33.5 L72.1,-33.5 L-26.4,5.4 Z" transform="translate(210,120) scale(0.33) rotate(0)"/><path d="M0,-90 L26.4,5.4 L-72.1,-33.5 L72.1,-33.5 L-26.4,5.4 Z" transform="translate(150,210) scale(0.33) rotate(22.5)"/></g></svg>`
   };
+  
   const options = Object.keys(locales).map((code) => {
     const active = code === locale ? ' active' : '';
-    return `<a href="${localizedPath(page.path, code)}" class="lang-flag${active}" aria-label="${locales[code].label}" title="${locales[code].label}">${flags[code]}</a>`;
+    return `<a href="${localizedPath(page.path, code)}" class="lang-option${active}">${flags[code]}<span>${locales[code].label}</span></a>`;
   }).join("");
-  return `<div class="language-switch">${options}</div>`;
+  
+  return `
+    <details class="language-switch">
+      <summary aria-label="Language Selector">${flags[locale]}</summary>
+      <div class="lang-dropdown">
+        ${options}
+      </div>
+    </details>
+  `;
 }
 
 function header(page, locale) {
