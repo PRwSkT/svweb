@@ -233,17 +233,17 @@ function hero(page, locale) {
   const slidesHtml = isHome ? `data-slides='["/assets/images/real-1.jpg","/assets/images/real-2.jpg","/assets/images/real-3.jpg","/assets/images/real-4.jpg","/assets/images/real-5.jpg","/assets/images/real-6.png"]'` : "";
   const pageImage = page.image || 'real-1.jpg';
 
-  return `<section class="hero" style="--hero-image: url('/assets/images/${pageImage}')" ${slidesHtml}>
+  return `<section class="hero ${isHome ? "home" : ""}" style="--hero-image: url('/assets/images/${pageImage}')" ${slidesHtml}>
     <div class="hero-content">
       <div class="hero-copy">
         <p class="eyebrow">${escapeHtml(t(page, "eyebrow", locale))}</p>
         <h1>${escapeHtml(t(page, "title", locale))}</h1>
         <p class="lead">${escapeHtml(t(page, "summary", locale))}</p>
-        <div class="hero-actions">${button(l.ctaTour, localizedPath("/contact/", locale), "secondary")}${button(l.ctaApply, localizedPath("/admissions/apply/", locale), "primary")}${button(l.ctaGuide, localizedPath("/academics/", locale), "ghost inverse")}</div>
+        ${page.type !== 'success' ? `<div class="hero-actions">${button(l.ctaTour, localizedPath("/contact/", locale), "secondary")}${button(l.ctaApply, localizedPath("/admissions/apply/", locale), "primary")}${button(l.ctaGuide, localizedPath("/academics/", locale), "ghost inverse")}</div>` : ""}
       </div>
-      <aside class="hero-index" aria-label="Program highlights">
+      ${page.type !== 'success' ? `<aside class="hero-index" aria-label="Program highlights">
         ${feature.map((item) => `<span>${escapeHtml(item)}</span>`).join("")}
-      </aside>
+      </aside>` : ""}
     </div>
   </section>`;
 }
@@ -275,8 +275,10 @@ function quickLinks(locale) {
 }
 
 function textSections(page, locale) {
-  const sections = page.sections?.[locale] || page.sections?.th || [];
-  return `<section class="section"><div class="section-heading"><p class="eyebrow">${locale === "th" ? "รายละเอียด" : locale === "en" ? "Details" : "详情"}</p><h2>${escapeHtml(t(page, "title", locale))}</h2></div><div class="card-grid">${sections.map(sec => `<article class="info-card"><h3>${escapeHtml(sec.title || sec[0])}</h3><p>${escapeHtml(sec.body || sec[1])}</p></article>`).join("")}</div></section>`;
+  const sections = page.sections?.[locale] || page.sections?.th || page.sections || [];
+  if (sections.length === 0) return "";
+  const eyebrowText = page.eyebrow?.[locale] || page.eyebrow?.th || page.eyebrow || (locale === "th" ? "รายละเอียด" : locale === "en" ? "Details" : "详情");
+  return `<section class="section"><div class="section-heading"><p class="eyebrow">${escapeHtml(eyebrowText)}</p><h2>${escapeHtml(t(page, "title", locale))}</h2></div><div class="card-grid">${sections.map(sec => `<article class="info-card"><h3>${escapeHtml(sec.title || sec[0])}</h3><p>${escapeHtml(sec.body || sec[1])}</p></article>`).join("")}</div></section>`;
 }
 
 function programCards(locale) {
@@ -394,6 +396,7 @@ function aboutSections(page, locale) {
 }
 
 function bodyContent(page, locale) {
+  if (page.type === "success") return "";
   if (page.type === "home") return homeSections(locale);
   if (page.type === "about") return aboutSections(page, locale);
   if (page.type === "programs") return `${programCards(locale)}${textSections({ ...page, sections: { [locale]: [[locale === "th" ? "ภาพรวมหลักสูตร" : "Overview", t(page, "summary", locale)]] } }, locale)}`;
@@ -497,11 +500,11 @@ function html(page, locale) {
   <main id="main">
     ${hero(page, locale)}
     ${bodyContent(page, locale)}
-    <section class="closing-cta">
+    ${page.type !== 'success' ? `<section class="closing-cta">
       <p class="eyebrow">Somkidvittaya School</p>
       <h2>${locale === "th" ? "พร้อมเริ่มต้นเส้นทางใหม่กับ SV?" : locale === "en" ? "Ready to Begin with SV?" : "准备加入 SV 吗？"}</h2>
       <div class="hero-actions">${button(locales[locale].ctaTour, localizedPath("/contact/", locale), "secondary")}${button(locales[locale].ctaApply, localizedPath("/admissions/apply/", locale), "primary")}</div>
-    </section>
+    </section>` : ""}
   </main>
   ${footer(locale)}
   <script src="/main.js" defer></script>
