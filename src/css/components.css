@@ -236,7 +236,7 @@ h1, h2, h3 { margin: 0; color: var(--sv-deep); line-height: 1.13; letter-spacing
 h1, h2 { font-family: Georgia, "Times New Roman", var(--font-thai); font-weight: 700; }
 h1 { max-width: 780px; color: var(--white); font-size: 4.45rem; }
 h2 { font-size: 2.72rem; }
-h3 { font-size: 1.25rem; }
+h3 { font-size: 1.4rem; }
 
 .lead { max-width: 680px; margin: 23px 0 0; color: rgba(255, 255, 255, 0.88); font-size: 1.08rem; line-height: 1.72; }
 .hero-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 29px; }
@@ -288,7 +288,7 @@ h3 { font-size: 1.25rem; }
 .section-heading h2 { max-width: 720px; }
 
 .card-grid, .news-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; border-top: 1px solid var(--line); }
-.info-card, .news-card, .contact-card, .mini-calendar { min-height: 232px; padding: 27px 24px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); background: transparent; }
+.info-card, .news-card, .contact-card, .mini-calendar { min-height: 232px; padding: 32px 30px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); background: transparent; }
 .card-grid > :first-child, .news-grid > :first-child { border-left: 1px solid var(--line); }
 .info-card:nth-child(4n + 2) { background: rgba(179, 154, 75, 0.11); }
 .info-card:nth-child(4n + 3) { background: rgba(77, 109, 97, 0.11); }
@@ -698,20 +698,20 @@ textarea { resize: vertical; }
   position: relative;
   overflow: hidden;
 }
-.hero::before {
-  content: '';
+.hero-bg {
   position: absolute;
-  inset: 0;
-  background-image: var(--hero-image);
-  background-size: cover;
-  background-position: center;
-  z-index: -2;
-  transition: transform 6s ease-out; /* Smooth scale on slide change */
-}
-.hero.is-animating::before {
+  top: 0; left: 0; width: 100%; height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 1.2s ease, transform 6s ease-out;
   transform: scale(1.05);
+  z-index: -2;
+  will-change: opacity, transform;
 }
-
+.hero-bg.active {
+  opacity: 1;
+  transform: scale(1);
+}
 .slider-controls {
   position: absolute;
   bottom: 80px;
@@ -845,14 +845,15 @@ textarea { resize: vertical; }
 .news-row {
   display: flex;
   align-items: center;
-  padding: 24px 0;
+  padding: 24px 12px 24px 0;
   border-bottom: 1px solid var(--line);
   text-decoration: none;
-  transition: padding-left 0.3s ease;
+  transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), background-color 0.4s ease;
+  will-change: transform;
 }
 .news-row:hover {
-  padding-left: 10px;
-  background: rgba(0,0,0,0.01);
+  transform: translateX(10px);
+  background: rgba(0,0,0,0.015);
 }
 .news-date {
   min-width: 100px;

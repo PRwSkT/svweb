@@ -38,12 +38,14 @@
         let isPaused = false;
         
         const updateSlide = () => {
-          // Remove animating class to reset scale
-          heroSlider.classList.remove("is-animating");
-          // Trigger reflow
-          void heroSlider.offsetWidth;
-          heroSlider.style.setProperty('--hero-image', `url('${slides[currentSlide]}')`);
-          heroSlider.classList.add("is-animating");
+          const bgs = heroSlider.querySelectorAll('.hero-bg');
+          bgs.forEach((bg, i) => {
+            if (i === currentSlide) {
+              bg.classList.add('active');
+            } else {
+              bg.classList.remove('active');
+            }
+          });
           
           const indicator = document.querySelector(".slider-indicator");
           if(indicator) indicator.textContent = `0${currentSlide + 1} / 0${slides.length}`;
