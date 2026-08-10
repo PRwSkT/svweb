@@ -2,12 +2,18 @@ lang: zh
 id: kindergarten
 path: /academics/kindergarten/
 image: real-2.jpg
-title: 幼儿园
-eyebrow: 在探索中学习
-summary: SV 幼儿园培养语言、创造力、协作与自信。
+title: 幼儿园 (Kindergarten)
+eyebrow: 适合 3-6 岁
+summary: >-
+  我们的双语课程 (Bilingual Program) 注重在模拟真实生活场景中输入语言 (Real-life Language Input)，通过在玩中学 (Play & Learn) 培养自信和领导力。
 sections:
-  - title: 有生命的课堂
-    body: 孩子提问、实验、讲述并创作。
-  - title: 发展
-    body: 教师跟踪成长并与家庭持续沟通。
+  - title: 双语课程 (Bilingual Program)
+    body: >-
+      由1名泰籍班主任和1名英语母语教师协同授课。每周课程包含泰语 50%、英语 50% 以及综合课程 25%。涵盖英语、数学(英)、科学(英)、自然拼读(英)和美术(英)。
+  - title: 增强自信，敢于表达 (Builds Confident English Speaking)
+    body: >-
+      鼓励孩子自信交流，将英语融入日常活动中，从小培养领导力和表达能力。
+  - title: 培养社交能力及批判性思维 (Develops Social & Critical Thinking Skills)
+    body: >-
+      注重团队协作与适龄的批判性思维，使孩子能够有效解决问题并从环境中学习。
 nav: academics

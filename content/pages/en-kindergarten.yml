@@ -3,11 +3,17 @@ id: kindergarten
 path: /academics/kindergarten/
 image: real-2.jpg
 title: Kindergarten
-eyebrow: Learning Through Exploration
-summary: SV Kindergarten builds language, creativity, collaboration, and confidence.
+eyebrow: Age 3-6 Years
+summary: >-
+  Our Bilingual Program focuses on real-life language input via play and learn activities to build confidence and leadership.
 sections:
-  - title: Living Classroom
-    body: Children ask, experiment, tell stories, and create.
-  - title: Development
-    body: Teachers monitor growth and keep families informed.
+  - title: Bilingual Program
+    body: >-
+      Co-taught by 1 Thai teacher and 1 native English teacher. The weekly structure includes 50% Thai Language, 50% English Language, and 25% Integrated activities. Covers English, Math(EN), Science(EN), Phonics(EN), and Art(EN).
+  - title: Builds Confident English Speaking
+    body: >-
+      Encourages children to communicate confidently by integrating English into everyday activities, fostering early leadership and expressiveness.
+  - title: Develops Social & Critical Thinking Skills
+    body: >-
+      Focuses on collaboration and age-appropriate critical thinking, empowering children to solve problems and learn effectively from their surroundings.
 nav: academics

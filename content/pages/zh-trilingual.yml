@@ -1,0 +1,16 @@
+lang: zh
+id: trilingual
+path: /zh/academics/trilingual/
+image: real-1.jpg
+title: 三语课程 (Trilingual Program)
+eyebrow: 敬请期待
+summary: >-
+  通过语言、数字技能与创造性思维等关键基础，全面提升学生潜能，营造快乐且可持续的学习环境。
+sections:
+  - title: 三国教师协同授课
+    body: >-
+      由英语母语教师、中文母语教师与泰国教师共同授课，提供沉浸式语言环境。
+  - title: 课程结构
+    body: >-
+      泰语课程 25%、英语课程 25%、中文课程 25%、综合课程 25%。
+nav: academics

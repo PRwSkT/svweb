@@ -44,8 +44,32 @@
           bgs.forEach((bg, i) => {
             if (i === currentSlide) {
               bg.classList.add('active');
+              if (bg.tagName === 'VIDEO') {
+                stopTimer(); // Let the video dictate the duration
+                bg.currentTime = 0;
+                bg.play().catch(e => console.log('Autoplay prevented', e));
+                
+                // Only attach the event once
+                if (!bg.hasAttribute('data-ended-listener')) {
+                  bg.setAttribute('data-ended-listener', 'true');
+                  bg.addEventListener('ended', () => {
+                    if (!isPaused) {
+                      nextSlide();
+                    }
+                  });
+                }
+              } else {
+                // If it's an image, make sure the timer is running
+                if (!isPaused) {
+                  stopTimer();
+                  startTimer();
+                }
+              }
             } else {
               bg.classList.remove('active');
+              if (bg.tagName === 'VIDEO') {
+                bg.pause();
+              }
             }
           });
           
@@ -59,7 +83,7 @@
         const startTimer = () => { slideInterval = setInterval(nextSlide, 6000); };
         const stopTimer = () => { clearInterval(slideInterval); };
 
-        startTimer();
+        updateSlide(); // Initialize first slide state
         heroSlider.classList.add("is-animating"); // initial zoom
 
         document.querySelector(".slider-arrow.next")?.addEventListener("click", () => { nextSlide(); stopTimer(); if(!isPaused) startTimer(); });

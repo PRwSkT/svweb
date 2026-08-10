@@ -2,14 +2,18 @@ lang: en
 id: primary
 path: /academics/primary/
 image: real-3.jpg
-title: Primary
-eyebrow: Strong Foundations
+title: Primary School
+eyebrow: Age 6 and up
 summary: >-
-  Primary builds academics, languages, analytical thinking, and project work for
-  the next stage.
+  Our Primary level offers two distinct tracks: the Bilingual Program and the General Program, catering to diverse learning styles and future goals.
 sections:
-  - title: Core Subjects
-    body: Thai, English, math, science, social studies, and digital skills.
-  - title: PBL
-    body: Learning through real questions and student presentations.
+  - title: Bilingual Program
+    body: >-
+      Building upon our Kindergarten curriculum, this program offers a 50/50 balance of English and Thai. Core subjects (Math, Science, Phonics, Art) are taught in English by native speakers to ensure global academic excellence.
+  - title: General Program
+    body: >-
+      A well-rounded curriculum focusing on English for communication, while encouraging individual talents through specialized subjects such as Thai/Western Music, Visual Arts, Sports (Football, Swimming, Taekwondo), Robotics & Computers, and Mental Math.
+  - title: Chinese Skills Enhancement
+    body: >-
+      Students in the General Program also receive Chinese language training to broaden their perspectives and enhance their competitiveness in the digital era.
 nav: academics

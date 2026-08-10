@@ -2,12 +2,18 @@ lang: zh
 id: primary
 path: /academics/primary/
 image: real-3.jpg
-title: 小学
-eyebrow: 扎实基础
-summary: 小学阶段建立学术、语言、分析思维与项目学习能力。
+title: 小学 (Primary School)
+eyebrow: 招收 6 岁及以上学生
+summary: >-
+  小学阶段提供两大课程：双语课程 (Bilingual Program) 与普通课程 (General Program)，以满足不同学生的学习风格和未来目标。
 sections:
-  - title: 核心科目
-    body: 泰语、英语、数学、科学、社会与数字技能。
-  - title: 项目式学习
-    body: 通过真实问题与成果展示学习。
+  - title: 双语课程 (Bilingual Program)
+    body: >-
+      延续幼儿园的双语环境，实行 50% 泰语和 50% 英语的教学比例。核心科目（数学、科学、自然拼读、美术）均由英语母语教师授课，确保卓越的国际化学术水平。
+  - title: 普通课程 (General Program)
+    body: >-
+      侧重于沟通英语的全面发展课程，同时通过丰富多样的科目培养个人特长，如泰式/西方音乐、视觉艺术、体育（足球、游泳、跆拳道）、机器人与计算机以及珠心算。
+  - title: 中文技能提升
+    body: >-
+      普通课程的学生还将接受中文培训，以开阔视野并提升在数字化时代的竞争力。
 nav: academics

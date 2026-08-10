@@ -264,7 +264,12 @@ function hero(page, locale) {
   const pageImage = page.image || 'real-1.jpg';
   
   const slidesHtml = isHome 
-    ? slides.map((src, i) => `<img src="${src}" class="hero-bg ${i === 0 ? 'active' : ''}" alt="" aria-hidden="true" width="1920" height="1080">`).join("")
+    ? slides.map((src, i) => {
+        const cls = `hero-bg ${i === 0 ? 'active' : ''}`;
+        return src.endsWith(".mp4")
+          ? `<video src="${src}" class="${cls}" muted playsinline ${i === 0 ? 'autoplay' : ''}></video>`
+          : `<img src="${src}" class="${cls}" alt="" aria-hidden="true" width="1920" height="1080">`;
+      }).join("")
     : `<img src="/assets/images/${pageImage}" class="hero-bg active" alt="" aria-hidden="true" width="1920" height="1080">`;
 
   return `<section class="hero ${isHome ? "home" : ""}" ${isHome ? `data-slides='${JSON.stringify(slides)}'` : ""}>
@@ -322,7 +327,14 @@ function textSections(page, locale) {
 }
 
 function programCards(locale) {
-  return `<section class="section" data-animate="fade-up"><div class="section-heading"><p class="eyebrow">Academics</p><h2>${locale === "th" ? "เลือกดูหลักสูตรตามช่วงวัย" : locale === "en" ? "Explore by Program" : "按学段了解课程"}</h2></div><div class="card-grid reveal-stagger" data-animate="reveal-stagger">${globals.programCards[locale].map(([title, body, href]) => `<a class="info-card link-card" href="${localizedPath(href, locale)}"><h3>${escapeHtml(title)}</h3><p>${escapeHtml(body)}</p><span>→</span></a>`).join("")}</div></section>`;
+  return `<section class="section" data-animate="fade-up"><div class="section-heading"><p class="eyebrow">Academics</p><h2>${locale === "th" ? "เลือกดูหลักสูตรตามช่วงวัย" : locale === "en" ? "Explore by Program" : "按学段了解课程"}</h2></div><div class="card-grid programs-grid reveal-stagger" data-animate="reveal-stagger">${globals.programCards[locale].map(([title, body, href, image]) => `<a class="program-card" href="${localizedPath(href, locale)}">
+  <div class="program-card-img"><img src="/images/${image || 'real-1.jpg'}" alt="${escapeHtml(title)}" loading="lazy"></div>
+  <div class="program-card-content">
+    <h3>${escapeHtml(title)}</h3>
+    <p>${escapeHtml(body)}</p>
+    <span>${locale === "th" ? "ดูรายละเอียด →" : locale === "en" ? "Learn More →" : "了解更多 →"}</span>
+  </div>
+</a>`).join("")}</div></section>`;
 }
 
 function admissions(locale) {

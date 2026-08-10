@@ -20,20 +20,20 @@ quickLinks:
 
 programCards:
   th:
-    - ["MEP Program", "ใช้ภาษาอังกฤษในบริบทจริงควบคู่หลักสูตรไทย", "/academics/mep/"]
-    - ["เตรียมอนุบาล", "ดูแลก้าวแรกอย่างอบอุ่นผ่านการเล่น", "/academics/pre-kindergarten/"]
-    - ["อนุบาล", "สำรวจ สร้างสรรค์ และสื่อสารอย่างมั่นใจ", "/academics/kindergarten/"]
-    - ["ประถมศึกษา", "วางรากฐานวิชาการ ภาษา และทักษะอนาคต", "/academics/primary/"]
+    - ["Trilingual Program", "เตรียมพบกับหลักสูตรใหม่เร็วๆ นี้ (Coming Soon)", "/academics/trilingual/", "real-1.jpg"]
+    - ["เตรียมนุบาล", "ดูแลก้าวแรกอย่างอบอุ่นผ่าน 6 Sensory Play", "/academics/pre-kindergarten/", "real-4.jpg"]
+    - ["อนุบาล", "Bilingual Program ส่งเสริมพัฒนาการและภาษา", "/academics/kindergarten/", "real-2.jpg"]
+    - ["ประถมศึกษา", "Bilingual & General Program มุ่งสู่สากล", "/academics/primary/", "real-3.jpg"]
   en:
-    - ["MEP Program", "English in real contexts with Thai foundations.", "/academics/mep/"]
-    - ["Pre-Kindergarten", "Gentle first steps through play.", "/academics/pre-kindergarten/"]
-    - ["Kindergarten", "Explore, create, and communicate.", "/academics/kindergarten/"]
-    - ["Primary", "Academics, language, and future skills.", "/academics/primary/"]
+    - ["Trilingual Program", "Coming Soon", "/academics/trilingual/", "real-1.jpg"]
+    - ["Pre-Kindergarten", "Gentle first steps through 6 sensory play.", "/academics/pre-kindergarten/", "real-4.jpg"]
+    - ["Kindergarten", "Bilingual Program for holistic growth.", "/academics/kindergarten/", "real-2.jpg"]
+    - ["Primary", "Bilingual & General Programs for future skills.", "/academics/primary/", "real-3.jpg"]
   zh:
-    - ["MEP 课程", "真实语境英语与泰国课程基础。", "/academics/mep/"]
-    - ["幼儿预备班", "通过游戏温和开启学习。", "/academics/pre-kindergarten/"]
-    - ["幼儿园", "探索、创造与沟通。", "/academics/kindergarten/"]
-    - ["小学", "学术、语言与未来技能。", "/academics/primary/"]
+    - ["三语课程", "敬请期待 (Coming Soon)", "/academics/trilingual/", "real-1.jpg"]
+    - ["幼儿预备班", "通过 6 Sensory Play 温和开启学习。", "/academics/pre-kindergarten/", "real-4.jpg"]
+    - ["幼儿园", "双语课程促进全面发展。", "/academics/kindergarten/", "real-2.jpg"]
+    - ["小学", "双语和普通课程培养未来技能。", "/academics/primary/", "real-3.jpg"]
 
 news:
   th:

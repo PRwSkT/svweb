@@ -2,12 +2,18 @@ lang: zh
 id: pre-kindergarten
 path: /academics/pre-kindergarten/
 image: real-4.jpg
-title: 幼儿预备班
-eyebrow: 学习第一步
-summary: 温和的日常与安全空间帮助幼儿适应，并通过游戏学习。
+title: 幼托班 (Nursery)
+eyebrow: 招收 1.5 岁及以上学生
+summary: >-
+  提供安全友好的环境，通过 6 种感官游戏 (Sensory Play) 帮助幼儿温和开启双语 (泰英) 学习之旅。
 sections:
-  - title: 游戏化学习
-    body: 通过适龄活动发展动作、语言、情绪与社交能力。
-  - title: 关怀
-    body: 细致照护并定期与家庭沟通。
+  - title: 六大感官发展 (Sensory Play)
+    body: >-
+      我们通过六大感官活动，促进幼儿大脑发育与全面成长，让学习变得充满乐趣。
+  - title: 安全与支持性环境
+    body: >-
+      我们的学习环境安全、友好且充满支持，让孩子在教师的密切关注下感受到家的温暖。
+  - title: 泰英双语培养
+    body: >-
+      通过儿歌、故事和互动游戏，让孩子在无压力的环境中自然熟悉泰语和英语。
 nav: academics
