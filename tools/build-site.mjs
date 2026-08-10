@@ -194,27 +194,15 @@ function footer(locale) {
     ? "อาคาร The 1960 Bldg., " + schoolAddress
     : "The 1960 Bldg., " + schoolAddress;
   
-  return `<footer class="site-footer yonsei-style">
-    <div class="footer-top">
-      <div class="footer-links">
-        <a href="${localizedPath("/privacy/", locale)}">${locale === "th" ? "ประกาศความเป็นส่วนตัว" : locale === "en" ? "Privacy Policy" : "隐私声明"}</a>
-        <a href="${localizedPath("/contact/", locale)}">${locale === "th" ? "ร่วมงานกับเรา" : locale === "en" ? "Recruit" : "招聘"}</a>
-        <a href="${localizedPath("/admissions/", locale)}">${locale === "th" ? "การรับสมัคร" : locale === "en" ? "Admissions" : "招生"}</a>
-        <a href="${localizedPath("/", locale)}">${locale === "th" ? "แผนผังเว็บไซต์" : locale === "en" ? "Site Map" : "网站地图"}</a>
-      </div>
-      <div class="footer-related">
-        <button class="related-sites-btn">Somkidvittaya Related Sites <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 15l-6-6-6 6"/></svg></button>
-      </div>
-    </div>
-    
-    <div class="footer-main">
+  return `<footer class="site-footer">
+    <div class="footer-grid">
       <div class="footer-col">
         <img src="/assets/images/logo-white.png" alt="Somkidvittaya School" height="55" style="height: 55px; width: auto; margin-bottom: 15px;">
         <strong>${locale === "th" ? "โรงเรียนสมคิดวิทยา" : "Somkidvittaya School"}</strong>
         <p>${schoolAddress}</p>
         <div class="footer-social" style="margin-top: 20px;">
-          <a href="#" aria-label="Facebook"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg></a>
-          <a href="#" aria-label="Instagram"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a>
+          <a href="${escapeHtml(siteSettings.facebook)}" target="_blank" aria-label="Facebook"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg></a>
+          <a href="${escapeHtml(siteSettings.instagram)}" target="_blank" aria-label="Instagram"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a>
         </div>
       </div>
       <div class="footer-col">
@@ -223,12 +211,22 @@ function footer(locale) {
         <p>${companyAddressLine}</p>
         <p class="copyright" style="margin-top: 30px;">COPYRIGHT © SIRITHAM CO., LTD. ALL RIGHTS RESERVED.</p>
       </div>
+      <div class="footer-col">
+        <h3>${locale === "th" ? "ติดต่อ" : locale === "en" ? "Contact" : "联系"}</h3>
+        <p>${escapeHtml(siteSettings.address).replace(/\n/g, "<br>")}<br>Tel: <a href="tel:${siteSettings.phone.replace(/[^0-9+]/g, '')}">${escapeHtml(siteSettings.phone)}</a><br>Email: <a href="mailto:${siteSettings.email}">${escapeHtml(siteSettings.email)}</a></p>
+      </div>
+      <div class="footer-col">
+        <h3>${locale === "th" ? "ทางลัด" : locale === "en" ? "Quick Links" : "快捷链接"}</h3>
+        <a href="${localizedPath("/admissions/", locale)}">${l.ctaApply}</a>
+        <a href="${localizedPath("/parents/", locale)}">${l.portal}</a>
+        <a href="${localizedPath("/contact/", locale)}">${l.ctaTour}</a>
+        <a href="${localizedPath("/privacy/", locale)}">${locale === "th" ? "ประกาศความเป็นส่วนตัว" : locale === "en" ? "Privacy Policy" : "隐私声明"}</a>
+      </div>
     </div>
     
     <div class="footer-giant-graphic">
       <img src="/assets/images/sv-graphic.png" alt="" aria-hidden="true">
     </div>
-    <button class="scroll-top-btn" onclick="window.scrollTo({top:0, behavior:'smooth'})" aria-label="Scroll to top">↑<br>TOP</button>
   </footer>
   <div class="mobile-cta">${button(locale === "th" ? "โทร" : locale === "en" ? "Call" : "电话", `tel:${siteSettings.phone.replace(/[^0-9+]/g, '')}`, "ghost")}${button(l.ctaApply, localizedPath("/admissions/apply/", locale), "primary")}${button(l.ctaTour, localizedPath("/contact/", locale), "secondary")}</div>`;
 }
