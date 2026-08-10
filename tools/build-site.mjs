@@ -338,8 +338,8 @@ function textSections(page, locale) {
     
     const paths = chart.data.map((item, index) => {
       const percentage = (item.value / total) * 100;
-      const strokeDasharray = percentage + " " + (100 - percentage);
-      const strokeDashoffset = 100 - currentOffset + 25; // +25 to start at top (12 o'clock)
+      const strokeDasharray = `${percentage} ${100 - percentage}`;
+      const strokeDashoffset = 100 - currentOffset + 25;
       currentOffset += percentage;
       return `<circle cx="21" cy="21" r="${radius}" fill="transparent" stroke="${item.color}" stroke-width="8" stroke-dasharray="${strokeDasharray}" stroke-dashoffset="${strokeDashoffset}" class="chart-segment" style="animation-delay: ${index * 0.15}s" />`;
     }).join("");
@@ -370,37 +370,60 @@ function textSections(page, locale) {
     `;
   }
 
-  const sectionsHtml = `<div class="text-list">
-    ${sections.map(sec => `
-      <div class="text-item">
-        <div class="text-item-header">
-          ${sec.icon ? `<i data-feather="${sec.icon}"></i>` : ""}
-          <h3>${escapeHtml(sec.title || sec[0])}</h3>
+  let contentHtml = "";
+  
+  if (chartHtml && sections.length > 0) {
+    const featuredSection = sections[0];
+    const restSections = sections.slice(1);
+    
+    contentHtml = `
+      <div class="curriculum-grid" style="margin-bottom: 40px;">
+        <div class="text-item featured-item" style="height: 100%; display: flex; flex-direction: column; justify-content: center; box-shadow: 0 20px 50px rgba(139, 29, 50, 0.08); border-color: rgba(139, 29, 50, 0.1);">
+          <div class="text-item-header">
+            ${featuredSection.icon ? `<i data-feather="${featuredSection.icon}"></i>` : ""}
+            <h3 style="font-size: 1.6rem;">${escapeHtml(featuredSection.title || featuredSection[0])}</h3>
+          </div>
+          <p style="font-size: 1.15rem;">${escapeHtml(featuredSection.body || featuredSection[1])}</p>
         </div>
-        <p>${escapeHtml(sec.body || sec[1])}</p>
-      </div>
-    `).join("")}
-  </div>`;
-
-  if (chartHtml) {
-    return `<section class="section curriculum-section" data-animate="fade-up">
-      <div class="section-heading">
-        <p class="eyebrow">${escapeHtml(eyebrowText)}</p>
-        <h2>${escapeHtml(t(page, "title", locale))}</h2>
-      </div>
-      <div class="curriculum-grid">
-        ${sectionsHtml}
         ${chartHtml}
       </div>
-    </section>`;
+      
+      ${restSections.length > 0 ? `
+        <div class="text-list secondary-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 32px;">
+          ${restSections.map((sec, i) => `
+            <div class="text-item" style="animation-delay: ${(i+1) * 0.1}s; height: 100%;">
+              <div class="text-item-header">
+                ${sec.icon ? `<i data-feather="${sec.icon}"></i>` : ""}
+                <h3>${escapeHtml(sec.title || sec[0])}</h3>
+              </div>
+              <p>${escapeHtml(sec.body || sec[1])}</p>
+            </div>
+          `).join("")}
+        </div>
+      ` : ""}
+    `;
+  } else {
+    contentHtml = `
+      <div class="text-list secondary-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 32px;">
+        ${sections.map((sec, i) => `
+          <div class="text-item" style="animation-delay: ${i * 0.1}s; height: 100%;">
+            <div class="text-item-header">
+              ${sec.icon ? `<i data-feather="${sec.icon}"></i>` : ""}
+              <h3>${escapeHtml(sec.title || sec[0])}</h3>
+            </div>
+            <p>${escapeHtml(sec.body || sec[1])}</p>
+          </div>
+        `).join("")}
+      </div>
+    `;
   }
 
-  return `<section class="section" data-animate="fade-up">
+  return `<section class="section curriculum-section" data-animate="fade-up">
     <div class="section-heading">
       <p class="eyebrow">${escapeHtml(eyebrowText)}</p>
       <h2>${escapeHtml(t(page, "title", locale))}</h2>
     </div>
-    ${sectionsHtml}
+    ${contentHtml}
   </section>`;
 }
 
