@@ -115,6 +115,10 @@ for (const file of readdirSync(join(root, 'content/pages'))) {
   if (data.epilogue) p.epilogue[l] = data.epilogue;
   if (data.intro) p.intro = p.intro || {};
   if (data.intro) p.intro[l] = data.intro;
+  if (data.chart) {
+    p.chart = p.chart || {};
+    p.chart[l] = data.chart[l] || data.chart;
+  }
   if (data.type && !p.type) p.type = data.type;
   
   // Get file modification time for sitemap
