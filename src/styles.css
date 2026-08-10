@@ -422,3 +422,80 @@ textarea { resize: vertical; }
   .site-footer { padding: 54px 20px 112px; }
   .mobile-cta { display: flex; }
 }
+
+/* About History Timeline */
+.about-history {
+  max-width: 900px;
+  margin: 0 auto;
+}
+.history-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+  margin-top: 3rem;
+}
+.chapter-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+.chapter-subtitle {
+  color: var(--primary);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+.chapter-header h3 {
+  font-size: 2rem;
+  color: var(--text-dark);
+  margin-bottom: 1rem;
+}
+.chapter-body {
+  font-size: 1.1rem;
+  color: var(--text);
+  line-height: 1.8;
+  max-width: 700px;
+  margin: 0 auto;
+}
+.chapter-events {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+.event-card {
+  background: var(--surface);
+  border-radius: 12px;
+  padding: 1.5rem;
+  display: flex;
+  gap: 1.5rem;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+  border-left: 4px solid var(--primary);
+  align-items: flex-start;
+}
+.event-year {
+  font-weight: 700;
+  color: var(--primary);
+  font-size: 1.25rem;
+  min-width: 120px;
+  flex-shrink: 0;
+}
+.event-content h4 {
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+  color: var(--text-dark);
+}
+.event-content p {
+  color: var(--text);
+  line-height: 1.6;
+}
+
+@media (max-width: 600px) {
+  .event-card {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .event-year {
+    font-size: 1.1rem;
+    min-width: auto;
+  }
+}

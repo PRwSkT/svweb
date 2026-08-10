@@ -113,7 +113,7 @@ for (const file of readdirSync(join(root, 'content/pages'))) {
   if (data.eyebrow) p.eyebrow[l] = data.eyebrow;
   if (data.summary) p.summary[l] = data.summary;
   if (data.seo) p.seo[l] = data.seo;
-  if (data.sections) p.sections[l] = data.sections.map(s => [s.title, s.body]);
+  if (data.sections) p.sections[l] = data.sections;
   
   // Get file modification time for sitemap
   const stat = statSync(join(root, 'content/pages', file));
@@ -271,7 +271,7 @@ function quickLinks(locale) {
 
 function textSections(page, locale) {
   const sections = page.sections?.[locale] || page.sections?.th || [];
-  return `<section class="section"><div class="section-heading"><p class="eyebrow">${locale === "th" ? "รายละเอียด" : locale === "en" ? "Details" : "详情"}</p><h2>${escapeHtml(t(page, "title", locale))}</h2></div><div class="card-grid">${sections.map(([title, body]) => `<article class="info-card"><h3>${escapeHtml(title)}</h3><p>${escapeHtml(body)}</p></article>`).join("")}</div></section>`;
+  return `<section class="section"><div class="section-heading"><p class="eyebrow">${locale === "th" ? "รายละเอียด" : locale === "en" ? "Details" : "详情"}</p><h2>${escapeHtml(t(page, "title", locale))}</h2></div><div class="card-grid">${sections.map(sec => `<article class="info-card"><h3>${escapeHtml(sec.title || sec[0])}</h3><p>${escapeHtml(sec.body || sec[1])}</p></article>`).join("")}</div></section>`;
 }
 
 function programCards(locale) {
@@ -348,8 +348,42 @@ function homeSections(locale) {
   return `${stats(locale)}${quickLinks(locale)}${programCards(locale)}${textSections(pages[0], locale)}${news(locale)}${formSection(locale, "quick-inquiry")}`;
 }
 
+function aboutSections(page, locale) {
+  const sections = page.sections || [];
+  return `<section class="section about-history">
+    <div class="section-heading">
+      <p class="eyebrow">${escapeHtml(t(page, "eyebrow", locale))}</p>
+      <h2>${escapeHtml(t(page, "title", locale))}</h2>
+      <p class="lead">${escapeHtml(t(page, "summary", locale))}</p>
+    </div>
+    <div class="history-timeline">
+      ${sections.map(sec => `
+        <div class="history-chapter">
+          <div class="chapter-header">
+            <p class="chapter-subtitle">${escapeHtml(sec.subtitle || "")}</p>
+            <h3>${escapeHtml(sec.title || "")}</h3>
+            ${sec.body ? `<p class="chapter-body">${escapeHtml(sec.body)}</p>` : ""}
+          </div>
+          <div class="chapter-events">
+            ${(sec.events || []).map(ev => `
+              <div class="event-card">
+                <div class="event-year">${escapeHtml(ev.year || "")}</div>
+                <div class="event-content">
+                  <h4>${escapeHtml(ev.title || "")}</h4>
+                  <p>${escapeHtml(ev.text || "")}</p>
+                </div>
+              </div>
+            `).join("")}
+          </div>
+        </div>
+      `).join("")}
+    </div>
+  </section>`;
+}
+
 function bodyContent(page, locale) {
   if (page.type === "home") return homeSections(locale);
+  if (page.type === "about") return aboutSections(page, locale);
   if (page.type === "programs") return `${programCards(locale)}${textSections({ ...page, sections: { [locale]: [[locale === "th" ? "ภาพรวมหลักสูตร" : "Overview", t(page, "summary", locale)]] } }, locale)}`;
   if (page.type === "admissions") return admissions(locale);
   if (page.type === "steps") return admissions(locale);
