@@ -448,7 +448,7 @@ function contact(locale) {
   const l = locales[locale];
   return `<section class="section contact-grid">
     <div class="contact-card"><h2>${locale === "th" ? "ข้อมูลติดต่อ" : locale === "en" ? "Contact Information" : "联系方式"}</h2><p>Somkidvittaya School<br>${escapeHtml(l.address || siteSettings.address).replace(/\n/g, "<br>")}<br>Tel: ${escapeHtml(siteSettings.phone)}<br>Email: ${escapeHtml(siteSettings.email)}</p><div class="hero-actions">${button(locales[locale].ctaTour, "#contact-form", "primary")}${button(locale === "th" ? "โทรหาเรา" : locale === "en" ? "Call Us" : "致电", `tel:${siteSettings.phone.replace(/[^0-9+]/g, '')}`, "secondary")}</div></div>
-    <iframe title="Map to Somkidvittaya School Rayong" loading="lazy" src="https://www.google.com/maps?q=Somkid%20Vittaya%20School%20Rayong&output=embed"></iframe>
+    <iframe title="Map to Somkidvittaya School Rayong" loading="lazy" src="https://maps.google.com/maps?q=Somkidvittaya%20School%20Rayong&t=&z=16&ie=UTF8&iwloc=&output=embed"></iframe>
   </section><div id="contact-form">${formSection(locale, "contact")}</div>`;
 }
 
