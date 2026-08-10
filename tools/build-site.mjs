@@ -114,6 +114,8 @@ for (const file of readdirSync(join(root, 'content/pages'))) {
   if (data.summary) p.summary[l] = data.summary;
   if (data.seo) p.seo[l] = data.seo;
   if (data.sections) p.sections[l] = data.sections;
+  if (data.epilogue) p.epilogue = p.epilogue || {};
+  if (data.epilogue) p.epilogue[l] = data.epilogue;
   
   // Get file modification time for sitemap
   const stat = statSync(join(root, 'content/pages', file));
@@ -349,7 +351,9 @@ function homeSections(locale) {
 }
 
 function aboutSections(page, locale) {
-  const sections = page.sections || [];
+  const sections = page.sections?.[locale] || page.sections?.th || page.sections || [];
+  const epilogue = page.epilogue?.[locale] || page.epilogue?.th || page.epilogue || null;
+  
   return `<section class="section about-history">
     <div class="section-heading">
       <p class="eyebrow">${escapeHtml(t(page, "eyebrow", locale))}</p>
@@ -360,17 +364,17 @@ function aboutSections(page, locale) {
       ${sections.map(sec => `
         <div class="history-chapter">
           <div class="chapter-header">
-            <p class="chapter-subtitle">${escapeHtml(sec.subtitle || "")}</p>
+            ${sec.subtitle ? `<p class="chapter-subtitle">${escapeHtml(sec.subtitle)}</p>` : ""}
             <h3>${escapeHtml(sec.title || "")}</h3>
             ${sec.body ? `<p class="chapter-body">${escapeHtml(sec.body)}</p>` : ""}
           </div>
           <div class="chapter-events">
             ${(sec.events || []).map(ev => `
-              <div class="event-card">
+              <div class="event-item">
                 <div class="event-year">${escapeHtml(ev.year || "")}</div>
                 <div class="event-content">
-                  <h4>${escapeHtml(ev.title || "")}</h4>
-                  <p>${escapeHtml(ev.text || "")}</p>
+                  ${ev.title ? `<h4>${escapeHtml(ev.title)}</h4>` : ""}
+                  <p>${ev.text ? ev.text.replace(/\n/g, "<br>").replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>") : ""}</p>
                 </div>
               </div>
             `).join("")}
@@ -378,6 +382,12 @@ function aboutSections(page, locale) {
         </div>
       `).join("")}
     </div>
+    ${epilogue ? `
+    <div class="epilogue-section">
+      <h3>${escapeHtml(epilogue.title || "")}</h3>
+      <div class="epilogue-body">${(epilogue.body || "").replace(/\n/g, "<br>").replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")}</div>
+    </div>
+    ` : ""}
   </section>`;
 }
 
