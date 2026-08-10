@@ -486,8 +486,8 @@ function contact(locale) {
   const l = locales[locale];
   return `<section class="section contact-grid">
     <div class="contact-card"><h2>${locale === "th" ? "ข้อมูลติดต่อ" : locale === "en" ? "Contact Information" : "联系方式"}</h2><p>Somkidvittaya School<br>${escapeHtml(l.address || siteSettings.address).replace(/\n/g, "<br>")}<br>Tel: ${escapeHtml(siteSettings.phone)}<br>Email: ${escapeHtml(siteSettings.email)}</p><div class="hero-actions">${button(locales[locale].ctaTour, "#contact-form", "primary")}${button(locale === "th" ? "โทรหาเรา" : locale === "en" ? "Call Us" : "致电", `tel:${siteSettings.phone.replace(/[^0-9+]/g, '')}`, "secondary")}</div></div>
-    <div class="map-wrapper" style="width: 100%; height: 100%; min-height: 400px; background: #e0e0e0;">
-      <iframe title="Map to Somkidvittaya School Rayong" loading="lazy" style="width:100%; height:100%; border:0;" src="https://maps.google.com/maps?q=Somkidvittaya%20School%20Rayong&t=&z=16&ie=UTF8&iwloc=&output=embed"></iframe>
+    <div class="map-wrapper" style="width: 100%; height: 100%; min-height: 400px; background: #e0e0e0; border-radius: 12px; overflow: hidden; box-shadow: var(--shadow);">
+      <iframe title="Map to Somkidvittaya School Rayong" loading="lazy" style="width:100%; height:100%; border:0;" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3877.202377317789!2d101.27551007584166!3d12.67840132034947!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3102d978a6350f95%3A0x6b772c21213f59e6!2sSomkidvittaya%20School!5e0!3m2!1sen!2sth!4v1723300000000!5m2!1sen!2sth" allowfullscreen="" referrerpolicy="no-referrer-when-downgrade"></iframe>
     </div>
   </section><div id="contact-form">${formSection(locale, "contact")}</div>`;
 }
