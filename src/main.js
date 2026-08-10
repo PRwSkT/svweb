@@ -6,6 +6,8 @@
     menuButton.addEventListener("click", () => {
       const isOpen = nav.classList.toggle("is-open");
       menuButton.setAttribute("aria-expanded", String(isOpen));
+      const header = document.querySelector(".site-header");
+      if (header) header.classList.toggle("menu-open", isOpen);
     });
   }
 
