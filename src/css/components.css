@@ -720,14 +720,11 @@ textarea { resize: vertical; }
   transform: scale(1);
 }
 .slider-controls {
-  position: absolute;
-  bottom: 80px;
-  right: 5%;
   display: flex;
   align-items: center;
   gap: 15px;
   color: var(--white);
-  z-index: 10;
+  margin-top: 40px;
 }
 .slider-arrow, .slider-pause {
   background: rgba(0,0,0,0.3);

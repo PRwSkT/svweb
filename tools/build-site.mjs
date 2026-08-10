@@ -240,17 +240,17 @@ function hero(page, locale) {
         <h1>${escapeHtml(t(page, "title", locale))}</h1>
         <p class="lead">${escapeHtml(t(page, "summary", locale))}</p>
         ${page.type !== 'success' ? `<div class="hero-actions">${button(l.ctaTour, localizedPath("/contact/", locale), "secondary")}${button(l.ctaApply, localizedPath("/admissions/apply/", locale), "primary")}${button(l.ctaGuide, localizedPath("/academics/", locale), "ghost inverse")}</div>` : ""}
+        ${isHome ? `<div class="slider-controls">
+          <span class="slider-indicator">01 / 06</span>
+          <div class="slider-arrow prev"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></div>
+          <div class="slider-pause"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg></div>
+          <div class="slider-arrow next"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></div>
+        </div>` : ""}
       </div>
       ${page.type !== 'success' ? `<aside class="hero-index" aria-label="Program highlights" data-animate="fade-up">
         ${feature.map((item) => `<span>${escapeHtml(item)}</span>`).join("")}
       </aside>` : ""}
     </div>
-    ${isHome ? `<div class="slider-controls">
-      <span class="slider-indicator">01 / 06</span>
-      <div class="slider-arrow prev"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></div>
-      <div class="slider-pause"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg></div>
-      <div class="slider-arrow next"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></div>
-    </div>` : ""}
   </section>`;
 }
 
