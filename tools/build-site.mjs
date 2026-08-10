@@ -505,17 +505,6 @@ function html(page, locale) {
   </main>
   ${footer(locale)}
   <script src="/main.js" defer></script>
-  <script>
-    if (window.netlifyIdentity) {
-      window.netlifyIdentity.on("init", user => {
-        if (!user) {
-          window.netlifyIdentity.on("login", () => {
-            document.location.href = "/admin/";
-          });
-        }
-      });
-    }
-  </script>
 </body>
 </html>`;
 }
