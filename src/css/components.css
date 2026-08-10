@@ -195,15 +195,21 @@ main { overflow: hidden; }
 
 .hero {
   position: relative;
+  isolation: isolate;
   min-height: min(770px, calc(100vh - 30px));
   display: flex;
   align-items: flex-end;
   padding: 136px max(20px, calc((100% - var(--max)) / 2)) 56px;
   color: var(--white);
   background-color: var(--sv-deep);
-  background-image: linear-gradient(90deg, rgba(4, 16, 29, 0.91) 0%, rgba(4, 16, 29, 0.73) 43%, rgba(4, 16, 29, 0.25) 100%), linear-gradient(0deg, rgba(4, 16, 29, 0.62) 0%, rgba(4, 16, 29, 0) 45%), var(--hero-image);
-  background-position: center;
-  background-size: cover;
+}
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(90deg, rgba(4, 16, 29, 0.91) 0%, rgba(4, 16, 29, 0.73) 43%, rgba(4, 16, 29, 0.25) 100%), linear-gradient(0deg, rgba(4, 16, 29, 0.62) 0%, rgba(4, 16, 29, 0) 45%);
+  z-index: 1;
+  pointer-events: none;
 }
 
 .hero::after {
@@ -218,7 +224,7 @@ main { overflow: hidden; }
 
 .hero-content {
   position: relative;
-  z-index: 1;
+  z-index: 2;
   width: 100%;
   display: grid;
   grid-template-columns: minmax(0, 730px) minmax(210px, 310px);
@@ -372,7 +378,8 @@ textarea { resize: vertical; }
   .brand small { display: none; }
   .header-actions .button { display: none; }
   .language-switch span { display: none; }
-  .hero { min-height: 625px; padding: 88px 22px 42px; background-image: linear-gradient(90deg, rgba(4, 16, 29, 0.88) 0%, rgba(4, 16, 29, 0.48) 100%), linear-gradient(0deg, rgba(4, 16, 29, 0.6) 0%, rgba(4, 16, 29, 0) 55%), var(--hero-image); }
+  .hero { min-height: 625px; padding: 88px 22px 42px; }
+  .hero::before { background-image: linear-gradient(90deg, rgba(4, 16, 29, 0.88) 0%, rgba(4, 16, 29, 0.48) 100%), linear-gradient(0deg, rgba(4, 16, 29, 0.6) 0%, rgba(4, 16, 29, 0) 55%); }
   .hero-content { grid-template-columns: 1fr; gap: 30px; }
   .hero-index { max-width: 360px; grid-template-columns: repeat(2, minmax(0, 1fr)); border-top: 1px solid rgba(229, 205, 119, 0.7); border-left: 0; }
   .hero-index span { padding: 8px 8px 0 0; border-bottom: 0; }
@@ -705,7 +712,7 @@ textarea { resize: vertical; }
   opacity: 0;
   transition: opacity 1.2s ease, transform 6s ease-out;
   transform: scale(1.05);
-  z-index: -2;
+  z-index: 0;
   will-change: opacity, transform;
 }
 .hero-bg.active {
