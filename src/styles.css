@@ -649,3 +649,8 @@ textarea { resize: vertical; }
   margin: 1.5rem 0;
   line-height: 1.4;
 }
+
+.text-list { max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; gap: 40px; text-align: left; padding: 0 24px; }
+.text-item h3 { font-size: 1.5rem; font-weight: 700; margin-bottom: 12px; color: var(--sv-deep); }
+.text-item p { color: var(--muted); line-height: 1.75; font-size: 1.05rem; }
+

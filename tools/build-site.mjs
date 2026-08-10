@@ -278,7 +278,7 @@ function textSections(page, locale) {
   const sections = page.sections?.[locale] || page.sections?.th || page.sections || [];
   if (sections.length === 0) return "";
   const eyebrowText = page.eyebrow?.[locale] || page.eyebrow?.th || page.eyebrow || (locale === "th" ? "รายละเอียด" : locale === "en" ? "Details" : "详情");
-  return `<section class="section"><div class="section-heading"><p class="eyebrow">${escapeHtml(eyebrowText)}</p><h2>${escapeHtml(t(page, "title", locale))}</h2></div><div class="card-grid">${sections.map(sec => `<article class="info-card"><h3>${escapeHtml(sec.title || sec[0])}</h3><p>${escapeHtml(sec.body || sec[1])}</p></article>`).join("")}</div></section>`;
+  return `<section class="section"><div class="section-heading"><p class="eyebrow">${escapeHtml(eyebrowText)}</p><h2>${escapeHtml(t(page, "title", locale))}</h2></div><div class="text-list">${sections.map(sec => `<div class="text-item"><h3>${escapeHtml(sec.title || sec[0])}</h3><p>${escapeHtml(sec.body || sec[1])}</p></div>`).join("")}</div></section>`;
 }
 
 function programCards(locale) {
