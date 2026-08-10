@@ -156,9 +156,9 @@ function button(label, href, variant = "primary") {
 
 function languageSelect(page, locale) {
   const flags = {
-    th: `<svg viewBox="0 0 900 600" width="24" height="16"><rect fill="#A51931" width="900" height="600"/><rect fill="#F4F5F8" y="100" width="900" height="400"/><rect fill="#2D2A4A" y="200" width="900" height="200"/></svg>`,
-    en: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 30" width="24" height="16"><rect width="60" height="30" fill="#012169"/><path d="M0,0 l60,30 m0,-30 l-60,30" stroke="#fff" stroke-width="6"/><path d="M0,0 l30,15 m30,-15 l-30,15 m0,15 l-30,-15 m60,0 l-30,-15" stroke="#C8102E" stroke-width="4"/><path d="M30,0 v30 M0,15 h60" stroke="#fff" stroke-width="10"/><path d="M30,0 v30 M0,15 h60" stroke="#C8102E" stroke-width="6"/></svg>`,
-    zh: `<svg viewBox="0 0 900 600" width="24" height="16"><rect fill="#ee1c25" width="900" height="600"/><g fill="#ffdf00" transform="translate(150,150)"><path d="M0,-90 L26.4,5.4 L-72.1,-33.5 L72.1,-33.5 L-26.4,5.4 Z"/><path d="M0,-90 L26.4,5.4 L-72.1,-33.5 L72.1,-33.5 L-26.4,5.4 Z" transform="translate(150,-60) scale(0.33) rotate(22.5)"/><path d="M0,-90 L26.4,5.4 L-72.1,-33.5 L72.1,-33.5 L-26.4,5.4 Z" transform="translate(210,30) scale(0.33) rotate(-22.5)"/><path d="M0,-90 L26.4,5.4 L-72.1,-33.5 L72.1,-33.5 L-26.4,5.4 Z" transform="translate(210,120) scale(0.33) rotate(0)"/><path d="M0,-90 L26.4,5.4 L-72.1,-33.5 L72.1,-33.5 L-26.4,5.4 Z" transform="translate(150,210) scale(0.33) rotate(22.5)"/></g></svg>`
+    th: `<svg viewBox="0 0 900 600" width="24" height="16" style="border: 1px solid rgba(0,0,0,0.1); border-radius: 2px;"><rect fill="#A51931" width="900" height="600"/><rect fill="#F4F5F8" y="100" width="900" height="400"/><rect fill="#2D2A4A" y="200" width="900" height="200"/></svg>`,
+    en: `<img src="/assets/images/flag-en.png" alt="English Flag" width="24" height="16" style="border: 1px solid rgba(0,0,0,0.1); border-radius: 2px; object-fit: cover;">`,
+    zh: `<img src="/assets/images/flag-zh.jpg" alt="China Flag" width="24" height="16" style="border: 1px solid rgba(0,0,0,0.1); border-radius: 2px; object-fit: cover;">`
   };
   
   const options = Object.keys(locales).map((code) => {
