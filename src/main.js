@@ -115,33 +115,59 @@
   }
 
   // Reveal Animations
+  const animateCounter = (el, target, duration) => {
+    const easeOutExpo = t => t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
+    let startTime = null;
+    const step = (timestamp) => {
+      if (!startTime) startTime = timestamp;
+      const progress = Math.min((timestamp - startTime) / duration, 1);
+      const value = Math.round(easeOutExpo(progress) * target);
+      el.textContent = value;
+      if (progress < 1) {
+        requestAnimationFrame(step);
+      } else {
+        el.textContent = target;
+      }
+    };
+    requestAnimationFrame(step);
+  };
+
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         entry.target.classList.add("is-visible");
         
         // Counter Animation for Chart
-        if (entry.target.classList.contains("chart-container")) {
-          const counter = entry.target.querySelector(".counter");
-          if (counter) {
-            const target = parseInt(counter.getAttribute("data-target"), 10);
-            let count = 0;
-            const duration = 1200;
-            
-            const easeOutQuart = t => 1 - Math.pow(1 - t, 4);
-            let startTime = null;
-            
-            const updateCount = (timestamp) => {
-              if (!startTime) startTime = timestamp;
-              const progress = Math.min((timestamp - startTime) / duration, 1);
-              count = Math.floor(easeOutQuart(progress) * target);
-              counter.textContent = count;
-              if (progress < 1) requestAnimationFrame(updateCount);
-              else counter.textContent = target;
-            };
-            requestAnimationFrame(updateCount);
-          }
+        const counter = entry.target.querySelector(".counter");
+        if (counter && !counter.dataset.animated) {
+          counter.dataset.animated = "true";
+          const target = parseInt(counter.getAttribute("data-target"), 10);
+          animateCounter(counter, target, 1800);
         }
+
+        // Animate legend values too
+        entry.target.querySelectorAll(".legend-value").forEach((el, i) => {
+          if (!el.dataset.animated) {
+            el.dataset.animated = "true";
+            const text = el.textContent;
+            const num = parseInt(text, 10);
+            if (!isNaN(num)) {
+              el.textContent = "0%";
+              setTimeout(() => {
+                const easeOutExpo = t => t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
+                let startTime = null;
+                const step = (timestamp) => {
+                  if (!startTime) startTime = timestamp;
+                  const progress = Math.min((timestamp - startTime) / 1400, 1);
+                  el.textContent = Math.round(easeOutExpo(progress) * num) + "%";
+                  if (progress < 1) requestAnimationFrame(step);
+                  else el.textContent = num + "%";
+                };
+                requestAnimationFrame(step);
+              }, i * 200);
+            }
+          }
+        });
         
         observer.unobserve(entry.target);
       }

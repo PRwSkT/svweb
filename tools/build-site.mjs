@@ -659,6 +659,9 @@ function html(page, locale) {
   <link rel="preload" as="image" href="/assets/images/${page.image || "real-1.jpg"}">
   <link rel="icon" href="/favicon.ico?v=2">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=2">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/styles.css">
   ${structuredData(page, locale)}
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
