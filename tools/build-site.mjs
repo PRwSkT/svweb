@@ -440,8 +440,8 @@ function html(page, locale) {
   <meta name="twitter:image" content="${siteUrl}/assets/images/${page.image || "real-1.jpg"}">
   
   <link rel="preload" as="image" href="/assets/images/${page.image || "real-1.jpg"}">
-  <link rel="icon" href="/favicon.ico">
-  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="icon" href="/favicon.ico?v=2">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=2">
   <link rel="stylesheet" href="/styles.css">
   ${structuredData(page, locale)}
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
