@@ -770,23 +770,44 @@ textarea { resize: vertical; }
 
 /* Epilogue */
 .epilogue-section {
-  text-align: center;
   margin-top: 5rem;
-  padding: 4rem 2rem;
-  background: linear-gradient(135deg, rgba(18,124,209,0.05) 0%, rgba(18,124,209,0.01) 100%);
+  padding: 4rem;
+  background: linear-gradient(135deg, rgba(18,124,209,0.05) 0%, rgba(18,124,209,0.02) 100%);
   border-radius: 20px;
   position: relative;
+  overflow: hidden;
 }
-.epilogue-section::before {
-  content: '”';
-  position: absolute;
-  top: -2rem;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 8rem;
-  color: var(--primary);
-  opacity: 0.1;
-  font-family: serif;
+.epilogue-content-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 4rem;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+.epilogue-graphic {
+  flex: 0 0 35%;
+  display: flex;
+  justify-content: center;
+}
+.epilogue-graphic img {
+  width: 100%;
+  max-width: 320px;
+  height: auto;
+  object-fit: contain;
+}
+.epilogue-text {
+  flex: 1;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.epilogue-text .quote-icon {
+  width: 64px;
+  height: 64px;
+  color: var(--sv-gold);
+  margin-bottom: 24px;
+  opacity: 0.5;
 }
 .epilogue-section h3 {
   font-size: 2.2rem;
@@ -797,8 +818,18 @@ textarea { resize: vertical; }
   font-size: 1.25rem;
   line-height: 1.9;
   color: var(--text-dark);
-  max-width: 800px;
-  margin: 0 auto;
+}
+
+@media (max-width: 900px) {
+  .epilogue-content-wrapper {
+    flex-direction: column;
+    text-align: center;
+    gap: 2rem;
+  }
+  .epilogue-text {
+    align-items: center;
+    text-align: center;
+  }
 }
 
 @media (max-width: 768px) {
