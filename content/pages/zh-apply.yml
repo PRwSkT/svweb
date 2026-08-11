@@ -7,3 +7,6 @@ eyebrow: 招生
 summary: 通过 Netlify Forms 提交初步信息，招生团队将联系下一步。
 type: form
 nav: admissions
+
+seo:
+  zh: ["在线申请 | Somkidvittaya 学校", "通过 Netlify Forms 提交初步信息，招生团队将联系下一步。"]

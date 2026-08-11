@@ -1,9 +1,12 @@
 lang: zh
 id: faq
 path: /admissions/faq/
-image: real-6.png
+image: real-6.jpg
 title: 招生常见问题
 eyebrow: 招生
 summary: 家长申请前常见问题解答。
 type: faq
 nav: admissions
+
+seo:
+  zh: ["招生常见问题 | Somkidvittaya 学校", "家长申请前常见问题解答。"]

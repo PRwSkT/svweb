@@ -5,7 +5,7 @@ image: real-4.jpg
 title: Nursery (Pre-Kindergarten)
 eyebrow: Accepting Students from age 1.5 and up
 summary: >-
-  Gentle routines and safe spaces help young children adapt and build their bilinguals (Thai-English) foundation naturally through play.
+  Gentle routines and safe spaces help young children adapt and build their bilingual (Thai-English) foundation naturally through play.
 sections:
   - title: Six-Sensory Development
     body: >-
@@ -17,3 +17,6 @@ sections:
     body: >-
       Children familiarize themselves with both Thai and English through songs, storytelling, and shared activities without pressure.
 nav: academics
+
+seo:
+  en: ["Nursery (Pre-Kindergarten) | Somkidvittaya School Rayong", "Gentle routines and safe spaces help young children adapt and build their bilingual (Thai-English) foundation naturally through play."]

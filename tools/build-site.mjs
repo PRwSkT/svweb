@@ -1,4 +1,5 @@
 import { mkdirSync, copyFileSync, writeFileSync, existsSync, rmSync, readFileSync, readdirSync, statSync } from "node:fs";
+import crypto from "node:crypto";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import * as yaml from "js-yaml";
@@ -26,7 +27,7 @@ const locales = {
     submit: "ส่งข้อมูล",
     footer: "โรงเรียนสองภาษา เตรียมอนุบาล-ประถมศึกษา จ.ระยอง",
     langTitle: "ภาษา",
-    address: "80/5 ถ.หลังวัดป่าประดู่ ต.ท่าประดู่ อ.เมืองระยอง จ.ระยอง 21000"
+    address: "80/5 ถ.หลังวัดป่า ต.ท่าประดู่ อ.เมืองระยอง จ.ระยอง 21000 ประเทศไทย"
   },
   en: {
     label: "English",
@@ -44,9 +45,9 @@ const locales = {
     formLevel: "Interested level",
     formMessage: "Message",
     submit: "Submit",
-    footer: "Bilinguals school for Pre-Kindergarten to Primary in Rayong",
+    footer: "Bilingual school for Pre-Kindergarten to Primary in Rayong",
     langTitle: "Language",
-    address: "80/5 Lhang Wat Pa Pradu Rd., Tha Pradu, Mueang Rayong, Rayong 21000"
+    address: "80/5 Lang Wat Pa Rd, Tha Pradu, Mueang Rayong, Rayong 21000, Thailand"
   },
   zh: {
     label: "中文",
@@ -66,7 +67,7 @@ const locales = {
     submit: "提交",
     footer: "位于罗勇府的双语学校，涵盖幼儿预备班至小学",
     langTitle: "语言",
-    address: "罗勇府直辖县 Tha Pradu 区 Lhang Wat Pa Pradu 路 80/5 号，邮编 21000"
+    address: "泰国罗勇府罗勇直辖县 Tha Pradu 区 Lang Wat Pa 路 80/5 号，邮政编码：21000，泰国"
   }
 };
 
@@ -131,9 +132,9 @@ for (const file of readdirSync(join(root, 'content/pages'))) {
 const pages = Array.from(pageMap.values());
 
 const seoFallback = {
-  th: ["โรงเรียนสมคิดวิทยา | Somkidvittaya School", "โรงเรียนสมคิดวิทยา โรงเรียนสองภาษา จ.ระยอง สำหรับเตรียมอนุบาล อนุบาล และประถมศึกษา"],
-  en: ["Somkidvittaya School", "Somkidvittaya School is a bilinguals school in Rayong for Pre-Kindergarten, Kindergarten, and Primary."],
-  zh: ["Somkidvittaya School", "Somkidvittaya School 是罗勇府双语学校，提供幼儿预备班、幼儿园和小学课程。"]
+  th: ["โรงเรียนสมคิดวิทยา | Somkidvittaya School", "โรงเรียนสมคิดวิทยา โรงเรียนสองภาษา จ.ระยอง สำหรับเตรียมอนุบาล ปฐมวัย และประถมศึกษา"],
+  en: ["Somkidvittaya School", "Somkidvittaya School is a bilingual school in Rayong for Pre-Kindergarten, Kindergarten, and Primary."],
+  zh: ["Somkidvittaya学校", "Somkidvittaya学校是罗勇府双语学校，提供幼儿预备班、幼儿园和小学课程。"]
 };
 
 function t(page, key, locale) {
@@ -158,26 +159,28 @@ function escapeHtml(value) {
 }
 
 function button(label, href, variant = "primary") {
-  return `<a class="button ${variant}" href="${href}">${escapeHtml(label)}</a>`;
+  const arrow = variant.includes("primary") || variant.includes("secondary") ? '<span class="arrow">→</span>' : '';
+  return `<a class="button ${variant}" href="${href}">${escapeHtml(label)}${arrow}</a>`;
 }
 
 function languageSelect(page, locale) {
   const globeIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-globe"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>`;
-  const chevronIcon = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-left: 2px;"><polyline points="6 9 12 15 18 9"></polyline></svg>`;
+  
   const langNames = { th: "ภาษาไทย (TH)", en: "English (EN)", zh: "中文 (ZH)" };
-  const shortNames = { th: "TH", en: "EN", zh: "ZH" };
   const options = Object.keys(locales).map((code) => {
     const active = code === locale ? ' active' : '';
     return `<a href="${localizedPath(page.path, code)}" class="lang-option${active}"><span>${langNames[code]}</span></a>`;
   }).join("");
   
   return `
-    <details class="language-switch">
-      <summary aria-label="Language Selector">${globeIcon} <span style="font-size: 0.9em; font-weight: 600;">${shortNames[locale]}</span> ${chevronIcon}</summary>
+    <button class="language-switch" popovertarget="lang-menu" style="anchor-name: --lang-btn;">
+      ${globeIcon} <span>${locale.toUpperCase()}</span>
+    </button>
+    <div id="lang-menu" popover style="position-anchor: --lang-btn; margin: 0; left: anchor(right); top: anchor(bottom); margin-top: 8px; margin-left: -100px;">
       <div class="lang-dropdown">
         ${options}
       </div>
-    </details>
+    </div>
   `;
 }
 
@@ -200,7 +203,7 @@ function header(page, locale) {
         <img src="/assets/images/logo.png" alt="Somkidvittaya School Logo" class="brand-logo" width="60" height="60">
       </a>
       <nav id="site-nav" class="site-nav" data-site-nav>${navLinks}</nav>
-      <div class="header-actions">${languageSelect(page, locale)}${button(l.ctaApply, localizedPath("/admissions/apply/", locale), "primary small")}</div>
+      <div class="header-actions">${languageSelect(page, locale)}${button(l.ctaTour, localizedPath("/contact/", locale), "primary small")}</div>
       <button class="menu-button" data-menu-button aria-expanded="false" aria-controls="site-nav"><span></span><span></span><span></span></button>
     </div>
   </header>`;
@@ -225,8 +228,8 @@ function footer(locale) {
     <div class="footer-grid">
       <div class="footer-col">
         <img src="/assets/images/logo-white.png" alt="Somkidvittaya School" height="55" style="height: 55px; width: auto; margin-bottom: 15px;">
-        <strong>${locale === "th" ? "โรงเรียนสมคิดวิทยา" : "Somkidvittaya School"}</strong>
-        <p>${schoolAddress}<br>Tel: <a href="tel:${siteSettings.phone.replace(/[^0-9+]/g, '')}">${escapeHtml(siteSettings.phone)}</a><br>Email: <a href="mailto:${siteSettings.email}">${escapeHtml(siteSettings.email)}</a></p>
+        <strong>${locale === "th" ? "โรงเรียนสมคิดวิทยา" : locale === "zh" ? "Somkidvittaya学校" : "Somkidvittaya School"}</strong>
+        <p>${escapeHtml(schoolAddress)}<br>Tel: <a href="tel:${siteSettings.phone.replace(/[^0-9+]/g, '')}">${escapeHtml(siteSettings.phone)}</a><br>Email: <a href="mailto:${siteSettings.email}">${escapeHtml(siteSettings.email)}</a></p>
         <div class="footer-social" style="margin-top: 20px;">
           <a href="${escapeHtml(siteSettings.facebook)}" target="_blank" aria-label="Facebook"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg></a>
           <a href="${escapeHtml(siteSettings.instagram)}" target="_blank" aria-label="Instagram"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a>
@@ -256,10 +259,10 @@ function footer(locale) {
 function hero(page, locale) {
   const l = locales[locale];
   const feature = locale === "th"
-    ? ["Bilinguals Program", "Active Learning", "PBL", "AI Integration"]
+    ? ["Bilingual Program", "Active Learning", "PBL", "AI Integration"]
     : locale === "en"
-      ? ["Bilinguals Program", "Active Learning", "PBL", "AI Integration"]
-      : ["Bilinguals Program", "主动学习", "项目式学习", "AI 应用"];
+      ? ["Bilingual Program", "Active Learning", "PBL", "AI Integration"]
+      : ["Bilingual Program", "主动学习", "项目式学习", "AI 应用"];
 
   const isHome = page.id === "home";
   const slides = ["/assets/images/real-1.jpg","/assets/images/real-2.jpg","/assets/images/real-3.jpg","/assets/images/real-4.jpg","/assets/images/real-5.jpg","/assets/images/real-6.jpg"];
@@ -268,11 +271,12 @@ function hero(page, locale) {
   const slidesHtml = isHome 
     ? slides.map((src, i) => {
         const cls = `hero-bg ${i === 0 ? 'active' : ''}`;
+        const loading = i === 0 ? 'fetchpriority="high"' : 'loading="lazy"';
         return src.endsWith(".mp4")
           ? `<video src="${src}" class="${cls}" muted playsinline ${i === 0 ? 'autoplay' : ''}></video>`
-          : `<img src="${src}" class="${cls}" alt="" aria-hidden="true" width="1920" height="1080">`;
+          : `<img src="${src}" class="${cls}" alt="" aria-hidden="true" width="1920" height="1080" ${loading}>`;
       }).join("")
-    : `<img src="/assets/images/${pageImage}" class="hero-bg active" alt="" aria-hidden="true" width="1920" height="1080">`;
+    : `<img src="/assets/images/${pageImage}" class="hero-bg active" alt="" aria-hidden="true" width="1920" height="1080" fetchpriority="high">`;
 
   return `<section class="hero ${isHome ? "home" : ""}" ${isHome ? `data-slides='${JSON.stringify(slides)}'` : ""}>
     ${slidesHtml}
@@ -281,7 +285,7 @@ function hero(page, locale) {
         <p class="eyebrow">${escapeHtml(t(page, "eyebrow", locale))}</p>
         <h1>${escapeHtml(t(page, "title", locale))}</h1>
         <p class="lead">${escapeHtml(t(page, "summary", locale))}</p>
-        ${page.type !== 'success' ? `<div class="hero-actions">${button(l.ctaTour, localizedPath("/contact/", locale), "secondary")}${button(l.ctaApply, localizedPath("/admissions/apply/", locale), "primary")}${button(l.ctaGuide, localizedPath("/academics/", locale), "ghost inverse")}</div>` : ""}
+        ${page.type !== 'success' ? `<div class="hero-actions">${button(l.ctaTour, localizedPath("/contact/", locale), "primary")}${button(l.ctaApply, localizedPath("/admissions/apply/", locale), "secondary")}${button(l.ctaGuide, localizedPath("/academics/", locale), "ghost inverse")}</div>` : ""}
         ${isHome ? `<div class="slider-controls">
           <span class="slider-indicator">01 / 06</span>
           <div class="slider-arrow prev"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></div>
@@ -289,7 +293,7 @@ function hero(page, locale) {
           <div class="slider-arrow next"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></div>
         </div>` : ""}
       </div>
-      ${isHome ? `<aside class="hero-index" aria-label="Program highlights" data-animate="fade-up">
+      ${page.type !== 'success' ? `<aside class="hero-index" aria-label="Program highlights" data-animate="fade-up">
         ${feature.map((item) => `<span>${escapeHtml(item)}</span>`).join("")}
       </aside>` : ""}
     </div>
@@ -298,8 +302,11 @@ function hero(page, locale) {
 
 function stats(locale) {
   return `<section class="stats" aria-label="School highlights" data-animate="fade-up">${globals.stats.map(([n, th, en, zh]) => {
-    const val = typeof n === 'object' && n !== null ? (n[locale] || n.th) : String(n);
-    return `<div><strong>${escapeHtml(val)}</strong><span>${escapeHtml(locale === "th" ? th : locale === "en" ? en : zh)}</span></div>`;
+    let numStr = typeof n === "object" ? (locale === "th" ? n.th : locale === "en" ? n.en : n.zh) : n;
+    const numMatch = String(numStr).match(/^(\d+)(.*)$/);
+    const num = numMatch ? numMatch[1] : numStr;
+    const suffix = numMatch ? numMatch[2] : "";
+    return `<div><strong><span class="counter" data-target="${num}">${num}</span>${suffix}</strong><span>${escapeHtml(locale === "th" ? th : locale === "en" ? en : zh)}</span></div>`;
   }).join("")}</section>`;
 }
 
@@ -325,7 +332,8 @@ function quickLinks(locale) {
 }
 
 function textSections(page, locale) {
-  const sections = page.sections?.[locale] || page.sections?.th || page.sections || [];
+  const rawSections = page.sections?.[locale] || page.sections?.th || page.sections;
+  const sections = Array.isArray(rawSections) ? rawSections : [];
   if (sections.length === 0) return "";
   const eyebrowText = page.eyebrow?.[locale] || page.eyebrow?.th || page.eyebrow || (locale === "th" ? "รายละเอียด" : locale === "en" ? "Details" : "详情");
   
@@ -337,13 +345,24 @@ function textSections(page, locale) {
     let currentOffset = 0;
     const radius = 15.9155;
     
-    const paths = chart.data.map((item, index) => {
-      const percentage = (item.value / total) * 100;
-      const strokeDasharray = `${percentage} ${100 - percentage}`;
-      const strokeDashoffset = 100 - currentOffset + 25;
-      currentOffset += percentage;
-      return `<circle cx="21" cy="21" r="${radius}" fill="transparent" stroke="${item.color}" stroke-width="8" stroke-dasharray="${strokeDasharray}" stroke-dashoffset="${strokeDashoffset}" class="chart-segment" style="animation-delay: ${index * 0.15}s" />`;
-    }).join("");
+    // Calculate sizes and cumulative sizes for layering
+    const sizes = chart.data.map(item => (item.value / total) * 100);
+    const cumulatives = [];
+    let currentSum = 0;
+    for (let i = 0; i < sizes.length; i++) {
+      currentSum += sizes[i];
+      cumulatives.push(currentSum);
+    }
+    
+    const pathsArray = [];
+    // Render in reverse so the largest cumulative (100%) is at the bottom (rendered first)
+    for (let i = chart.data.length - 1; i >= 0; i--) {
+      const item = chart.data[i];
+      const length = cumulatives[i];
+      const strokeDasharray = `${length} ${100 - length}`;
+      pathsArray.push(`<circle cx="21" cy="21" r="${radius}" fill="transparent" stroke="${item.color}" stroke-width="8" stroke-dasharray="${strokeDasharray}" stroke-dashoffset="0" class="chart-segment" style="animation-delay: ${i * 0.15}s" />`);
+    }
+    const paths = pathsArray.join("");
 
     chartHtml = `
       <div class="chart-container" data-animate="fade-in">
@@ -380,7 +399,7 @@ function textSections(page, locale) {
       <div class="featured-program-card">
         <div class="text-item featured-text" style="animation: none; transform: none; opacity: 1;">
           <div class="text-item-header">
-            ${featuredSection.icon ? `<i data-feather="${featuredSection.icon}"></i>` : ""}
+            ${featuredSection.icon ? `<div class="icon-wrapper"><i data-feather="${featuredSection.icon}"></i></div>` : ""}
             <h3 style="font-size: 1.8rem; margin: 0; color: var(--sv-deep);">${escapeHtml(featuredSection.title || featuredSection[0])}</h3>
           </div>
           <p style="font-size: 1.15rem; margin-top: 16px; color: var(--muted); line-height: 1.7;">${escapeHtml(featuredSection.body || featuredSection[1])}</p>
@@ -393,8 +412,8 @@ function textSections(page, locale) {
           ${restSections.map((sec, i) => `
             <div class="text-item" style="animation-delay: ${(i+1) * 0.1}s;">
               <div class="text-item-header">
-                ${sec.icon ? `<i data-feather="${sec.icon}"></i>` : ""}
-                <h3 style="font-size: 1.5rem; margin: 0; color: var(--sv-deep);">${escapeHtml(sec.title || sec[0])}</h3>
+                ${sec.icon ? `<div class="icon-wrapper"><i data-feather="${sec.icon}"></i></div>` : ""}
+                <h3 style="margin: 0; color: var(--sv-deep);">${escapeHtml(sec.title || sec[0])}</h3>
               </div>
               <p style="margin-top: 12px; color: var(--muted); line-height: 1.7; flex-grow: 1;">${escapeHtml(sec.body || sec[1])}</p>
             </div>
@@ -404,12 +423,12 @@ function textSections(page, locale) {
     `;
   } else {
     contentHtml = `
-      <div class="text-list secondary-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 40px;">
+      <div class="text-list ${sections.length === 1 ? 'cards-grid-1' : (sections.length === 2 ? 'cards-grid-2' : 'secondary-grid')}">
         ${sections.map((sec, i) => `
           <div class="text-item" style="animation-delay: ${i * 0.1}s;">
             <div class="text-item-header">
-              ${sec.icon ? `<i data-feather="${sec.icon}"></i>` : ""}
-              <h3 style="font-size: 1.5rem; margin: 0; color: var(--sv-deep);">${escapeHtml(sec.title || sec[0])}</h3>
+              ${sec.icon ? `<div class="icon-wrapper"><i data-feather="${sec.icon}"></i></div>` : ""}
+              <h3 style="margin: 0; color: var(--sv-deep);">${escapeHtml(sec.title || sec[0])}</h3>
             </div>
             <p style="margin-top: 12px; color: var(--muted); line-height: 1.7;">${escapeHtml(sec.body || sec[1])}</p>
           </div>
@@ -439,7 +458,8 @@ function programCards(locale) {
 }
 
 function admissions(locale) {
-  return `<section class="section"><div class="section-heading"><p class="eyebrow">Admissions</p><h2>${locale === "th" ? "สมัครง่ายใน 4 ขั้นตอน" : locale === "en" ? "Apply in Four Steps" : "四步完成申请"}</h2></div><div class="steps">${globals.admissionsSteps[locale].map((s, i) => `<div><strong>${i + 1}</strong><span>${escapeHtml(s)}</span></div>`).join("")}</div></section>${formSection(locale, "admissions-inquiry")}`;
+  const cta = button(locale === "th" ? "ดูโครงสร้างค่าธรรมเนียม" : locale === "en" ? "View Tuition & Fees" : "查看学费", localizedPath("/admissions/tuition-fees/", locale), "secondary");
+  return `<section class="section"><div class="section-heading"><p class="eyebrow">Admissions</p><h2>${locale === "th" ? "สมัครง่ายใน 4 ขั้นตอน" : locale === "en" ? "Apply in Four Steps" : "四步完成申请"}</h2></div><div class="steps">${globals.admissionsSteps[locale].map((s, i) => `<div><strong>${i + 1}</strong><span>${escapeHtml(s)}</span></div>`).join("")}</div><div style="margin-top: 40px; text-align: center;">${cta}</div></section>${formSection(locale, "admissions-inquiry")}`;
 }
 
 function fees(locale) {
@@ -481,15 +501,22 @@ function news(locale) {
   </section>`;
 }
 
-function parents(locale) {
+function parents(page, locale) {
+  const calendarTitle = locale === "th" ? "กรกฎาคม 2026" : locale === "en" ? "July 2026" : "2026年7月";
+  const events = locale === "th" 
+    ? ["ปฐมนิเทศผู้ปกครอง", "วันกิจกรรมภาษาอังกฤษ", "วันตรวจผลงานนักเรียน"] 
+    : locale === "en" 
+      ? ["Parent Orientation", "English Activity Day", "Portfolio Review"] 
+      : ["家长迎新会", "英语活动日", "学生作品审查"];
+      
   return `<section class="section split">
     <div><p class="eyebrow">SV Portal</p><h2>${locale === "th" ? "ทุกข้อมูลสำคัญในที่เดียว" : locale === "en" ? "Everything Important in One Place" : "重要信息集中一处"}</h2><p>${locale === "th" ? "ใช้สำหรับประกาศ เอกสาร ปฏิทินกิจกรรม และทางเข้า SV Portal ระบบภายในของโรงเรียน" : locale === "en" ? "Notices, downloads, activity calendar, and a direct link to the school SV Portal." : "用于公告、下载、活动日历以及进入学校 SV Portal。"}</p>${button(locales[locale].portal, portalUrl, "primary")}</div>
-    <div class="mini-calendar"><strong>July 2026</strong><span>Parent Orientation</span><span>English Activity Day</span><span>Portfolio Review</span></div>
-  </section>`;
+    <div class="mini-calendar"><strong>${calendarTitle}</strong>${events.map(e => `<span>${e}</span>`).join("")}</div>
+  </section>${textSections(page, locale)}`;
 }
 
-function life(locale) {
-  return `<section class="section"><div class="card-grid">${globals.lifeCards[locale].map(([title, body]) => `<article class="info-card"><h3>${escapeHtml(title)}</h3><p>${escapeHtml(body)}</p></article>`).join("")}</div></section>`;
+function life(page, locale) {
+  return `<section class="section"><div class="card-grid">${globals.lifeCards[locale].map(([title, body]) => `<article class="info-card"><h3>${escapeHtml(title)}</h3><p>${escapeHtml(body)}</p></article>`).join("")}</div></section>${textSections(page, locale)}`;
 }
 
 function formSection(locale, name = "contact") {
@@ -508,183 +535,109 @@ function formSection(locale, name = "contact") {
 function contact(locale) {
   const l = locales[locale];
   return `<section class="section contact-grid">
-    <div class="contact-card"><h2>${locale === "th" ? "ข้อมูลติดต่อ" : locale === "en" ? "Contact Information" : "联系方式"}</h2><p>Somkidvittaya School<br>${escapeHtml(l.address || siteSettings.address).replace(/\n/g, "<br>")}<br>Tel: ${escapeHtml(siteSettings.phone)}<br>Email: ${escapeHtml(siteSettings.email)}</p><div class="hero-actions">${button(locales[locale].ctaTour, "#contact-form", "primary")}${button(locale === "th" ? "โทรหาเรา" : locale === "en" ? "Call Us" : "致电", `tel:${siteSettings.phone.replace(/[^0-9+]/g, '')}`, "secondary")}</div></div>
+    <div class="contact-card"><h2>${locale === "th" ? "ข้อมูลติดต่อ" : locale === "en" ? "Contact Information" : "联系方式"}</h2><p>${locale === "th" ? "โรงเรียนสมคิดวิทยา" : locale === "zh" ? "Somkidvittaya学校" : "Somkidvittaya School"}<br>${escapeHtml(l.address || siteSettings.address).replace(/\n/g, "<br>")}<br>Tel: ${escapeHtml(siteSettings.phone)}<br>Email: ${escapeHtml(siteSettings.email)}</p><div class="hero-actions">${button(locales[locale].ctaTour, "#contact-form", "primary")}${button(locale === "th" ? "โทรหาเรา" : locale === "en" ? "Call Us" : "致电", `tel:${siteSettings.phone.replace(/[^0-9+]/g, '')}`, "secondary")}</div></div>
     <div class="map-wrapper" style="width: 100%; height: 100%; min-height: 400px; background: #e0e0e0; border-radius: 12px; overflow: hidden; box-shadow: var(--shadow);">
-      <iframe title="Map to Somkidvittaya School Rayong" loading="lazy" style="width:100%; height:100%; border:0;" src="https://maps.google.com/maps?q=Somkidvittaya%20School%20Rayong&t=&z=16&ie=UTF8&iwloc=&output=embed" allowfullscreen="" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      <iframe title="Map to Somkidvittaya School Rayong" loading="lazy" style="width:100%; height:100%; border:0;" src="https://maps.google.com/maps?q=โรงเรียนสมคิดวิทยา&t=&z=16&ie=UTF8&iwloc=B&output=embed" allowfullscreen="" referrerpolicy="no-referrer-when-downgrade"></iframe>
     </div>
   </section><div id="contact-form">${formSection(locale, "contact")}</div>`;
 }
 
-function homeSections(page, locale) {
-  return `${stats(locale)}${quickLinks(locale)}${directorQuote(locale)}${homeVideoSection(locale)}${whySV(locale)}${programCards(locale)}${parentVoices(locale)}${news(locale)}${formSection(locale, "quick-inquiry")}`;
-}
+function directorQuote(locale) {
+  const quote = locale === "th" ? "“ทุกความตั้งใจของเราในวันนี้ คือการสร้างสรรค์พื้นที่แห่งอนาคตที่ดีที่สุดให้กับลูกหลานของเรา เพราะความสำเร็จที่ยิ่งใหญ่ที่สุดของโรงเรียนสมคิดวิทยา คือการได้เห็นเด็ก ๆ เติบโตอย่างงดงามและมีความสุขในทุก ๆ วัน”" : locale === "en" ? "\"Every effort we make today is dedicated to creating the best future environment for our children. The greatest success of Somkidvittaya School is seeing our students grow beautifully and happily every single day.\"" : "“我们今天所付出的每一份努力，都是为了给孩子创造最好的未来空间。Somkidvittaya学校最大的成功，就是看到孩子们每天都在美丽和快乐中成长。”";
+  const name = locale === "th" ? "นาย ณัฐวัฒน์ สงเคราะห์ธรรม" : locale === "en" ? "Mr. Nattawat Songkrotham" : "Nattawat Songkrotham 先生";
+  const title = locale === "th" ? "ผู้อำนวยการโรงเรียนสมคิดวิทยา" : locale === "en" ? "Director of Somkidvittaya School" : "Somkidvittaya学校校长";
+  const cta = locale === "th" ? "อ่านสาส์นฉบับเต็ม" : locale === "en" ? "Read Full Message" : "阅读全文";
 
-function aboutSections(page, locale) {
-  const sections = page.sections?.[locale] || page.sections?.th || page.sections || [];
-  const epilogue = page.epilogue?.[locale] || page.epilogue?.th || page.epilogue || null;
-  
-  return `<section class="section about-history">
-    ${page.intro ? `
-    <div class="section-heading">
-      <p class="lead">${escapeHtml(t(page, "intro", locale))}</p>
-    </div>` : ""}
-    <div class="history-timeline">
-      ${sections.map(sec => `
-        <div class="history-chapter">
-          <div class="chapter-header">
-            ${sec.subtitle ? `<p class="chapter-subtitle">${escapeHtml(sec.subtitle)}</p>` : ""}
-            <h3>${escapeHtml(sec.title || "")}</h3>
-            ${sec.body ? `<p class="chapter-body">${escapeHtml(sec.body)}</p>` : ""}
-          </div>
-          <div class="chapter-events">
-            ${(sec.events || []).map(ev => `
-              <div class="event-item">
-                <div class="event-year">${escapeHtml(ev.year || "")}</div>
-                <div class="event-content">
-                  ${ev.title ? `<h4>${escapeHtml(ev.title)}</h4>` : ""}
-                  <p>${ev.text ? ev.text.replace(/\n/g, "<br>").replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>") : ""}</p>
-                </div>
-              </div>
-            `).join("")}
-          </div>
+  return `<section class="director-quote-section" data-animate="fade-up">
+    <div class="director-quote-container">
+      <div class="director-image-wrapper">
+        <img src="/assets/images/director.png" alt="${name}" class="director-img">
+        <div class="director-gradient-fade"></div>
+      </div>
+      <div class="director-quote-content">
+        <svg class="quote-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
+        <blockquote class="director-quote-text">${quote}</blockquote>
+        <div class="director-quote-author">
+          <strong>${name}</strong>
+          <span>${title}</span>
         </div>
-      `).join("")}
+        ${button(cta, localizedPath("/director/", locale), "secondary")}
+      </div>
     </div>
-    ${epilogue ? `
-    <div class="epilogue-section">
-      <h3>${escapeHtml(epilogue.title || "")}</h3>
-      <div class="epilogue-body">${(epilogue.body || "").replace(/\n/g, "<br>").replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")}</div>
-    </div>
-    ` : ""}
   </section>`;
 }
 
-function bodyContent(page, locale) {
-  if (page.type === "success") return "";
-  if (page.type === "home") return homeSections(page, locale);
-  if (page.type === "about") return aboutSections(page, locale);
-  if (page.type === "programs") return `${programCards(locale)}${textSections({ ...page, sections: { [locale]: [[locale === "th" ? "ภาพรวมหลักสูตร" : "Overview", t(page, "summary", locale)]] } }, locale)}`;
-  if (page.type === "admissions") return admissions(locale);
-  if (page.type === "steps") return admissions(locale);
-  if (page.type === "fees") return fees(locale);
-  if (page.type === "form") return formSection(locale, "admissions-apply");
-  if (page.type === "faq") return faq(locale);
-  if (page.type === "life") return life(locale);
-  if (page.type === "parents") return parents(locale);
-  if (page.type === "news") return news(locale);
-  if (page.type === "contact") return contact(locale);
-  return textSections(page, locale);
-}
-
-function structuredData(page, locale) {
-  const l = locales[locale];
-  const org = {
-    "@context": "https://schema.org",
-    "@type": "School",
-    name: "Somkidvittaya School",
-    alternateName: "โรงเรียนสมคิดวิทยา",
-    url: pageUrl("/", locale),
-    logo: `${siteUrl}/assets/images/logo.png`,
-    image: `${siteUrl}/assets/images/real-1.jpg`,
-    address: {
-      "@type": "PostalAddress",
-      addressLocality: "Rayong",
-      addressCountry: "TH",
-      streetAddress: l.address || siteSettings.address
-    },
-    telephone: siteSettings.phone,
-    email: siteSettings.email,
-    sameAs: [siteSettings.facebook, siteSettings.instagram, siteSettings.youtube].filter(Boolean)
-  };
-  
-  const scripts = [`<script type="application/ld+json">${JSON.stringify(org)}</script>`];
-  
-  if (page.id !== "home") {
-    const breadcrumb = {
-      "@context": "https://schema.org",
-      "@type": "BreadcrumbList",
-      itemListElement: [
-        {
-          "@type": "ListItem",
-          position: 1,
-          name: t(pages[0], "title", locale),
-          item: pageUrl("/", locale)
-        },
-        {
-          "@type": "ListItem",
-          position: 2,
-          name: t(page, "title", locale),
-          item: pageUrl(page.path, locale)
+function directorFullMessage(page, locale) {
+  let sections = page.sections?.[locale] || page.sections?.th || page.sections || [];
+  if (!Array.isArray(sections)) sections = [];
+  return `<section class="director-full-message">
+    <div class="director-message-container" data-animate="fade-up">
+      ${sections.map((sec, i) => {
+        if (sec.highlight) {
+          return `<blockquote class="message-highlight" style="animation-delay: ${i * 0.1}s">${escapeHtml(sec.highlight)}</blockquote>`;
         }
-      ]
-    };
-    scripts.push(`<script type="application/ld+json">${JSON.stringify(breadcrumb)}</script>`);
-  }
-  
-  return scripts.join("\n  ");
+        return `<p class="${i === 0 ? 'drop-cap' : ''}" style="animation-delay: ${i * 0.1}s">${escapeHtml(sec.text || "")}</p>`;
+      }).join("")}
+      ${(() => {
+        const signoff = page.signoff?.[locale] || page.signoff?.th || page.signoff;
+        if (!signoff) return "";
+        return `
+      <div class="message-signoff" style="animation-delay: ${sections.length * 0.1}s">
+        <img src="/assets/images/${signoff.image}" alt="${escapeHtml(signoff.name)}" class="signoff-avatar">
+        <div class="signoff-details">
+          <strong>${escapeHtml(signoff.name)}</strong>
+          <span>${escapeHtml(signoff.title)}</span>
+        </div>
+      </div>
+      `;
+      })()}
+    </div>
+  </section>`;
 }
 
-function html(page, locale) {
-  const fallbackTitle = `${t(page, "title", locale)} | Somkidvittaya School`;
-  const fallbackDescription = `${t(page, "summary", locale)} ${seoFallback[locale][1]}`;
-  const seoData = page.seo?.[locale];
-  const title = seoData?.title || (Array.isArray(seoData) ? seoData[0] : fallbackTitle);
-  const description = seoData?.description || (Array.isArray(seoData) ? seoData[1] : fallbackDescription.slice(0, 230));
-  
-  const alternates = Object.keys(locales).map((code) => `<link rel="alternate" hreflang="${code}" href="${pageUrl(page.path, code)}">`).join("\n  ");
-  const xDefault = `<link rel="alternate" hreflang="x-default" href="${pageUrl(page.path, "th")}">`;
-  
-  return `<!doctype html>
-<html lang="${locale}"${locale === "zh" ? " class=\"lang-zh\"" : ""}>
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>${escapeHtml(title)}</title>
-  <meta name="description" content="${escapeHtml(description)}">
-  <link rel="canonical" href="${pageUrl(page.path, locale)}">
-  ${alternates}
-  ${xDefault}
-  ${Object.keys(locales).filter(l => l !== locale).map(l => `<meta property="og:locale:alternate" content="${l === "th" ? "th_TH" : l === "en" ? "en_US" : "zh_CN"}">`).join("\n  ")}
-  
-  <meta property="og:title" content="${escapeHtml(title)}">
-  <meta property="og:description" content="${escapeHtml(description)}">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="${pageUrl(page.path, locale)}">
-  <meta property="og:image" content="${siteUrl}/assets/images/${page.image || "real-1.jpg"}">
-  <meta property="og:locale" content="${locale === "th" ? "th_TH" : locale === "en" ? "en_US" : "zh_CN"}">
-  
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="${escapeHtml(title)}">
-  <meta name="twitter:description" content="${escapeHtml(description)}">
-  <meta name="twitter:image" content="${siteUrl}/assets/images/${page.image || "real-1.jpg"}">
-  
-  <link rel="preload" as="image" href="/assets/images/${page.image || "real-1.jpg"}">
-  <link rel="icon" href="/favicon.ico?v=2">
-  <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=2">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/styles.css">
-  ${structuredData(page, locale)}
-  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-</head>
-<body class="${page.path === '/' ? 'is-home' : ''}">
-  ${header(page, locale)}
-  <main id="main">
-    ${hero(page, locale)}
-    ${bodyContent(page, locale)}
-    ${page.type !== 'success' ? `<section class="closing-cta">
-      <p class="eyebrow">Somkidvittaya School</p>
-      <h2>${locale === "th" ? "พร้อมเริ่มต้นเส้นทางใหม่กับ SV?" : locale === "en" ? "Ready to Begin with SV?" : "准备加入 SV 吗？"}</h2>
-      <div class="hero-actions">${button(locales[locale].ctaTour, localizedPath("/contact/", locale), "secondary")}${button(locales[locale].ctaApply, localizedPath("/admissions/apply/", locale), "primary")}</div>
-    </section>` : ""}
-  </main>
-  ${footer(locale)}
-  <script src="/main.js" defer></script>
-  <script src="https://unpkg.com/feather-icons"></script>
-  <script>window.addEventListener('DOMContentLoaded', () => feather.replace());</script>
-</body>
-</html>`;
+function homeVideoSection(locale) {
+  const title = locale === "th" ? "แนะนำโรงเรียน" : locale === "en" ? "School Introduction" : "学校介绍";
+  const subtitle = locale === "th" ? "Somkidvittaya School" : locale === "en" ? "Somkidvittaya School" : "Somkidvittaya 学校";
+  const desc = locale === "th" ? "รับชมวิดีโอแนะนำโรงเรียน เพื่อทำความรู้จักกับแนวทางการจัดการเรียนการสอน สภาพแวดล้อม และความตั้งใจของเราในการสร้างพื้นที่แห่งการเรียนรู้สำหรับเด็ก ๆ" : locale === "en" ? "Watch our school introduction video to learn more about our teaching approach, environment, and our dedication to creating a wonderful learning space for children." : "观看我们的学校介绍视频，了解我们的教学方法、环境以及我们致力于为孩子们创造美好学习空间的决心。";
+
+  return `<section class="section video-section" style="padding-top: 2rem; padding-bottom: 4rem;">
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 4rem; align-items: center; max-width: 1200px; margin: 0 auto; padding: 0 5vw;">
+    <div data-animate="fade-up">
+      <p class="eyebrow">${subtitle}</p>
+      <h2 style="font-size: 2.5rem; margin-bottom: 1rem;">${title}</h2>
+      <p style="color: var(--muted); line-height: 1.7; font-size: 1.1rem;">${desc}</p>
+    </div>
+    <div style="border-radius: 12px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.15); position: relative; padding-bottom: 56.25%; height: 0;" data-animate="fade-up" class="video-container">
+      <iframe src="https://www.youtube.com/embed/HBVkXyl8GVw?si=TE8888H4bXtYiacA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe>
+    </div>
+  </div>
+</section>`;
+}
+
+function parentVoices(locale) {
+  const quote = locale === "th" 
+    ? "“เห็นความเปลี่ยนแปลงของลูกชัดเจนมากตั้งแต่ย้ายมาเรียนที่สมคิดวิทยา ลูกกลับบ้านมาเล่าเรื่องโรงเรียนด้วยความสนุกสนาน กล้าสื่อสารภาษาอังกฤษมากขึ้น และมีความสุขกับการไปโรงเรียนทุกวัน เป็นการตัดสินใจที่คุ้มค่าที่สุดสำหรับอนาคตของลูกค่ะ”" 
+    : locale === "en" 
+      ? "\"We've seen such a positive change since moving our child to Somkidvittaya. They come home excited to share about their day, speak English with much more confidence, and genuinely love going to school. It was the best decision for their future.\"" 
+      : "“自从转到Somkidvittaya学校后，我们看到了孩子身上明显的积极变化。孩子每天回家都兴奋地分享学校里的事，更自信地说英语，并且真的很喜欢上学。这是我们为孩子的未来做出的最佳决定。”";
+  const name = locale === "th" ? "คุณแม่น้องวิน (นักเรียนชั้น ป.2)" : locale === "en" ? "Mother of Win (Grade 2)" : "Win的母亲 (小学二年级)";
+  const eyebrow = locale === "th" ? "เสียงจากผู้ปกครอง" : locale === "en" ? "Parent Voices" : "家长心声";
+
+  return `<section class="director-quote-section" data-animate="fade-up" style="background: var(--sv-stone); padding: 4rem 0;">
+    <div class="director-quote-container reversed">
+      <div class="director-image-wrapper">
+        <img src="/assets/images/real-3.jpg" alt="${eyebrow}" class="director-img" style="border-radius: 50%; max-width: 280px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); object-fit: cover; aspect-ratio: 1/1;">
+      </div>
+      <div class="director-quote-content">
+        <p class="eyebrow">${eyebrow}</p>
+        <svg class="quote-icon" style="color: var(--sv-gold); margin-top: 1rem;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
+        <blockquote class="director-quote-text" style="font-size: 1.4rem;">${quote}</blockquote>
+        <div class="director-quote-author">
+          <strong>${name}</strong>
+        </div>
+      </div>
+    </div>
+  </section>`;
 }
 
 function whySV(locale) {
@@ -743,76 +696,191 @@ function whySV(locale) {
   </section>`;
 }
 
+function homeSections(page, locale) {
+  return `${stats(locale)}${quickLinks(locale)}${directorQuote(locale)}${homeVideoSection(locale)}${whySV(locale)}${programCards(locale)}${parentVoices(locale)}${news(locale)}${formSection(locale, "quick-inquiry")}`;
+}
 
-function directorQuote(locale) {
-  const q = {
-    th: ["ทุกความตั้งใจของเราในวันนี้ คือการสร้างสรรค์พื้นที่แห่งอนาคตที่ดีที่สุดให้กับลูกหลานของเรา เพราะความสำเร็จที่ยิ่งใหญ่ที่สุดของโรงเรียนสมคิดวิทยา คือการได้เห็นเด็ก ๆ เติบโตอย่างงดงามและมีความสุขในทุก ๆ วัน", "นาย ณัฐวัฒน์ สงเคราะห์ธรรม", "ผู้อำนวยการโรงเรียนสมคิดวิทยา", "อ่านสาส์นฉบับเต็ม"],
-    en: ["Our dedication today is to create the best future space for our children. The greatest success of Somkidvittaya School is seeing our students grow beautifully and happily every day.", "Mr. Natthawat Songkrotham", "School Director", "Read Full Message"],
-    zh: ["我们今天的奉献是为了给孩子们创造最好的未来空间。Somkidvittaya学校最大的成功就是看到我们的学生每天都在美丽和快乐中成长。", "Natthawat Songkrotham 先生", "校长", "阅读全文"]
-  }[locale] || {};
-  if (!q[0]) return "";
-  return `<section class="director-quote-section" data-animate="fade-up" style="background: var(--sv-paper); padding: 4rem 0;">
-    <div class="director-quote-container">
-      <div class="director-image-wrapper">
-        <img src="/assets/images/director.png" alt="Director" class="director-img">
-        <div class="director-gradient-fade"></div>
-      </div>
-      <div class="director-quote-content">
-        <svg class="quote-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
-        <blockquote class="director-quote-text">“${q[0]}”</blockquote>
-        <div class="director-quote-author">
-          <strong>${q[1]}</strong>
-          <span>${q[2]}</span>
+function aboutSections(page, locale) {
+  const sections = page.sections?.[locale] || page.sections?.th || page.sections || [];
+  const epilogue = page.epilogue?.[locale] || page.epilogue?.th || page.epilogue || null;
+  
+  return `<section class="section about-history">
+    ${page.intro ? `
+    <div class="section-heading">
+      <p class="lead">${escapeHtml(t(page, "intro", locale))}</p>
+    </div>` : ""}
+    <div class="history-timeline">
+      <h2 class="timeline-main-title" style="margin-left: 5rem; margin-bottom: 3rem; color: var(--sv-gold); font-size: 2.2rem; font-weight: 700;">
+        ${locale === "th" ? "66 ปี แห่งประวัติศาสตร์สมคิดวิทยา" : locale === "en" ? "66 Years of Somkidvittaya History" : "Somkidvittaya 66年历史"}
+      </h2>
+      ${sections.map(sec => `
+        <div class="history-chapter">
+          <div class="chapter-header">
+            ${sec.subtitle ? `<p class="chapter-subtitle">${escapeHtml(sec.subtitle)}</p>` : ""}
+            <h3>${escapeHtml(sec.title || "")}</h3>
+            ${sec.body ? `<p class="chapter-body">${escapeHtml(sec.body)}</p>` : ""}
+          </div>
+          <div class="chapter-events">
+            ${(sec.events || []).map(ev => `
+              <div class="event-item">
+                <div class="event-year">${escapeHtml(ev.year || "")}</div>
+                <div class="event-content">
+                  ${ev.title ? `<h4>${escapeHtml(ev.title)}</h4>` : ""}
+                  <p>${ev.text ? ev.text.replace(/\n/g, "<br>").replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>") : ""}</p>
+                </div>
+              </div>
+            `).join("")}
+          </div>
         </div>
-        <a href="${localizedPath('/director/', locale)}" class="btn primary-btn">${q[3]} &rarr;</a>
-      </div>
+      `).join("")}
     </div>
+    ${epilogue ? `
+    <div class="epilogue-section">
+      <h3>${escapeHtml(epilogue.title || "")}</h3>
+      <div class="epilogue-body">${(epilogue.body || "").replace(/\n/g, "<br>").replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")}</div>
+    </div>
+    ` : ""}
   </section>`;
 }
 
-function homeVideoSection(locale) {
-  const d = {
-    th: { eyebrow: "วีดีโอแนะนำ", title: "ทำความรู้จักกับเรา", desc: "รับชมบรรยากาศและการเรียนการสอนที่สมคิดวิทยาผ่านวีดีโอแนะนำโรงเรียน" },
-    en: { eyebrow: "School Introduction", title: "Get to Know Us", desc: "Experience the atmosphere and academics at Somkidvittaya School." },
-    zh: { eyebrow: "学校介绍", title: "了解我们", desc: "通过视频了解Somkidvittaya的氛围和教学。" }
-  }[locale];
-  return `<section class="section" data-animate="fade-up" style="padding: 4rem 2rem; display: flex; justify-content: center;">
-  <div class="director-quote-container" style="align-items: center;">
-    <div class="director-quote-content">
-      <p class="eyebrow">${d.eyebrow}</p>
-      <h2 style="font-size: 2.5rem;">${d.title}</h2>
-      <p style="color: var(--muted); line-height: 1.7; font-size: 1.1rem; margin-top: 1rem; max-width: 90%;">${d.desc}</p>
-    </div>
-    <div style="flex: 1 1 45%; min-width: 300px; display: flex; justify-content: center; width: 100%; border-radius: 16px; overflow: hidden; box-shadow: 0 12px 36px rgba(0,0,0,0.12);">
-      <iframe src="https://www.youtube.com/embed/HBVkXyl8GVw?si=TE8888H4bXtYiacA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style="width: 100%; aspect-ratio: 16/9; border: none; display: block;"></iframe>
-    </div>
-  </div>
-</section>`;
+function bodyContent(page, locale) {
+  if (page.type === "success") return "";
+  if (page.type === "director") return directorFullMessage(page, locale);
+  if (page.type === "home") return homeSections(page, locale);
+  if (page.type === "about") return aboutSections(page, locale);
+  if (page.type === "programs") return `${programCards(locale)}${textSections({ ...page, sections: { [locale]: [[locale === "th" ? "ภาพรวมหลักสูตร" : "Overview", t(page, "summary", locale)]] } }, locale)}`;
+  if (page.type === "admissions") return admissions(locale);
+  if (page.type === "steps") return admissions(locale);
+  if (page.type === "fees") return fees(locale);
+  if (page.type === "form") return formSection(locale, "admissions-apply");
+  if (page.type === "faq") return faq(locale);
+  if (page.type === "life") return life(page, locale);
+  if (page.type === "parents") return parents(page, locale);
+  if (page.type === "news") return news(locale);
+  if (page.type === "contact") return contact(locale);
+  return textSections(page, locale);
 }
 
-function parentVoices(locale) {
-  const d = {
-    th: { eyebrow: "เสียงจากผู้ปกครอง", quote: "เห็นความเปลี่ยนแปลงของลูกชัดเจนมากตั้งแต่ย้ายมาเรียนที่สมคิดวิทยา ลูกกลับบ้านมาเล่าเรื่องโรงเรียนด้วยความสนุกสนาน กล้าสื่อสารภาษาอังกฤษมากขึ้น และมีความสุขกับการไปโรงเรียนทุกวัน เป็นการตัดสินใจที่คุ้มค่าที่สุดสำหรับอนาคตของลูกค่ะ", name: "คุณแม่น้องวิน (นักเรียนชั้น ป.2)" },
-    en: { eyebrow: "Parent Voices", quote: "We've seen clear changes since moving to Somkidvittaya. Our child comes home excited, communicates more confidently in English, and loves going to school. It’s the best decision for their future.", name: "Win's Mother (Grade 2)" },
-    zh: { eyebrow: "家长心声", quote: "自从转到这里，我们看到了明显的变化。孩子回家后总是兴奋地讲述学校的事情，更敢于用英语交流。这是我们做出的最好决定。", name: "Win 的妈妈 (二年级)" }
-  }[locale];
-  return `<section class="director-quote-section" data-animate="fade-up" style="background: var(--sv-stone); padding: 4rem 0;">
-    <div class="director-quote-container reversed">
-      <div class="director-image-wrapper">
-        <img src="/assets/images/real-3.jpg" alt="${d.eyebrow}" class="director-img" style="border-radius: 50%; max-width: 280px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); object-fit: cover; aspect-ratio: 1/1;">
-      </div>
-      <div class="director-quote-content">
-        <p class="eyebrow">${d.eyebrow}</p>
-        <svg class="quote-icon" style="color: var(--sv-gold); margin-top: 1rem;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
-        <blockquote class="director-quote-text" style="font-size: 1.4rem;">“${d.quote}”</blockquote>
-        <div class="director-quote-author">
-          <strong>${d.name}</strong>
-        </div>
-      </div>
-    </div>
-  </section>`;
+function structuredData(page, locale) {
+  const l = locales[locale];
+  const org = {
+    "@context": "https://schema.org",
+    "@type": "School",
+    name: "Somkidvittaya School",
+    alternateName: "โรงเรียนสมคิดวิทยา",
+    url: pageUrl("/", locale),
+    logo: `${siteUrl}/assets/images/logo.png`,
+    image: `${siteUrl}/assets/images/real-1.jpg`,
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: "Rayong",
+      addressCountry: "TH",
+      streetAddress: l.address || siteSettings.address
+    },
+    telephone: siteSettings.phone,
+    email: siteSettings.email,
+    sameAs: [siteSettings.facebook, siteSettings.instagram, siteSettings.youtube].filter(Boolean)
+  };
+  
+  const scripts = [`<script type="application/ld+json">${JSON.stringify(org)}</script>`];
+  
+  if (page.id !== "home") {
+    const breadcrumb = {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: t(pages[0], "title", locale),
+          item: pageUrl("/", locale)
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: t(page, "title", locale),
+          item: pageUrl(page.path, locale)
+        }
+      ]
+    };
+    scripts.push(`<script type="application/ld+json">${JSON.stringify(breadcrumb)}</script>`);
+  }
+  
+  return scripts.join("\n  ");
 }
 
+function html(page, locale, cssHash) {
+  let fallbackSuffix = " | Somkidvittaya School";
+  if (locale === "th") fallbackSuffix = " | โรงเรียนสมคิดวิทยา";
+  else if (locale === "zh") fallbackSuffix = " | Somkidvittaya学校";
+  const fallbackTitle = `${t(page, "title", locale)}${fallbackSuffix}`;
+  const fallbackDescription = `${t(page, "summary", locale)} ${seoFallback[locale][1]}`;
+  let title, description;
+  try {
+    const seoArray = page.seo?.[locale] || [fallbackTitle, fallbackDescription.slice(0, 230)];
+    title = seoArray[0];
+    description = seoArray[1];
+  } catch (e) {
+    console.error("SEO Error:", page.id, locale, page.seo?.[locale]);
+    title = fallbackTitle;
+    description = fallbackDescription.slice(0, 230);
+  }
+  
+  const alternates = Object.keys(locales).map((code) => `<link rel="alternate" hreflang="${code}" href="${pageUrl(page.path, code)}">`).join("\n  ");
+  const xDefault = `<link rel="alternate" hreflang="x-default" href="${pageUrl(page.path, "th")}">`;
+  
+  return `<!doctype html>
+<html lang="${locale}"${locale === "zh" ? " class=\"lang-zh\"" : ""}>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="view-transition" content="same-origin">
+  <title>${escapeHtml(title)}</title>
+  <meta name="description" content="${escapeHtml(description)}">
+  <link rel="canonical" href="${pageUrl(page.path, locale)}">
+  ${alternates}
+  ${xDefault}
+  ${Object.keys(locales).filter(l => l !== locale).map(l => `<meta property="og:locale:alternate" content="${l === "th" ? "th_TH" : l === "en" ? "en_US" : "zh_CN"}">`).join("\n  ")}
+  
+  <meta property="og:title" content="${escapeHtml(title)}">
+  <meta property="og:description" content="${escapeHtml(description)}">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="${pageUrl(page.path, locale)}">
+  <meta property="og:image" content="${siteUrl}/assets/images/${page.image || "real-1.jpg"}">
+  <meta property="og:locale" content="${locale === "th" ? "th_TH" : locale === "en" ? "en_US" : "zh_CN"}">
+  
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="${escapeHtml(title)}">
+  <meta name="twitter:description" content="${escapeHtml(description)}">
+  <meta name="twitter:image" content="${siteUrl}/assets/images/${page.image || "real-1.jpg"}">
+  
+  <link rel="preload" as="image" href="/assets/images/${page.image || "real-1.jpg"}">
+  <link rel="icon" href="/favicon.ico?v=2">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=2">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css?v=${cssHash}">
+  ${structuredData(page, locale)}
+</head>
+<body class="${page.path === '/' ? 'is-home' : ''}">
+  ${header(page, locale)}
+  <main id="main">
+    ${hero(page, locale)}
+    ${bodyContent(page, locale)}
+    ${page.type !== 'success' ? `<section class="closing-cta">
+      <p class="eyebrow">Somkidvittaya School</p>
+      <h2>${locale === "th" ? "พร้อมเริ่มต้นเส้นทางใหม่กับ SV?" : locale === "en" ? "Ready to Begin with SV?" : "准备加入 SV 吗？"}</h2>
+      <div class="hero-actions">${button(locales[locale].ctaTour, localizedPath("/contact/", locale), "secondary")}${button(locales[locale].ctaApply, localizedPath("/admissions/apply/", locale), "primary")}</div>
+    </section>` : ""}
+  </main>
+  ${footer(locale)}
+  <script src="/main.js" defer></script>
+  <script src="https://unpkg.com/feather-icons"></script>
+  <script>window.addEventListener('DOMContentLoaded', () => feather.replace());</script>
+</body>
+</html>`;
+}
 
 function outputPath(path, locale) {
   const clean = localizedPath(path, locale).replace(/^\/|\/$/g, "");
@@ -843,24 +911,34 @@ if (existsSync(dist)) rmSync(dist, { recursive: true, force: true });
 mkdirSync(dist, { recursive: true });
 mkdirSync(join(dist, "assets", "images"), { recursive: true });
 
-for (const page of pages) {
-  for (const locale of Object.keys(locales)) writePage(page, locale);
-}
-
-  
-  // Concatenate CSS partials
-  const cssOrder = ['variables.css', 'reset.css', 'typography.css', 'layout.css', 'components.css', 'animations.css'];
-  let combinedCss = '';
-  for (const file of cssOrder) {
-    const filePath = join(root, "src", "css", file);
-    if (existsSync(filePath)) {
-      combinedCss += readFileSync(filePath, "utf8") + "\n";
-    }
+// Read CSS early to compute content hash
+const cssOrder = ['variables.css', 'reset.css', 'typography.css', 'layout.css', 'components.css', 'animations.css'];
+let combinedCss = '';
+for (const file of cssOrder) {
+  const filePath = join(root, "src", "css", file);
+  if (existsSync(filePath)) {
+    combinedCss += readFileSync(filePath, "utf8") + "\n";
   }
-  writeFileSync(join(dist, "styles.css"), combinedCss);
+}
+const cssHash = crypto.createHash('md5').update(combinedCss).digest('hex').substring(0, 8);
+
+for (const page of pages) {
+  for (const locale of Object.keys(locales)) writePage(page, locale, cssHash);
+}
+  
+writeFileSync(join(dist, "styles.css"), combinedCss);
 copyAsset("src/main.js", "main.js");
 copyAsset("src/assets/favicon.ico", "favicon.ico");
 copyAsset("src/assets/apple-touch-icon.png", "apple-touch-icon.png");
+
+// Copy Fonts
+mkdirSync(join(dist, "assets", "fonts"), { recursive: true });
+for (const font of ['SukhumvitSet-Light.ttf', 'SukhumvitSet-SemiBold.ttf', 'SukhumvitSet-Text.ttf', 'SukhumvitSet-Thin.ttf']) {
+  if (existsSync(join(root, font))) {
+    copyFileSync(join(root, font), join(dist, "assets", "fonts", font));
+  }
+}
+
 for (const image of readdirSync(join(root, "src/assets/images"))) {
   if (image.startsWith('.')) continue;
   copyAsset(`src/assets/images/${image}`, `assets/images/${image}`);

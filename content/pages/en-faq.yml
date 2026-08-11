@@ -1,9 +1,12 @@
 lang: en
 id: faq
 path: /admissions/faq/
-image: real-6.png
+image: real-6.jpg
 title: Admissions FAQ
 eyebrow: Admissions
 summary: Answers to common parent questions before applying.
 type: faq
 nav: admissions
+
+seo:
+  en: ["Admissions FAQ | Somkidvittaya School Rayong", "Answers to common parent questions before applying."]

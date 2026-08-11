@@ -11,3 +11,6 @@ sections:
   - title: 教师
     body: 按学段展示泰国教师、外籍教师与支持人员。
 nav: about
+
+seo:
+  zh: ["管理团队与教师 | Somkidvittaya 学校", "教师团队页面可展示照片、职位与简介，帮助家长建立信任。"]

@@ -7,3 +7,6 @@ eyebrow: Admissions
 summary: Submit an initial inquiry through Netlify Forms so admissions can follow up.
 type: form
 nav: admissions
+
+seo:
+  en: ["Apply Online | Somkidvittaya School Rayong", "Submit an initial inquiry through Netlify Forms so admissions can follow up."]

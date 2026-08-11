@@ -1,7 +1,7 @@
 lang: zh
 id: approach
 path: /academics/approach/
-image: real-6.png
+image: real-6.jpg
 title: 我们的教学方法
 eyebrow: 主动学习 / 项目式学习 / AI
 summary: 我们结合主动学习、项目式学习与适龄 AI 应用，帮助孩子思考与创造。
@@ -11,3 +11,6 @@ sections:
   - title: AI 应用
     body: 数字工具支持思考，不取代教师与真实经验。
 nav: academics
+
+seo:
+  zh: ["我们的教学方法 | Somkidvittaya 学校", "我们结合主动学习、项目式学习与适龄 AI 应用，帮助孩子思考与创造。"]

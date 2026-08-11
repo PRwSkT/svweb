@@ -9,9 +9,12 @@ summary: >-
   responsible global citizens.
 sections:
   - title: Vision
-    body: To be a trusted bilinguals school for the region.
+    body: To be a trusted bilingual school for the region.
   - title: Mission
     body: To balance academics, languages, character, and future skills.
   - title: Values
     body: Care, Curiosity, Confidence, Community
 nav: about
+
+seo:
+  en: ["Vision, Mission, and Values | Somkidvittaya School Rayong", "We help learners become happy, thoughtful, multilingual, and socially responsible global citizens."]

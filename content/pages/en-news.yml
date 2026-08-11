@@ -1,7 +1,7 @@
 lang: en
 id: news
 path: /news/
-image: real-6.png
+image: real-6.jpg
 title: News and Events
 eyebrow: News & Events
 summary: >-
@@ -9,3 +9,6 @@ summary: >-
   SEO.
 type: news
 nav: news
+
+seo:
+  en: ["News and Events | Somkidvittaya School Rayong", "Updates from the school community that keep the website active and support SEO."]

@@ -1,9 +1,12 @@
 lang: zh
 id: news
 path: /news/
-image: real-6.png
+image: real-6.jpg
 title: 新闻与活动
 eyebrow: 新闻与活动
 summary: 发布学校动态，让网站保持活跃并支持长期 SEO。
 type: news
 nav: news
+
+seo:
+  zh: ["新闻与活动 | Somkidvittaya 学校", "发布学校动态，让网站保持活跃并支持长期 SEO。"]

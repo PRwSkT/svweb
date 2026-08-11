@@ -2,14 +2,23 @@ lang: en
 id: home
 path: /
 image: real-1.jpg
-title: ""
+title: Nurturing Global Citizens from Day One
 eyebrow: Somkidvittaya School, 66 years
 summary: >-
-  A bilinguals school in Rayong for Pre-Kindergarten to Primary, combining Bilinguals Program,
+  A bilingual school in Rayong for Pre-Kindergarten to Primary, combining Bilinguals Program,
   active learning, PBL, and thoughtful technology.
+sections:
+  - title: Why SV
+    body: >-
+      Bilinguals Program, active learning classrooms, PBL, and data-informed care for each
+      learner.
+  - title: Programs
+    body: >-
+      Pre-Kindergarten, Kindergarten, and Primary pathways designed for
+      confidence, language, and life skills.
 seo:
   - Somkidvittaya School — Bilinguals School in Rayong
   - >-
-    Somkidvittaya School is a bilinguals Bilinguals Program school in Rayong for
+    Somkidvittaya School is a bilingual Bilinguals Program school in Rayong for
     Pre-Kindergarten to Primary with active learning and PBL.
 type: home

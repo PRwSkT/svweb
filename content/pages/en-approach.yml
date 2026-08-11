@@ -1,7 +1,7 @@
 lang: en
 id: approach
 path: /academics/approach/
-image: real-6.png
+image: real-6.jpg
 title: Our Learning Approach
 eyebrow: Active Learning / PBL / AI
 summary: >-
@@ -15,3 +15,6 @@ sections:
       Digital tools support thinking without replacing teachers or real
       experience.
 nav: academics
+
+seo:
+  en: ["Our Learning Approach | Somkidvittaya School Rayong", "Our approach blends active learning, PBL, and age-appropriate AI integration to help children think and create."]

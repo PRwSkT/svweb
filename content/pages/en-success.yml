@@ -4,6 +4,9 @@ path: /success/
 title: Submission Successful!
 eyebrow: Thank You
 summary: Thank you for contacting Somkidvittaya School. Our team has received your information and will get back to you as soon as possible.
-image: real-6.png
+image: real-6.jpg
 nav: null
 type: success
+
+seo:
+  en: ["Submission Successful! | Somkidvittaya School Rayong", "Thank you for contacting Somkidvittaya School. Our team has received your information and will get back to you as soon as possible."]

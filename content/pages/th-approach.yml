@@ -1,7 +1,7 @@
 lang: th
 id: approach
 path: /academics/approach/
-image: real-6.png
+image: real-6.jpg
 title: แนวการสอนของเรา
 eyebrow: Active Learning / PBL / AI
 summary: >-
@@ -13,3 +13,6 @@ sections:
   - title: AI Integration
     body: ใช้เครื่องมือดิจิทัลเพื่อฝึกคิด ไม่แทนที่ครูหรือประสบการณ์จริง
 nav: academics
+
+seo:
+  th: ["แนวการสอนของเรา | โรงเรียนสมคิดวิทยา ระยอง", "การสอนของเราผสม active learning, project-based learning และ AI integration อย่างเหมาะสมกับวัย ไม่ใช่เทคโนโลยีเพื่อโชว์ แต่เพื่อช่วยให้เด็กคิดและสร้าง สมัครเรียนตั้งแต่ปฐมวัยถึงประถมที่โรงเรียนสมคิดวิทยา จ.ระยอง"]

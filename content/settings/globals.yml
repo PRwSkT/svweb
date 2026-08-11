@@ -21,8 +21,8 @@ quickLinks:
 programCards:
   th:
     - ["Trilingual Program", "เตรียมพบกับหลักสูตรใหม่เร็วๆ นี้ (Coming Soon)", "/academics/trilingual/", "real-1.jpg"]
-    - ["เตรียมนุบาล", "ดูแลก้าวแรกอย่างอบอุ่นผ่าน 6 Sensory Play", "/academics/pre-kindergarten/", "pre-k-program.jpg"]
-    - ["อนุบาล", "Bilinguals Program ส่งเสริมพัฒนาการและภาษา", "/academics/kindergarten/", "real-2.jpg"]
+    - ["เตรียมอนุบาล", "ดูแลก้าวแรกอย่างอบอุ่นผ่าน 6 Sensory Play", "/academics/pre-kindergarten/", "pre-k-program.jpg"]
+    - ["ปฐมวัย", "Bilinguals Program ส่งเสริมพัฒนาการและภาษา", "/academics/kindergarten/", "real-2.jpg"]
     - ["ประถมศึกษา", "Bilinguals & General Program มุ่งสู่สากล", "/academics/primary/", "primary-program.jpg"]
   en:
     - ["Trilingual Program", "Coming Soon", "/academics/trilingual/", "real-1.jpg"]
@@ -74,7 +74,7 @@ admissionsSteps:
 fees:
   th:
     heads: ["ระดับชั้น", "ค่าธรรมเนียม", "หมายเหตุ"]
-    rows: ["เตรียมอนุบาล", "อนุบาล", "ประถมศึกษา"]
+    rows: ["เตรียมอนุบาล", "ปฐมวัย", "ประถมศึกษา"]
   en:
     heads: ["Level", "Fee", "Notes"]
     rows: ["Pre-Kindergarten", "Kindergarten", "Primary"]
