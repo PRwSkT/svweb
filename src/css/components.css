@@ -1308,7 +1308,7 @@ p.drop-cap::first-letter { font-size: 4.5rem; font-weight: 700; color: var(--sv-
 
 
 /* Connect contact-card and map-wrapper as a single block */
-@media (min-width: 901px) {
+@media (min-width: 769px) {
   .contact-grid .contact-card {
     border-top-right-radius: 0 !important;
     border-bottom-right-radius: 0 !important;
@@ -1321,7 +1321,7 @@ p.drop-cap::first-letter { font-size: 4.5rem; font-weight: 700; color: var(--sv-
     border-bottom-right-radius: 20px !important;
   }
 }
-@media (max-width: 900px) {
+@media (max-width: 768px) {
   .contact-grid .contact-card {
     border-bottom-left-radius: 0 !important;
     border-bottom-right-radius: 0 !important;
