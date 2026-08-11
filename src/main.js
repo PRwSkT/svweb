@@ -8,6 +8,7 @@
       menuButton.setAttribute("aria-expanded", String(isOpen));
       const header = document.querySelector(".site-header");
       if (header) header.classList.toggle("menu-open", isOpen);
+      document.body.classList.toggle("lock-scroll", isOpen);
     });
   }
 

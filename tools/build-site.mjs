@@ -44,7 +44,7 @@ const locales = {
     formLevel: "Interested level",
     formMessage: "Message",
     submit: "Submit",
-    footer: "Bilingual school for Pre-Kindergarten to Primary in Rayong",
+    footer: "Bilinguals school for Pre-Kindergarten to Primary in Rayong",
     langTitle: "Language",
     address: "80/5 Lhang Wat Pa Pradu Rd., Tha Pradu, Mueang Rayong, Rayong 21000"
   },
@@ -132,7 +132,7 @@ const pages = Array.from(pageMap.values());
 
 const seoFallback = {
   th: ["โรงเรียนสมคิดวิทยา | Somkidvittaya School", "โรงเรียนสมคิดวิทยา โรงเรียนสองภาษา จ.ระยอง สำหรับเตรียมอนุบาล อนุบาล และประถมศึกษา"],
-  en: ["Somkidvittaya School", "Somkidvittaya School is a bilingual school in Rayong for Pre-Kindergarten, Kindergarten, and Primary."],
+  en: ["Somkidvittaya School", "Somkidvittaya School is a bilinguals school in Rayong for Pre-Kindergarten, Kindergarten, and Primary."],
   zh: ["Somkidvittaya School", "Somkidvittaya School 是罗勇府双语学校，提供幼儿预备班、幼儿园和小学课程。"]
 };
 
@@ -162,20 +162,18 @@ function button(label, href, variant = "primary") {
 }
 
 function languageSelect(page, locale) {
-  const flags = {
-    th: `<svg viewBox="0 0 900 600" width="24" height="16" style="border: 1px solid rgba(0,0,0,0.1); border-radius: 2px;"><rect fill="#A51931" width="900" height="600"/><rect fill="#F4F5F8" y="100" width="900" height="400"/><rect fill="#2D2A4A" y="200" width="900" height="200"/></svg>`,
-    en: `<img src="/assets/images/flag-en.png" alt="English Flag" width="24" height="16" style="border: 1px solid rgba(0,0,0,0.1); border-radius: 2px; object-fit: cover;">`,
-    zh: `<img src="/assets/images/flag-zh.jpg" alt="China Flag" width="24" height="16" style="border: 1px solid rgba(0,0,0,0.1); border-radius: 2px; object-fit: cover;">`
-  };
-  
+  const globeIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-globe"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>`;
+  const chevronIcon = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-left: 2px;"><polyline points="6 9 12 15 18 9"></polyline></svg>`;
+  const langNames = { th: "ภาษาไทย (TH)", en: "English (EN)", zh: "中文 (ZH)" };
+  const shortNames = { th: "TH", en: "EN", zh: "ZH" };
   const options = Object.keys(locales).map((code) => {
     const active = code === locale ? ' active' : '';
-    return `<a href="${localizedPath(page.path, code)}" class="lang-option${active}">${flags[code]}<span>${locales[code].label}</span></a>`;
+    return `<a href="${localizedPath(page.path, code)}" class="lang-option${active}"><span>${langNames[code]}</span></a>`;
   }).join("");
   
   return `
     <details class="language-switch">
-      <summary aria-label="Language Selector">${flags[locale]}</summary>
+      <summary aria-label="Language Selector">${globeIcon} <span style="font-size: 0.9em; font-weight: 600;">${shortNames[locale]}</span> ${chevronIcon}</summary>
       <div class="lang-dropdown">
         ${options}
       </div>
@@ -258,13 +256,13 @@ function footer(locale) {
 function hero(page, locale) {
   const l = locales[locale];
   const feature = locale === "th"
-    ? ["Bilingual Program", "Active Learning", "PBL", "AI Integration"]
+    ? ["Bilinguals Program", "Active Learning", "PBL", "AI Integration"]
     : locale === "en"
-      ? ["Bilingual Program", "Active Learning", "PBL", "AI Integration"]
-      : ["Bilingual Program", "主动学习", "项目式学习", "AI 应用"];
+      ? ["Bilinguals Program", "Active Learning", "PBL", "AI Integration"]
+      : ["Bilinguals Program", "主动学习", "项目式学习", "AI 应用"];
 
   const isHome = page.id === "home";
-  const slides = ["/assets/images/real-1.jpg","/assets/images/real-2.jpg","/assets/images/real-3.jpg","/assets/images/real-4.jpg","/assets/images/real-5.jpg","/assets/images/real-6.png"];
+  const slides = ["/assets/images/real-1.jpg","/assets/images/real-2.jpg","/assets/images/real-3.jpg","/assets/images/real-4.jpg","/assets/images/real-5.jpg","/assets/images/real-6.jpg"];
   const pageImage = page.image || 'real-1.jpg';
   
   const slidesHtml = isHome 
@@ -291,7 +289,7 @@ function hero(page, locale) {
           <div class="slider-arrow next"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></div>
         </div>` : ""}
       </div>
-      ${page.type !== 'success' ? `<aside class="hero-index" aria-label="Program highlights" data-animate="fade-up">
+      ${isHome ? `<aside class="hero-index" aria-label="Program highlights" data-animate="fade-up">
         ${feature.map((item) => `<span>${escapeHtml(item)}</span>`).join("")}
       </aside>` : ""}
     </div>
@@ -300,10 +298,8 @@ function hero(page, locale) {
 
 function stats(locale) {
   return `<section class="stats" aria-label="School highlights" data-animate="fade-up">${globals.stats.map(([n, th, en, zh]) => {
-    const numMatch = n.match(/^(\\d+)(.*)$/);
-    const num = numMatch ? numMatch[1] : n;
-    const suffix = numMatch ? numMatch[2] : "";
-    return `<div><strong><span class="counter" data-target="${num}">0</span>${suffix}</strong><span>${escapeHtml(locale === "th" ? th : locale === "en" ? en : zh)}</span></div>`;
+    const val = typeof n === 'object' && n !== null ? (n[locale] || n.th) : String(n);
+    return `<div><strong>${escapeHtml(val)}</strong><span>${escapeHtml(locale === "th" ? th : locale === "en" ? en : zh)}</span></div>`;
   }).join("")}</section>`;
 }
 
@@ -433,7 +429,7 @@ function textSections(page, locale) {
 
 function programCards(locale) {
   return `<section class="section" data-animate="fade-up"><div class="section-heading"><p class="eyebrow">Academics</p><h2>${locale === "th" ? "เลือกดูหลักสูตรตามช่วงวัย" : locale === "en" ? "Explore by Program" : "按学段了解课程"}</h2></div><div class="card-grid programs-grid reveal-stagger" data-animate="reveal-stagger">${globals.programCards[locale].map(([title, body, href, image]) => `<a class="program-card" href="${localizedPath(href, locale)}">
-  <div class="program-card-img"><img src="/images/${image || 'real-1.jpg'}" alt="${escapeHtml(title)}" loading="lazy"></div>
+  <div class="program-card-img"><img src="/assets/images/${image || 'real-1.jpg'}" alt="${escapeHtml(title)}" loading="lazy"></div>
   <div class="program-card-content">
     <h3>${escapeHtml(title)}</h3>
     <p>${escapeHtml(body)}</p>
@@ -520,7 +516,7 @@ function contact(locale) {
 }
 
 function homeSections(page, locale) {
-  return `${stats(locale)}${quickLinks(locale)}${programCards(locale)}${textSections(page, locale)}${news(locale)}${formSection(locale, "quick-inquiry")}`;
+  return `${stats(locale)}${quickLinks(locale)}${directorQuote(locale)}${homeVideoSection(locale)}${whySV(locale)}${programCards(locale)}${parentVoices(locale)}${news(locale)}${formSection(locale, "quick-inquiry")}`;
 }
 
 function aboutSections(page, locale) {
@@ -631,7 +627,9 @@ function structuredData(page, locale) {
 function html(page, locale) {
   const fallbackTitle = `${t(page, "title", locale)} | Somkidvittaya School`;
   const fallbackDescription = `${t(page, "summary", locale)} ${seoFallback[locale][1]}`;
-  const [title, description] = page.seo?.[locale] || [fallbackTitle, fallbackDescription.slice(0, 230)];
+  const seoData = page.seo?.[locale];
+  const title = seoData?.title || (Array.isArray(seoData) ? seoData[0] : fallbackTitle);
+  const description = seoData?.description || (Array.isArray(seoData) ? seoData[1] : fallbackDescription.slice(0, 230));
   
   const alternates = Object.keys(locales).map((code) => `<link rel="alternate" hreflang="${code}" href="${pageUrl(page.path, code)}">`).join("\n  ");
   const xDefault = `<link rel="alternate" hreflang="x-default" href="${pageUrl(page.path, "th")}">`;
@@ -688,6 +686,133 @@ function html(page, locale) {
 </body>
 </html>`;
 }
+
+function whySV(locale) {
+  const content = {
+    th: {
+      eyebrow: "จุดเด่นของ SV",
+      title: "ทำไมต้องสมคิดวิทยา",
+      pillars: [
+        { icon: "message-circle", title: "สภาพแวดล้อม 2 ภาษา", body: "พัฒนาทักษะภาษาอังกฤษอย่างเป็นธรรมชาติผ่านการใช้งานจริงในชีวิตประจำวัน สร้างความมั่นใจในการสื่อสาร" },
+        { icon: "users", title: "เรียนรู้ผ่านการลงมือทำ (PBL)", body: "ห้องเรียนแบบ Active Learning ที่เน้นให้เด็กคิดวิเคราะห์และแก้ปัญหาผ่านโครงงานที่ประยุกต์ใช้ได้ในโลกจริง" },
+        { icon: "pie-chart", title: "ดูแลใส่ใจรายบุคคลด้วยข้อมูล", body: "เราใช้ข้อมูลเพื่อติดตามและสนับสนุนพัฒนาการของนักเรียนแต่ละคนอย่างใกล้ชิดและตรงจุดตามศักยภาพ" },
+        { icon: "trending-up", title: "เส้นทางการเรียนรู้ที่ต่อเนื่อง", body: "เตรียมความพร้อมอย่างมั่นคงตั้งแต่ระดับเตรียมอนุบาลจนจบประถมศึกษา สู่ทักษะแห่งอนาคตอย่างไร้รอยต่อ" }
+      ]
+    },
+    en: {
+      eyebrow: "Why SV",
+      title: "Why Somkidvittaya",
+      pillars: [
+        { icon: "message-circle", title: "Natural Bilinguals Environment", body: "Develop English proficiency organically through real-world daily interactions for confident communication." },
+        { icon: "users", title: "Project-Based Learning", body: "Active classrooms focused on critical thinking and problem-solving through hands-on, real-world projects." },
+        { icon: "pie-chart", title: "Data-Informed Care", body: "We use data to closely monitor and support each student's unique development precisely and effectively." },
+        { icon: "trending-up", title: "Seamless Academic Pathways", body: "A secure and connected foundation from Pre-K through Primary, preparing students for future skills." }
+      ]
+    },
+    zh: {
+      eyebrow: "SV 的优势",
+      title: "为什么选择 Somkidvittaya",
+      pillars: [
+        { icon: "message-circle", title: "自然的双语环境", body: "通过日常生活中的实际运用自然地发展英语技能，实现自信交流。" },
+        { icon: "users", title: "项目式学习 (PBL)", body: "活跃的课堂重点是通过能应用于现实世界的动手项目培养批判性思维。" },
+        { icon: "pie-chart", title: "基于数据的个性化关怀", body: "我们使用数据密切跟踪并精确支持每位学生独特的发展轨迹。" },
+        { icon: "trending-up", title: "无缝衔接的学习路径", body: "从学前班到小学阶段的坚实基础，为学生掌握未来技能做好全面准备。" }
+      ]
+    }
+  };
+
+  const data = content[locale] || content.th;
+  
+  return `<section class="section why-sv-section" data-animate="fade-up" style="position: relative; overflow: hidden; padding-top: 6rem; padding-bottom: 6rem;">
+    <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; max-width: 800px; margin: 0 auto 60px auto; width: 100%;">
+      <p style="color: var(--sv-crimson); font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin: 0;">${data.eyebrow}</p>
+      <h2 style="font-size: 2.5rem; margin-top: 12px; margin-bottom: 0; color: var(--sv-deep);">${data.title}</h2>
+    </div>
+    
+    <div class="why-sv-grid">
+      ${data.pillars.map((pillar, i) => `
+        <div class="why-sv-card" style="display: flex; flex-direction: column; align-items: flex-start; animation-delay: ${i * 0.1}s; height: 100%;">
+          <div class="icon-wrapper" style="width: 64px; height: 64px; background: rgba(139, 29, 50, 0.05); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--sv-crimson); margin-bottom: 24px; transition: all 0.3s ease;">
+            <i data-feather="${pillar.icon}" style="width: 32px; height: 32px; stroke-width: 2;"></i>
+          </div>
+          <h3 style="font-size: 1.3rem; color: var(--sv-deep); margin: 0 0 16px 0; font-weight: 700; line-height: 1.4;">${pillar.title}</h3>
+          <p style="color: var(--muted); line-height: 1.7; margin: 0; font-size: 1.05rem;">${pillar.body}</p>
+        </div>
+      `).join('')}
+    </div>
+  </section>`;
+}
+
+
+function directorQuote(locale) {
+  const q = {
+    th: ["ทุกความตั้งใจของเราในวันนี้ คือการสร้างสรรค์พื้นที่แห่งอนาคตที่ดีที่สุดให้กับลูกหลานของเรา เพราะความสำเร็จที่ยิ่งใหญ่ที่สุดของโรงเรียนสมคิดวิทยา คือการได้เห็นเด็ก ๆ เติบโตอย่างงดงามและมีความสุขในทุก ๆ วัน", "นาย ณัฐวัฒน์ สงเคราะห์ธรรม", "ผู้อำนวยการโรงเรียนสมคิดวิทยา", "อ่านสาส์นฉบับเต็ม"],
+    en: ["Our dedication today is to create the best future space for our children. The greatest success of Somkidvittaya School is seeing our students grow beautifully and happily every day.", "Mr. Natthawat Songkrotham", "School Director", "Read Full Message"],
+    zh: ["我们今天的奉献是为了给孩子们创造最好的未来空间。Somkidvittaya学校最大的成功就是看到我们的学生每天都在美丽和快乐中成长。", "Natthawat Songkrotham 先生", "校长", "阅读全文"]
+  }[locale] || {};
+  if (!q[0]) return "";
+  return `<section class="director-quote-section" data-animate="fade-up" style="background: var(--sv-paper); padding: 4rem 0;">
+    <div class="director-quote-container">
+      <div class="director-image-wrapper">
+        <img src="/assets/images/director.png" alt="Director" class="director-img">
+        <div class="director-gradient-fade"></div>
+      </div>
+      <div class="director-quote-content">
+        <svg class="quote-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
+        <blockquote class="director-quote-text">“${q[0]}”</blockquote>
+        <div class="director-quote-author">
+          <strong>${q[1]}</strong>
+          <span>${q[2]}</span>
+        </div>
+        <a href="${localizedPath('/director/', locale)}" class="btn primary-btn">${q[3]} &rarr;</a>
+      </div>
+    </div>
+  </section>`;
+}
+
+function homeVideoSection(locale) {
+  const d = {
+    th: { eyebrow: "วีดีโอแนะนำ", title: "ทำความรู้จักกับเรา", desc: "รับชมบรรยากาศและการเรียนการสอนที่สมคิดวิทยาผ่านวีดีโอแนะนำโรงเรียน" },
+    en: { eyebrow: "School Introduction", title: "Get to Know Us", desc: "Experience the atmosphere and academics at Somkidvittaya School." },
+    zh: { eyebrow: "学校介绍", title: "了解我们", desc: "通过视频了解Somkidvittaya的氛围和教学。" }
+  }[locale];
+  return `<section class="section" data-animate="fade-up" style="padding: 4rem 2rem; display: flex; justify-content: center;">
+  <div class="director-quote-container" style="align-items: center;">
+    <div class="director-quote-content">
+      <p class="eyebrow">${d.eyebrow}</p>
+      <h2 style="font-size: 2.5rem;">${d.title}</h2>
+      <p style="color: var(--muted); line-height: 1.7; font-size: 1.1rem; margin-top: 1rem; max-width: 90%;">${d.desc}</p>
+    </div>
+    <div style="flex: 1 1 45%; min-width: 300px; display: flex; justify-content: center; width: 100%; border-radius: 16px; overflow: hidden; box-shadow: 0 12px 36px rgba(0,0,0,0.12);">
+      <iframe src="https://www.youtube.com/embed/HBVkXyl8GVw?si=TE8888H4bXtYiacA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style="width: 100%; aspect-ratio: 16/9; border: none; display: block;"></iframe>
+    </div>
+  </div>
+</section>`;
+}
+
+function parentVoices(locale) {
+  const d = {
+    th: { eyebrow: "เสียงจากผู้ปกครอง", quote: "เห็นความเปลี่ยนแปลงของลูกชัดเจนมากตั้งแต่ย้ายมาเรียนที่สมคิดวิทยา ลูกกลับบ้านมาเล่าเรื่องโรงเรียนด้วยความสนุกสนาน กล้าสื่อสารภาษาอังกฤษมากขึ้น และมีความสุขกับการไปโรงเรียนทุกวัน เป็นการตัดสินใจที่คุ้มค่าที่สุดสำหรับอนาคตของลูกค่ะ", name: "คุณแม่น้องวิน (นักเรียนชั้น ป.2)" },
+    en: { eyebrow: "Parent Voices", quote: "We've seen clear changes since moving to Somkidvittaya. Our child comes home excited, communicates more confidently in English, and loves going to school. It’s the best decision for their future.", name: "Win's Mother (Grade 2)" },
+    zh: { eyebrow: "家长心声", quote: "自从转到这里，我们看到了明显的变化。孩子回家后总是兴奋地讲述学校的事情，更敢于用英语交流。这是我们做出的最好决定。", name: "Win 的妈妈 (二年级)" }
+  }[locale];
+  return `<section class="director-quote-section" data-animate="fade-up" style="background: var(--sv-stone); padding: 4rem 0;">
+    <div class="director-quote-container reversed">
+      <div class="director-image-wrapper">
+        <img src="/assets/images/real-3.jpg" alt="${d.eyebrow}" class="director-img" style="border-radius: 50%; max-width: 280px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); object-fit: cover; aspect-ratio: 1/1;">
+      </div>
+      <div class="director-quote-content">
+        <p class="eyebrow">${d.eyebrow}</p>
+        <svg class="quote-icon" style="color: var(--sv-gold); margin-top: 1rem;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
+        <blockquote class="director-quote-text" style="font-size: 1.4rem;">“${d.quote}”</blockquote>
+        <div class="director-quote-author">
+          <strong>${d.name}</strong>
+        </div>
+      </div>
+    </div>
+  </section>`;
+}
+
 
 function outputPath(path, locale) {
   const clean = localizedPath(path, locale).replace(/^\/|\/$/g, "");
