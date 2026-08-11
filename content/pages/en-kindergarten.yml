@@ -5,7 +5,7 @@ image: real-2.jpg
 title: Kindergarten
 eyebrow: Ages 3-6
 summary: >-
-  A full Bilingual Program designed to foster all four developmental areas through Play-Based Learning, supported by close guidance under our Co-Teaching system.
+  A full Bilinguals Program designed to foster all four developmental areas through Play-Based Learning, supported by close guidance under our Co-Teaching system.
 chart:
   en:
     title: "Curriculum Breakdown"
@@ -20,7 +20,7 @@ chart:
         value: 25
         color: "var(--sv-gold)"
 sections:
-  - title: Confidence via Bilingual Program
+  - title: Confidence via Bilinguals Program
     icon: globe
     body: >-
       Because English is the gateway to future opportunities, we implement a Co-Teaching model (1 Thai teacher and 1 native English teacher) in every classroom. This allows children to absorb natural accents and grammar, building their confidence in daily communication.

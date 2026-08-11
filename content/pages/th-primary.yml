@@ -1,14 +1,14 @@
 lang: th
 id: primary
 path: /academics/primary/
-image: real-3.jpg
+image: primary-program.jpg
 title: ประถมศึกษา (Primary School)
 eyebrow: รับนักเรียนอายุ 6 ปีขึ้นไป
 summary: >-
-  ระดับประถมศึกษาเปิดสอน 2 โครงการ ได้แก่ ภาคสองภาษา (Bilingual Program) และ ภาคสามัญ (General Program) เพื่อรองรับเป้าหมายและสไตล์การเรียนรู้ที่หลากหลายของนักเรียนแต่ละคน
+  ระดับประถมศึกษาเปิดสอน 2 โครงการ ได้แก่ ภาคสองภาษา (Bilinguals Program) และ ภาคสามัญ (General Program) เพื่อรองรับเป้าหมายและสไตล์การเรียนรู้ที่หลากหลายของนักเรียนแต่ละคน
 chart:
   th:
-    title: "สัดส่วนเวลาเรียน (Bilingual Program)"
+    title: "สัดส่วนเวลาเรียน (Bilinguals Program)"
     data:
       - label: "English (Native Teachers)"
         value: 50
@@ -20,8 +20,8 @@ chart:
         value: 25
         color: "var(--sv-gold)"
 sections:
-  - title: ภาคสองภาษา (Bilingual Program)
-    icon: book-open
+  - title: ภาคสองภาษา (Bilinguals Program)
+    icon: globe
     body: >-
       สานต่อความเข้มข้นจากระดับอนุบาล ด้วยสัดส่วนการเรียนภาษาอังกฤษ 50% และภาษาไทย 50% โดยนักเรียนจะได้เรียนวิชาหลัก (คณิตศาสตร์ วิทยาศาสตร์ โฟนิกส์ ศิลปะ) เป็นภาษาอังกฤษกับครูเจ้าของภาษา เพื่อพัฒนาความเป็นเลิศทางวิชาการระดับสากล นอกจากนี้ นักเรียนภาคสองภาษายังได้เข้าร่วมวิชาเสริมทักษะครบถ้วนเช่นเดียวกับภาคสามัญ ทั้งดนตรีไทย-สากล ทัศนศิลป์ กีฬา (ฟุตบอล ว่ายน้ำ เทควันโด) Robotics & Computer และจินตคณิต
   - title: ภาคสามัญ (General Program)

@@ -5,10 +5,10 @@ image: real-2.jpg
 title: อนุบาล (Kindergarten)
 eyebrow: รับนักเรียนอายุ 3-6 ปี
 summary: >-
-  หลักสูตร Bilingual Program เต็มรูปแบบ ที่ออกแบบมาเพื่อเสริมสร้างพัฒนาการทั้ง 4 ด้าน ผ่านแนวคิด Play-Based Learning พร้อมการดูแลอย่างใกล้ชิดด้วยระบบ Co-Teaching
+  หลักสูตร Bilinguals Program เต็มรูปแบบ ที่ออกแบบมาเพื่อเสริมสร้างพัฒนาการทั้ง 4 ด้าน ผ่านแนวคิด Play-Based Learning พร้อมการดูแลอย่างใกล้ชิดด้วยระบบ Co-Teaching
 chart:
   th:
-    title: "สัดส่วนเวลาเรียน (Bilingual Program)"
+    title: "สัดส่วนเวลาเรียน (Bilinguals Program)"
     data:
       - label: "English (Native Teachers)"
         value: 50
@@ -20,7 +20,7 @@ chart:
         value: 25
         color: "var(--sv-gold)"
 sections:
-  - title: สร้างความมั่นใจผ่าน Bilingual Program
+  - title: สร้างความมั่นใจผ่าน Bilinguals Program
     icon: globe
     body: >-
       เพราะภาษาอังกฤษคือหน้าต่างสู่โอกาสในอนาคต เราจัดการเรียนการสอนแบบ Co-Teaching (ครูไทย 1 ท่าน และครูเจ้าของภาษา 1 ท่าน) ในทุกห้องเรียน เพื่อให้เด็กซึมซับสำเนียงและไวยากรณ์อย่างเป็นธรรมชาติราวกับภาษาแม่ เด็กๆ จะกล้าสื่อสารและมีความมั่นใจในการใช้ภาษาอังกฤษในชีวิตประจำวัน

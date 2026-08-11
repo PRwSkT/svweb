@@ -1,0 +1,23 @@
+lang: en
+id: director
+path: /director/
+image: real-1.jpg
+title: Director's Message
+type: director
+sections:
+  - text: >-
+      On behalf of Somkidvittaya School, it is my great pleasure to welcome you to the children's "second home"—a space we have purposefully created to be more than just an educational institution. It is a safe haven ready to embrace diversity and cultivate the future potential of our children.
+  - text: >-
+      I have always firmly believed that "every child is a valuable seedling with limitless potential." Therefore, our school's management and development are focused on nurturing their future with transparency and accountability. We are always open to listening and continuously integrating new educational technologies and innovations to keep pace with the evolving world, while steadfastly preserving the beauty of Thai traditions and the cultural arts we take pride in as our guiding compass.
+  - text: >-
+      Our primary vision is to elevate Somkidvittaya School into an outstanding educational institution characterized by academic excellence, moral integrity, and 21st-century skills. Under the close guidance of "modern educators with a heart for development," we strive to create an environment that encourages students to think critically, solve problems, communicate creatively, and become technologically literate. This ensures they grow into citizens who are not only capable and virtuous but also resilient and prepared to handle any future changes.
+  - highlight: >-
+      "Every effort we make today is dedicated to creating the best future environment for our children. The greatest success of Somkidvittaya School is seeing our students grow beautifully and happily every single day."
+  - highlight: >-
+      "Manage with the heart, develop with knowledge, drive with virtue, and grow alongside every child."
+  - text: >-
+      I would like to extend my deepest gratitude to all parents and the community for the unwavering trust and support you have always given to Somkidvittaya School. Together, we will build a strong foundation to create the best opportunities and future for every one of our children.
+signoff:
+  name: Mr. Nattawat Songkrotham
+  title: Director of Somkidvittaya School
+  image: director.png
