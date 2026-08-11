@@ -1288,3 +1288,31 @@ p.drop-cap::first-letter { font-size: 4.5rem; font-weight: 700; color: var(--sv-
 .info-card h3, .news-card h3 { font-size: 1.3rem; margin-bottom: 16px; color: var(--sv-deep); font-weight: 700; line-height: 1.4; }
 
 
+
+/* Connect contact-card and map-wrapper as a single block */
+@media (min-width: 901px) {
+  .contact-grid .contact-card {
+    border-top-right-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+    border-right: none !important;
+  }
+  .contact-grid .map-wrapper {
+    border-top-left-radius: 0 !important;
+    border-bottom-left-radius: 0 !important;
+    border-top-right-radius: 20px !important;
+    border-bottom-right-radius: 20px !important;
+  }
+}
+@media (max-width: 900px) {
+  .contact-grid .contact-card {
+    border-bottom-left-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+    border-bottom: none !important;
+  }
+  .contact-grid .map-wrapper {
+    border-top-left-radius: 0 !important;
+    border-top-right-radius: 0 !important;
+    border-bottom-left-radius: 20px !important;
+    border-bottom-right-radius: 20px !important;
+  }
+}
