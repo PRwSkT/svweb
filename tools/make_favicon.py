@@ -1,7 +1,7 @@
 import sys
 from PIL import Image
 
-input_image = "/Users/peerawatsmacbookpro/.gemini/antigravity/brain/b3ed2461-c034-4161-91bb-2ea434274efc/.user_uploaded/media__1786247242920.png"
+input_image = "/Users/peerawatsmacbookpro/.gemini/antigravity/brain/b3ed2461-c034-4161-91bb-2ea434274efc/.user_uploaded/media_1786465539509.png"
 img = Image.open(input_image).convert("RGBA")
 
 # Save favicon.ico (multi-size)
