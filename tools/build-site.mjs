@@ -736,15 +736,13 @@ function aboutSections(page, locale) {
     </div>
     ${epilogue ? `
     <div class="epilogue-section">
-      <div class="epilogue-content-wrapper">
-        <div class="epilogue-graphic">
-          <img src="/assets/images/epilogue-graphic.png" alt="Epilogue Graphic">
-        </div>
-        <div class="epilogue-text">
-          <svg class="quote-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
-          <h3>${escapeHtml(epilogue.title || "")}</h3>
-          <div class="epilogue-body">${(epilogue.body || "").replace(/\n/g, "<br>").replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")}</div>
-        </div>
+      <div class="epilogue-giant-graphic">
+        <img src="/assets/images/epilogue-graphic.png" alt="Epilogue Graphic">
+      </div>
+      <div class="epilogue-text" style="position: relative; z-index: 2; text-align: center;">
+        <svg class="quote-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" style="margin: 0 auto 24px auto;"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
+        <h3>${escapeHtml(epilogue.title || "")}</h3>
+        <div class="epilogue-body">${(epilogue.body || "").replace(/\n/g, "<br>").replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")}</div>
       </div>
     </div>
     ` : ""}
