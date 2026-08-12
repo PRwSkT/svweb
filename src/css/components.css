@@ -599,7 +599,7 @@ textarea { resize: vertical; }
   .quick-link-grid { grid-template-columns: 1fr; }
   .quick-link-grid a { min-height: 119px; border-bottom: 1px solid var(--line); border-left: 1px solid var(--line); }
   .section { padding: 64px 0; }
-  .card-grid, .news-grid, .steps, .form-section, .split, .contact-grid, .footer-grid { grid-template-columns: 1fr; }
+  .card-grid, .news-grid, .steps, .form-section, .split, .footer-grid { grid-template-columns: 1fr; }
   
   .info-card, .news-card { min-height: 190px; }
   .form-section { padding-top: 44px; }
@@ -1161,7 +1161,9 @@ textarea { resize: vertical; }
 @media (max-width: 900px) { .featured-program-card { grid-template-columns: 1fr; padding: 32px; gap: 32px; } }
 
 .cards-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: stretch; }
-@media (max-width: 900px) { .cards-grid-2 { grid-template-columns: 1fr; } }
+@media (max-width: 900px) {
+  .cards-grid-2, .contact-grid { grid-template-columns: 1fr; }
+}
 
 .text-item:nth-child(1) { animation-delay: 0.1s; }
 .text-item:nth-child(2) { animation-delay: 0.2s; }
@@ -1308,7 +1310,7 @@ p.drop-cap::first-letter { font-size: 4.5rem; font-weight: 700; color: var(--sv-
 
 
 /* Connect contact-card and map-wrapper as a single block */
-@media (min-width: 769px) {
+@media (min-width: 901px) {
   .contact-grid .contact-card {
     border-top-right-radius: 0 !important;
     border-bottom-right-radius: 0 !important;
@@ -1321,7 +1323,7 @@ p.drop-cap::first-letter { font-size: 4.5rem; font-weight: 700; color: var(--sv-
     border-bottom-right-radius: 20px !important;
   }
 }
-@media (max-width: 768px) {
+@media (max-width: 900px) {
   .contact-grid .contact-card {
     border-bottom-left-radius: 0 !important;
     border-bottom-right-radius: 0 !important;

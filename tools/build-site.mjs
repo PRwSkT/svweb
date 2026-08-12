@@ -823,7 +823,11 @@ function html(page, locale, cssHash) {
   const fallbackDescription = `${t(page, "summary", locale)} ${seoFallback[locale][1]}`;
   let title, description;
   try {
-    const seoArray = page.seo?.[locale] || [fallbackTitle, fallbackDescription.slice(0, 230)];
+    let rawSeo = page.seo?.[locale];
+    if (rawSeo && !Array.isArray(rawSeo) && rawSeo[locale]) {
+      rawSeo = rawSeo[locale];
+    }
+    const seoArray = rawSeo || [fallbackTitle, fallbackDescription.slice(0, 230)];
     title = seoArray[0];
     description = seoArray[1];
   } catch (e) {
@@ -861,8 +865,8 @@ function html(page, locale, cssHash) {
   <meta name="twitter:image" content="${siteUrl}/assets/images/${page.image || "real-1.jpg"}">
   
   <link rel="preload" as="image" href="/assets/images/${page.image || "real-1.jpg"}">
-  <link rel="icon" href="/favicon.ico?v=3">
-  <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=3">
+  <link rel="icon" href="/favicon.ico?v=4">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=4">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700&display=swap" rel="stylesheet">
