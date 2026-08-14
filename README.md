@@ -14,16 +14,20 @@ python3 -m http.server 4173 --directory dist
 
 ## Structure
 
-- `tools/build-site.mjs` - ข้อมูล sitemap, เนื้อหา, SEO และ template
-- `tools/generate-assets.py` - สร้างภาพ bitmap placeholder สำหรับใช้แทนภาพจริงชั่วคราว
-- `src/styles.css` - design system และ responsive UI
-- `src/main.js` - menu, FAQ accordion, language helper
+- `content/pages/` - เนื้อหาหน้าเว็บ 3 ภาษา แก้ผ่าน Admin ได้
+- `content/settings/` - เบอร์โทร อีเมล ที่อยู่ social links และ SV Portal
+- `src/admin/` - Decap CMS สำหรับแก้เนื้อหาผ่าน `/admin/`
+- `src/css/components.css` - design system, layout และ responsive UI
+- `src/main.js` - menu, FAQ accordion, slideshow และ language helper
+- `tools/build-site.mjs` - template, SEO, sitemap และ static build
+- `tools/generate-assets.py` - สร้าง/อัปเดต asset พื้นฐาน เช่น favicon
 - `dist/` - ไฟล์ build สำหรับ Netlify
 
 ## Before Launch Checklist
 
-- เปลี่ยนภาพ placeholder ใน `dist/assets/images/` เป็นภาพโรงเรียนจริง
-- ใส่เบอร์โทร อีเมล ที่อยู่ และ URL ของ SV Portal จริง
+- เปลี่ยน/อัปเดตรูปจริงผ่าน `src/assets/images/` หรือหน้า `/admin/`
+- ตรวจเบอร์โทร อีเมล ที่อยู่ social links และ URL ของ SV Portal ใน `content/settings/site.yml`
+- ตั้งค่า Netlify Identity และ Git Gateway เพื่อเปิดใช้งาน `/admin/` บน production
 - ตั้งค่า `SITE_URL` ตอน build หากโดเมนจริงไม่ใช่ `https://somkidvittaya.ac.th`
 - เชื่อม Google Analytics 4 และ Google Search Console
 - ตรวจคำแปล EN/ZH โดยผู้ตรวจภาษาก่อนเผยแพร่จริง

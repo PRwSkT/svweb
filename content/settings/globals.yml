@@ -1,18 +1,18 @@
 stats:
-  - ["66", "ปีแห่งความไว้วางใจ", "Years of trust", "年办学传承"]
-  - ["170+", "นักเรียนในครอบครัวSV", "Students in the SV community", "SV 学习社区学生"]
-  - [{th: "3 ภาษา", en: "3 Languages", zh: "3 种语言"}, "เพื่อโลกที่กว้างกว่า", "Languages for global readiness", "三语学习环境"]
+  - ["66", "ปีแห่งความไว้วางใจ", "Years of trust", "年的信任与传承"]
+  - ["170+", "นักเรียนในครอบครัว SV", "Students in the SV community", "名 SV 大家庭学子"]
+  - [{th: "3 ภาษา", en: "3 Languages", zh: "3 门语言"}, "เปิดโลกกว้างแห่งการเรียนรู้", "Languages for global readiness", "培养全球视野的三语环境"]
   - ["Bilinguals", "Bilinguals Program", "Bilinguals Program", "双语课程"]
 
 quickLinks:
   th:
-    - ["ผู้ปกครองที่สนใจ", "เรียนรู้หลักสูตร ค่าเทอม และเยี่ยมชม", "/admissions/"]
-    - ["ผู้ปกครองปัจจุบัน", "SV Portal ปฏิทิน และเอกสาร", "/parents/"]
-    - ["สำรวจหลักสูตร", "Bilinguals, สามภาษา, ปฐมวัย, ประถม", "/academics/"]
+    - ["ผู้ปกครองที่สนใจ", "ข้อมูลหลักสูตร ค่าธรรมเนียมการศึกษา และนัดหมายเยี่ยมชมโรงเรียน", "/admissions/"]
+    - ["ผู้ปกครองปัจจุบัน", "เข้าสู่ SV Portal ปฏิทินกิจกรรม และเอกสารสำคัญ", "/parents/"]
+    - ["สำรวจหลักสูตรของเรา", "หลักสูตร Bilinguals, 3 ภาษา, ปฐมวัย และประถมศึกษา", "/academics/"]
   en:
-    - ["Prospective Parents", "Programs, fees, and tours", "/admissions/"]
+    - ["Prospective Parents", "Programs, fees, and campus tours", "/admissions/"]
     - ["Current Parents", "SV Portal, calendar, and documents", "/parents/"]
-    - ["Explore Academics", "Bilinguals, Trilingual, early years, primary", "/academics/"]
+    - ["Explore Academics", "Bilingual, Trilingual, Early Years, and Primary", "/academics/"]
   zh:
     - ["准家长", "课程、费用与预约参观", "/admissions/"]
     - ["在校家长", "SV Portal、日历与文件", "/parents/"]
@@ -20,56 +20,56 @@ quickLinks:
 
 programCards:
   th:
-    - ["Trilingual Program", "เตรียมพบกับหลักสูตรใหม่เร็วๆ นี้ (Coming Soon)", "/academics/trilingual/", "real-1.jpg"]
-    - ["เตรียมอนุบาล", "ดูแลก้าวแรกอย่างอบอุ่นผ่าน 6 Sensory Play", "/academics/pre-kindergarten/", "pre-k-program.jpg"]
-    - ["ปฐมวัย", "Bilinguals Program ส่งเสริมพัฒนาการและภาษา", "/academics/kindergarten/", "real-2.jpg"]
-    - ["ประถมศึกษา", "Bilinguals & General Program มุ่งสู่สากล", "/academics/primary/", "primary-program.jpg"]
+    - ["Trilingual Program", "เตรียมพบกับหลักสูตรใหม่เร็ว ๆ นี้ (Coming Soon)", "/academics/trilingual/", "real-1.jpg"]
+    - ["เตรียมอนุบาล", "ดูแลก้าวแรกของลูกน้อยอย่างอบอุ่นผ่าน 6 Sensory Play", "/academics/pre-kindergarten/", "pre-k-program.jpg"]
+    - ["ปฐมวัย", "หลักสูตร Bilinguals Program เพื่อส่งเสริมพัฒนาการและทักษะภาษา", "/academics/kindergarten/", "real-2.jpg"]
+    - ["ประถมศึกษา", "หลักสูตร Bilinguals & General Program เพื่อก้าวสู่ความเป็นสากล", "/academics/primary/", "primary-program.jpg"]
   en:
     - ["Trilingual Program", "Coming Soon", "/academics/trilingual/", "real-1.jpg"]
-    - ["Pre-Kindergarten", "Gentle first steps through 6 sensory play.", "/academics/pre-kindergarten/", "pre-k-program.jpg"]
-    - ["Kindergarten", "Bilinguals Program for holistic growth.", "/academics/kindergarten/", "real-2.jpg"]
-    - ["Primary", "Bilinguals & General Programs for future skills.", "/academics/primary/", "primary-program.jpg"]
+    - ["Pre-Kindergarten", "Gentle first steps through sensory play.", "/academics/pre-kindergarten/", "pre-k-program.jpg"]
+    - ["Kindergarten", "Bilingual Program for holistic growth.", "/academics/kindergarten/", "real-2.jpg"]
+    - ["Primary", "Bilingual & General Programs for future skills.", "/academics/primary/", "primary-program.jpg"]
   zh:
     - ["三语课程", "敬请期待 (Coming Soon)", "/academics/trilingual/", "real-1.jpg"]
-    - ["幼儿预备班", "通过 6 Sensory Play 温和开启学习。", "/academics/pre-kindergarten/", "pre-k-program.jpg"]
-    - ["幼儿园", "双语课程促进全面发展。", "/academics/kindergarten/", "real-2.jpg"]
-    - ["小学", "双语和普通课程培养未来技能。", "/academics/primary/", "primary-program.jpg"]
+    - ["幼儿预备班", "通过 6 感官游戏（6 Sensory Play），温馨开启学习之旅。", "/academics/pre-kindergarten/", "pre-k-program.jpg"]
+    - ["幼儿园", "双语课程助力孩子全面发展。", "/academics/kindergarten/", "real-2.jpg"]
+    - ["小学", "双语及综合课程，赋能未来核心素养。", "/academics/primary/", "primary-program.jpg"]
 
 news:
   th:
     - ["เตรียมพื้นที่ข่าวเปิดภาคเรียน", "ข่าวสาร", "ใช้สำหรับสรุปกิจกรรมต้อนรับนักเรียนและผู้ปกครอง", "real-4.jpg"]
-    - ["กิจกรรมภาษาอังกฤษประจำเดือน", "กิจกรรม", "พื้นที่สำหรับเล่ากิจกรรม Bilinguals และภาพบรรยากาศ", "real-2.jpg"]
+    - ["กิจกรรมภาษาอังกฤษประจำเดือน", "กิจกรรม", "ภาพบรรยากาศและเรื่องราวจากกิจกรรมในหลักสูตร Bilinguals", "real-2.jpg"]
     - ["บทความเลือกโรงเรียนสองภาษา", "บทความ", "คอนเทนต์ SEO สำหรับผู้ปกครองในระยอง", "real-3.jpg"]
   en:
-    - ["New Term Updates", "News", "A place for welcome activities and family updates.", "real-4.jpg"]
-    - ["Monthly English Activities", "Events", "Stories from the Bilinguals classroom.", "real-2.jpg"]
-    - ["Choosing a Bilinguals School", "Article", "SEO content for families in Rayong.", "real-3.jpg"]
+    - ["New Term Updates", "News", "Welcome activities and family updates.", "real-4.jpg"]
+    - ["Monthly English Activities", "Events", "Stories from the Bilingual classroom.", "real-2.jpg"]
+    - ["Choosing a Bilingual School", "Article", "SEO content for families in Rayong.", "real-3.jpg"]
   zh:
-    - ["新学期动态", "新闻", "发布迎新活动与家庭信息。", "real-4.jpg"]
-    - ["每月英语活动", "活动", "展示双语课堂故事。", "real-2.jpg"]
-    - ["如何选择双语学校", "文章", "面向罗勇家庭的 SEO 内容。", "real-3.jpg"]
+    - ["新学期动态", "新闻", "了解迎新活动与家校最新资讯。", "real-4.jpg"]
+    - ["每月英语活动", "活动", "分享双语课堂的精彩点滴。", "real-2.jpg"]
+    - ["如何选择双语学校", "文章", "专为罗勇府家庭打造的择校指南。", "real-3.jpg"]
 
 faq:
   th:
-    - ["รับสมัครนักเรียนช่วงไหนบ้าง?", "โรงเรียนเปิดรับสมัครนักเรียนใหม่ตั้งแต่เดือนมกราคมของทุกปี สามารถติดต่อเพื่อนัดหมายเข้าชมโรงเรียนได้ตลอดปีการศึกษา"]
-    - ["หลักสูตร Bilinguals แตกต่างอย่างไร?", "เราจัดการเรียนการสอนภาษาอังกฤษผ่านกิจกรรม (Active Learning) กับครูต่างชาติ 5-7 คาบต่อสัปดาห์ พร้อมเสริม phonics และทักษะการสนทนาในบริบทจริง"]
-    - ["มีบริการรถรับส่งหรือไม่?", "ทางโรงเรียนมีเครือข่ายรถตู้รับส่งนักเรียนที่ปลอดภัย ครอบคลุมหลายพื้นที่ในจังหวัดระยอง สามารถสอบถามเส้นทางได้ที่ธุรการ"]
-    - ["เปิดสอนระดับชั้นใดบ้าง?", "รับนักเรียนตั้งแต่ระดับเตรียมอนุบาล (อายุ 2 ขวบขึ้นไป) จนถึงระดับชั้นประถมศึกษาปีที่ 6"]
+    - ["เปิดรับสมัครนักเรียนช่วงเวลาใดบ้าง?", "โรงเรียนเปิดรับสมัครนักเรียนใหม่ตั้งแต่เดือนมกราคมของทุกปี โดยท่านผู้ปกครองสามารถติดต่อเพื่อนัดหมายเข้าเยี่ยมชมโรงเรียนได้ตลอดปีการศึกษา"]
+    - ["หลักสูตร Bilinguals ของเรามีความโดดเด่นอย่างไร?", "เราเน้นการเรียนการสอนภาษาอังกฤษผ่านกิจกรรม (Active Learning) กับครูชาวต่างชาติ 5-7 คาบต่อสัปดาห์ ควบคู่ไปกับการปูพื้นฐาน Phonics และฝึกทักษะการสื่อสารในสถานการณ์จริง"]
+    - ["ทางโรงเรียนมีบริการรถรับส่งนักเรียนหรือไม่?", "โรงเรียนมีเครือข่ายรถตู้รับส่งที่ได้มาตรฐานความปลอดภัย ครอบคลุมหลายพื้นที่ในจังหวัดระยอง ท่านสามารถสอบถามเส้นทางและรายละเอียดเพิ่มเติมได้ที่ห้องธุรการ"]
+    - ["ทางโรงเรียนเปิดสอนในระดับชั้นใดบ้าง?", "เรารับสมัครนักเรียนตั้งแต่ระดับชั้นเตรียมอนุบาล (อายุ 2 ขวบขึ้นไป) จนถึงระดับชั้นประถมศึกษาปีที่ 6"]
   en:
-    - ["When is the admission period?", "Admissions open in January every year. School tours can be scheduled throughout the academic year."]
-    - ["How is the Bilinguals program different?", "We teach English through Active Learning with foreign teachers for 5-7 periods a week, emphasizing phonics and real-world conversation skills."]
-    - ["Is school transportation available?", "We coordinate with safe, reliable van services covering most areas in Rayong. Contact the office for specific routes."]
-    - ["What grades do you offer?", "We accept students from Pre-Kindergarten (2 years old) through Primary 6 (Grade 6)."]
+    - ["When is the admission period?", "Admissions open in January every year. Campus tours can be scheduled throughout the academic year."]
+    - ["How is the Bilingual program different?", "We teach English through Active Learning with native or fluent foreign teachers for 5-7 periods a week, emphasizing phonics and real-world conversation skills."]
+    - ["Is school transportation available?", "We coordinate with safe and reliable van services covering most areas in Rayong. Contact the administration office for specific routes."]
+    - ["What grade levels do you offer?", "We accept students from Pre-Kindergarten (2 years old) through Primary 6 (Grade 6)."]
   zh:
-    - ["招生时间是什么时候？", "每年一月开放新生报名。整个学年均可预约参观学校。"]
-    - ["双语课程有何不同？", "我们通过外教的活动式教学（Active Learning）教授英语，每周5-7节课，强化自然拼读和真实语境中的会话技能。"]
-    - ["提供校车服务吗？", "学校协调安全可靠的校车服务，覆盖罗勇府大部分地区。请联系行政办公室查询具体路线。"]
-    - ["提供哪些年级的课程？", "我们招收从幼儿预备班（2岁起）至小学六年级的学生。"]
+    - ["招生时间是什么时候？", "新生报名于每年1月正式启动，学年期间随时欢迎预约探校。"]
+    - ["双语课程有何不同？", "我们采用外教沉浸式活动教学（Active Learning），每周5至7节英语课，着重培养自然拼读能力与真实语境下的英语交流技巧。"]
+    - ["提供校车服务吗？", "学校提供安全可靠的校车服务，覆盖罗勇府主要区域。详情请咨询行政办公室。"]
+    - ["招收哪些年级的学生？", "我校设有幼儿预备班（2岁起）至小学六年级课程。"]
 
 admissionsSteps:
-  th: ["ส่งข้อมูล", "นัดเยี่ยมชม", "ประเมินความพร้อม", "ยืนยันสิทธิ์"]
+  th: ["ส่งข้อมูลสอบถาม", "นัดหมายเยี่ยมชม", "ประเมินความพร้อม", "ยืนยันสิทธิ์เข้าเรียน"]
   en: ["Inquiry", "School Tour", "Readiness Review", "Confirm"]
-  zh: ["提交咨询", "预约参观", "入学评估", "确认入学"]
+  zh: ["提交申请", "预约探校", "入学评估", "确认录取"]
 
 fees:
   th:
@@ -84,14 +84,14 @@ fees:
 
 lifeCards:
   th:
-    - ["A Day at SV", "เช้าอบอุ่น ห้องเรียนมีส่วนร่วม กิจกรรมหลังเลิกเรียน"]
-    - ["ชมรมและกิจกรรม", "ภาษา ศิลปะ กีฬา วิทยาศาสตร์ และกิจกรรมชุมชน"]
-    - ["แกลเลอรี", "พื้นที่สำหรับภาพถ่ายจริงและวิดีโอสั้นใน Phase 2"]
+    - ["A Day at SV", "บรรยากาศยามเช้าที่อบอุ่น ห้องเรียนที่เน้นการมีส่วนร่วม และกิจกรรมเสริมทักษะหลังเลิกเรียน"]
+    - ["ชมรมและกิจกรรม", "เรียนรู้ผ่านกิจกรรมชมรมที่หลากหลาย ทั้งภาษา ศิลปะ กีฬา วิทยาศาสตร์ และกิจกรรมเพื่อสังคม"]
+    - ["แกลเลอรี", "รวบรวมภาพแห่งความประทับใจและวิดีโอบรรยากาศจริงของโรงเรียน (Phase 2)"]
   en:
     - ["A Day at SV", "Warm mornings, active classrooms, and after-school activities."]
     - ["Clubs", "Languages, arts, sports, science, and community."]
     - ["Gallery", "A future home for real photos and short videos."]
   zh:
-    - ["SV 的一天", "温暖早晨、主动课堂与课后活动。"]
-    - ["社团活动", "语言、艺术、体育、科学与社区活动。"]
-    - ["图库", "未来展示真实照片与短视频。"]
+    - ["SV 的一天", "温馨的早晨、互动式课堂与丰富的课后活动。"]
+    - ["社团活动", "涵盖语言、艺术、体育、科学及社区实践。"]
+    - ["图库", "记录校园真实影像与精彩瞬间。"]

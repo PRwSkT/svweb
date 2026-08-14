@@ -5,7 +5,7 @@ image: primary-program.jpg
 title: Primary School
 eyebrow: Age 6 and up
 summary: >-
-  Our Primary level offers two distinct tracks: the Bilinguals Program and the General Program, catering to diverse learning styles and future goals.
+  Our Primary level offers two distinct tracks: the Bilingual Program and the General Program, catering to diverse learning styles and future goals.
 chart:
   en:
     title: "Curriculum Breakdown"
@@ -20,10 +20,10 @@ chart:
         value: 25
         color: "var(--sv-gold)"
 sections:
-  - title: Bilinguals Program
+  - title: Bilingual Program
     icon: globe
     body: >-
-      Building upon our Kindergarten curriculum, this program offers a 50/50 balance of English and Thai. Core subjects (Math, Science, Phonics, Art) are taught in English by native speakers to ensure global academic excellence. Moreover, students in the Bilinguals Program fully participate in the same specialized activities as the General Program, including Thai/Western Music, Visual Arts, Sports (Football, Swimming, Taekwondo), Robotics & Computers, and Mental Math.
+      Building upon our Kindergarten curriculum, this program offers a 50/50 balance of English and Thai. Core subjects (Math, Science, Phonics, Art) are taught in English by native speakers to ensure global academic excellence. Moreover, students in the Bilingual Program fully participate in the same specialized activities as the General Program, including Thai/Western Music, Visual Arts, Sports (Football, Swimming, Taekwondo), Robotics & Computers, and Mental Math.
   - title: General Program
     icon: award
     body: >-
@@ -39,4 +39,4 @@ sections:
 nav: academics
 
 seo:
-  en: ["Primary School | Somkidvittaya School Rayong", "Our Primary level offers two distinct tracks: the Bilinguals Program and the General Program, catering to diverse learning styles and future goals."]
+  en: ["Primary School | Somkidvittaya School Rayong", "Our Primary level offers two distinct tracks: the Bilingual Program and the General Program, catering to diverse learning styles and future goals."]

@@ -5,10 +5,9 @@ image: real-6.jpg
 title: News and Events
 eyebrow: News & Events
 summary: >-
-  Updates from the school community that keep the website active and support
-  SEO.
+  Stay informed with the latest updates, stories, and events from the Somkidvittaya School community.
 type: news
 nav: news
 
 seo:
-  en: ["News and Events | Somkidvittaya School Rayong", "Updates from the school community that keep the website active and support SEO."]
+  en: ["News and Events | Somkidvittaya School Rayong", "Stay informed with the latest updates, stories, and events from the Somkidvittaya School community."]

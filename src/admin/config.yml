@@ -16,14 +16,112 @@ collections:
       - {label: "Language", name: "lang", widget: "select", options: ["th", "en", "zh"], default: "th"}
       - {label: "Page ID", name: "id", widget: "string"}
       - {label: "Path", name: "path", widget: "string"}
+      - label: "Page Type"
+        name: "type"
+        widget: "select"
+        required: false
+        options:
+          - {label: "Default Content", value: ""}
+          - {label: "Home", value: "home"}
+          - {label: "About Timeline", value: "about"}
+          - {label: "Programs Overview", value: "programs"}
+          - {label: "Admissions", value: "admissions"}
+          - {label: "Admissions Steps", value: "steps"}
+          - {label: "Fees", value: "fees"}
+          - {label: "Application Form", value: "form"}
+          - {label: "FAQ", value: "faq"}
+          - {label: "Student Life", value: "life"}
+          - {label: "Parents", value: "parents"}
+          - {label: "News", value: "news"}
+          - {label: "Contact", value: "contact"}
+          - {label: "Director Message", value: "director"}
+          - {label: "Success Page", value: "success"}
+          - {label: "Privacy", value: "privacy"}
+      - label: "Navigation Group"
+        name: "nav"
+        widget: "select"
+        required: false
+        options:
+          - {label: "None", value: ""}
+          - {label: "About", value: "about"}
+          - {label: "Academics", value: "academics"}
+          - {label: "Admissions", value: "admissions"}
+          - {label: "Student Life", value: "student-life"}
+          - {label: "Parents", value: "parents"}
+          - {label: "News", value: "news"}
+          - {label: "Contact", value: "contact"}
       - {label: "Title", name: "title", widget: "string"}
       - {label: "Eyebrow", name: "eyebrow", widget: "string", required: false}
       - {label: "Summary", name: "summary", widget: "text", required: false}
       - {label: "Image", name: "image", widget: "image", required: false}
-      - {label: "Sections", name: "sections", widget: "list", required: false, fields: [
-          {label: "Section Title", name: "title", widget: "string"},
-          {label: "Section Body", name: "body", widget: "text"}
-        ]}
+      - {label: "Intro", name: "intro", widget: "text", required: false}
+      - label: "Sections"
+        name: "sections"
+        widget: "list"
+        required: false
+        fields:
+          - {label: "Section Title", name: "title", widget: "string", required: false}
+          - {label: "Subtitle", name: "subtitle", widget: "string", required: false}
+          - {label: "Icon", name: "icon", widget: "string", required: false}
+          - {label: "Section Body", name: "body", widget: "text", required: false}
+          - {label: "Paragraph Text", name: "text", widget: "text", required: false}
+          - {label: "Highlight Quote", name: "highlight", widget: "text", required: false}
+          - label: "Timeline Events"
+            name: "events"
+            widget: "list"
+            required: false
+            fields:
+              - {label: "Year / Label", name: "year", widget: "string", required: false}
+              - {label: "Event Title", name: "title", widget: "string", required: false}
+              - {label: "Event Text", name: "text", widget: "text", required: false}
+      - label: "Program Chart"
+        name: "chart"
+        widget: "object"
+        required: false
+        collapsed: true
+        fields:
+          - label: "Thai"
+            name: "th"
+            widget: "object"
+            required: false
+            fields: &chart_fields
+              - {label: "Chart Title", name: "title", widget: "string", required: false}
+              - label: "Chart Data"
+                name: "data"
+                widget: "list"
+                required: false
+                fields:
+                  - {label: "Label", name: "label", widget: "string"}
+                  - {label: "Value", name: "value", widget: "number", value_type: "int"}
+                  - {label: "Color", name: "color", widget: "string", default: "var(--sv-crimson)"}
+          - {label: "English", name: "en", widget: "object", required: false, fields: *chart_fields}
+          - {label: "Chinese", name: "zh", widget: "object", required: false, fields: *chart_fields}
+      - label: "Director Signoff"
+        name: "signoff"
+        widget: "object"
+        required: false
+        collapsed: true
+        fields:
+          - {label: "Name", name: "name", widget: "string", required: false}
+          - {label: "Title", name: "title", widget: "string", required: false}
+          - {label: "Image", name: "image", widget: "image", required: false}
+      - label: "Epilogue"
+        name: "epilogue"
+        widget: "object"
+        required: false
+        collapsed: true
+        fields:
+          - {label: "Title", name: "title", widget: "string", required: false}
+          - {label: "Body", name: "body", widget: "text", required: false}
+      - label: "SEO"
+        name: "seo"
+        widget: "object"
+        required: false
+        collapsed: true
+        fields:
+          - {label: "Thai SEO", name: "th", widget: "list", required: false, min: 2, max: 2, field: {label: "Value", name: "value", widget: "string"}}
+          - {label: "English SEO", name: "en", widget: "list", required: false, min: 2, max: 2, field: {label: "Value", name: "value", widget: "string"}}
+          - {label: "Chinese SEO", name: "zh", widget: "list", required: false, min: 2, max: 2, field: {label: "Value", name: "value", widget: "string"}}
 
   - name: "news"
     label: "News & Events"
@@ -48,7 +146,8 @@ collections:
         fields:
           - {label: "Site Phone", name: "phone", widget: "string"}
           - {label: "Site Email", name: "email", widget: "string"}
-          - {label: "Address", name: "address", widget: "string"}
+          - {label: "Address", name: "address", widget: "text"}
+          - {label: "SV Portal URL", name: "portal_url", widget: "string", required: false}
           - {label: "Facebook URL", name: "facebook", widget: "string", required: false}
           - {label: "Instagram URL", name: "instagram", widget: "string", required: false}
           - {label: "YouTube URL", name: "youtube", widget: "string", required: false}

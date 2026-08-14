@@ -6,7 +6,7 @@ import * as yaml from "js-yaml";
 const root = dirname(dirname(fileURLToPath(import.meta.url)));
 const dist = join(root, "dist");
 const siteUrl = (process.env.SITE_URL || "https://somkidvittaya.ac.th").replace(/\/$/, "");
-const portalUrl = process.env.SV_PORTAL_URL || "https://portal.somkidvittaya.ac.th";
+const defaultPortalUrl = process.env.SV_PORTAL_URL || "https://portal.somkidvittaya.ac.th";
 
 const locales = {
   th: {
@@ -83,6 +83,7 @@ const navItems = [
 
 const siteSettings = yaml.load(readFileSync(join(root, 'content/settings/site.yml'), 'utf8'));
 const globals = yaml.load(readFileSync(join(root, 'content/settings/globals.yml'), 'utf8'));
+const portalUrl = siteSettings.portal_url || defaultPortalUrl;
 
 const pageMap = new Map();
 for (const file of readdirSync(join(root, 'content/pages'))) {
@@ -150,6 +151,18 @@ function pageUrl(path, locale) {
   return `${siteUrl}${localizedPath(path, locale)}`;
 }
 
+function assetPath(value, fallback = "real-1.jpg") {
+  const image = String(value || fallback);
+  if (image.startsWith("http://") || image.startsWith("https://") || image.startsWith("/")) return image;
+  return `/assets/images/${image}`;
+}
+
+function absoluteAssetUrl(value, fallback = "real-1.jpg") {
+  const image = assetPath(value, fallback);
+  if (image.startsWith("http://") || image.startsWith("https://")) return image;
+  return `${siteUrl}${image}`;
+}
+
 function escapeHtml(value) {
   return String(value)
     .replaceAll("&", "&amp;")
@@ -159,7 +172,7 @@ function escapeHtml(value) {
 }
 
 function button(label, href, variant = "primary") {
-  const arrow = variant.includes("primary") || variant.includes("secondary") ? '<span class="arrow">→</span>' : '';
+  const arrow = variant.includes("primary") || variant.includes("secondary") ? '<span class="arrow" aria-hidden="true">→</span>' : '';
   return `<a class="button ${variant}" href="${href}">${escapeHtml(label)}${arrow}</a>`;
 }
 
@@ -173,7 +186,7 @@ function languageSelect(page, locale) {
   }).join("");
   
   return `
-    <button class="language-switch" popovertarget="lang-menu" style="anchor-name: --lang-btn;">
+    <button class="language-switch" type="button" popovertarget="lang-menu" aria-label="${escapeHtml(locales[locale].langTitle)}" style="anchor-name: --lang-btn;">
       ${globeIcon} <span>${locale.toUpperCase()}</span>
     </button>
     <div id="lang-menu" popover style="position-anchor: --lang-btn; margin: 0; left: anchor(right); top: anchor(bottom); margin-top: 8px; margin-left: -100px;">
@@ -204,7 +217,7 @@ function header(page, locale) {
       </a>
       <nav id="site-nav" class="site-nav" data-site-nav>${navLinks}</nav>
       <div class="header-actions">${languageSelect(page, locale)}${button(l.ctaTour, localizedPath("/contact/", locale), "primary small")}</div>
-      <button class="menu-button" data-menu-button aria-expanded="false" aria-controls="site-nav"><span></span><span></span><span></span></button>
+      <button class="menu-button" type="button" data-menu-button aria-expanded="false" aria-controls="site-nav" aria-label="${locale === "th" ? "เปิดเมนูหลัก" : locale === "en" ? "Open main menu" : "打开主菜单"}"><span></span><span></span><span></span></button>
     </div>
   </header>`;
 }
@@ -231,13 +244,13 @@ function footer(locale) {
         <strong>${locale === "th" ? "โรงเรียนสมคิดวิทยา" : locale === "zh" ? "Somkidvittaya学校" : "Somkidvittaya School"}</strong>
         <p>${escapeHtml(schoolAddress)}<br>Tel: <a href="tel:${siteSettings.phone.replace(/[^0-9+]/g, '')}">${escapeHtml(siteSettings.phone)}</a><br>Email: <a href="mailto:${siteSettings.email}">${escapeHtml(siteSettings.email)}</a></p>
         <div class="footer-social" style="margin-top: 20px;">
-          <a href="${escapeHtml(siteSettings.facebook)}" target="_blank" aria-label="Facebook"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg></a>
-          <a href="${escapeHtml(siteSettings.instagram)}" target="_blank" aria-label="Instagram"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a>
-          ${siteSettings.youtube ? `<a href="${escapeHtml(siteSettings.youtube)}" target="_blank" aria-label="YouTube"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33 2.78 2.78 0 0 0 1.94 2c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.33 29 29 0 0 0-.46-5.33z"></path><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon></svg></a>` : ''}
+          <a href="${escapeHtml(siteSettings.facebook)}" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg></a>
+          <a href="${escapeHtml(siteSettings.instagram)}" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a>
+          ${siteSettings.youtube ? `<a href="${escapeHtml(siteSettings.youtube)}" target="_blank" rel="noopener noreferrer" aria-label="YouTube"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33 2.78 2.78 0 0 0 1.94 2c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.33 29 29 0 0 0-.46-5.33z"></path><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon></svg></a>` : ''}
         </div>
       </div>
       <div class="footer-col">
-        <a href="https://siritham.com" target="_blank">
+        <a href="https://siritham.com" target="_blank" rel="noopener noreferrer">
           <img src="/assets/images/siritham-logo.png" alt="Siritham Co., Ltd." height="55" style="height: 55px; width: auto; margin-bottom: 15px;">
         </a>
         <strong>${locale === "th" ? "บริษัท ศิริธรรม จำกัด" : "Siritham Co., Ltd."}</strong>
@@ -266,7 +279,7 @@ function hero(page, locale) {
 
   const isHome = page.id === "home";
   const slides = ["/assets/images/real-1.jpg","/assets/images/real-2.jpg","/assets/images/real-3.jpg","/assets/images/real-4.jpg","/assets/images/real-5.jpg","/assets/images/real-6.jpg"];
-  const pageImage = page.image || 'real-1.jpg';
+  const pageImage = assetPath(page.image, "real-1.jpg");
   
   const slidesHtml = isHome 
     ? slides.map((src, i) => {
@@ -276,7 +289,7 @@ function hero(page, locale) {
           ? `<video src="${src}" class="${cls}" muted playsinline ${i === 0 ? 'autoplay' : ''}></video>`
           : `<img src="${src}" class="${cls}" alt="" aria-hidden="true" width="1920" height="1080" ${loading}>`;
       }).join("")
-    : `<img src="/assets/images/${pageImage}" class="hero-bg active" alt="" aria-hidden="true" width="1920" height="1080" fetchpriority="high">`;
+    : `<img src="${pageImage}" class="hero-bg active" alt="" aria-hidden="true" width="1920" height="1080" fetchpriority="high">`;
 
   return `<section class="hero ${isHome ? "home" : ""}" ${isHome ? `data-slides='${JSON.stringify(slides)}'` : ""}>
     ${slidesHtml}
@@ -288,9 +301,9 @@ function hero(page, locale) {
         ${page.type !== 'success' ? `<div class="hero-actions">${button(l.ctaTour, localizedPath("/contact/", locale), "primary")}${button(l.ctaApply, localizedPath("/admissions/apply/", locale), "secondary")}${button(l.ctaGuide, localizedPath("/academics/", locale), "ghost inverse")}</div>` : ""}
         ${isHome ? `<div class="slider-controls">
           <span class="slider-indicator">01 / 06</span>
-          <div class="slider-arrow prev"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></div>
-          <div class="slider-pause"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg></div>
-          <div class="slider-arrow next"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></div>
+          <button class="slider-arrow prev" type="button" aria-label="${locale === "th" ? "ภาพก่อนหน้า" : locale === "en" ? "Previous slide" : "上一张"}"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></button>
+          <button class="slider-pause" type="button" aria-label="${locale === "th" ? "หยุดสไลด์ชั่วคราว" : locale === "en" ? "Pause slideshow" : "暂停轮播"}"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg></button>
+          <button class="slider-arrow next" type="button" aria-label="${locale === "th" ? "ภาพถัดไป" : locale === "en" ? "Next slide" : "下一张"}"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></button>
         </div>` : ""}
       </div>
       ${page.type !== 'success' ? `<aside class="hero-index" aria-label="Program highlights" data-animate="fade-up">
@@ -458,7 +471,7 @@ function programCards(locale) {
 }
 
 function admissions(locale) {
-  const cta = button(locale === "th" ? "ดูโครงสร้างค่าธรรมเนียม" : locale === "en" ? "View Tuition & Fees" : "查看学费", localizedPath("/admissions/tuition-fees/", locale), "secondary");
+  const cta = button(locale === "th" ? "ดูโครงสร้างค่าธรรมเนียม" : locale === "en" ? "View Tuition & Fees" : "查看学费", localizedPath("/admissions/fees/", locale), "secondary");
   return `<section class="section"><div class="section-heading"><p class="eyebrow">Admissions</p><h2>${locale === "th" ? "สมัครง่ายใน 4 ขั้นตอน" : locale === "en" ? "Apply in Four Steps" : "四步完成申请"}</h2></div><div class="steps">${globals.admissionsSteps[locale].map((s, i) => `<div><strong>${i + 1}</strong><span>${escapeHtml(s)}</span></div>`).join("")}</div><div style="margin-top: 40px; text-align: center;">${cta}</div></section>${formSection(locale, "admissions-inquiry")}`;
 }
 
@@ -583,7 +596,7 @@ function directorFullMessage(page, locale) {
         if (!signoff) return "";
         return `
       <div class="message-signoff" style="animation-delay: ${sections.length * 0.1}s">
-        <img src="/assets/images/${signoff.image}" alt="${escapeHtml(signoff.name)}" class="signoff-avatar">
+        <img src="${assetPath(signoff.image, "director.png")}" alt="${escapeHtml(signoff.name)}" class="signoff-avatar">
         <div class="signoff-details">
           <strong>${escapeHtml(signoff.name)}</strong>
           <span>${escapeHtml(signoff.title)}</span>
@@ -856,15 +869,15 @@ function html(page, locale, cssHash) {
   <meta property="og:description" content="${escapeHtml(description)}">
   <meta property="og:type" content="website">
   <meta property="og:url" content="${pageUrl(page.path, locale)}">
-  <meta property="og:image" content="${siteUrl}/assets/images/${page.image || "real-1.jpg"}">
+  <meta property="og:image" content="${absoluteAssetUrl(page.image, "real-1.jpg")}">
   <meta property="og:locale" content="${locale === "th" ? "th_TH" : locale === "en" ? "en_US" : "zh_CN"}">
   
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="${escapeHtml(title)}">
   <meta name="twitter:description" content="${escapeHtml(description)}">
-  <meta name="twitter:image" content="${siteUrl}/assets/images/${page.image || "real-1.jpg"}">
+  <meta name="twitter:image" content="${absoluteAssetUrl(page.image, "real-1.jpg")}">
   
-  <link rel="preload" as="image" href="/assets/images/${page.image || "real-1.jpg"}">
+  <link rel="preload" as="image" href="${assetPath(page.image, "real-1.jpg")}">
   <link rel="icon" href="/favicon.ico?v=4">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=4">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -897,10 +910,10 @@ function outputPath(path, locale) {
   return clean ? join(dist, clean, "index.html") : join(dist, "index.html");
 }
 
-function writePage(page, locale) {
+function writePage(page, locale, cssHash) {
   const file = outputPath(page.path, locale);
   mkdirSync(dirname(file), { recursive: true });
-  writeFileSync(file, html(page, locale));
+  writeFileSync(file, html(page, locale, cssHash));
 }
 
 function copyAsset(src, destName) {

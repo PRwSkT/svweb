@@ -5,8 +5,7 @@ image: real-5.jpg
 title: Leadership and Teachers
 eyebrow: About
 summary: >-
-  A people-first team page for photos, roles, and short bios that build
-  confidence before a family visit.
+  Meet our dedicated leadership and passionate teaching staff who are committed to nurturing every student's potential.
 sections:
   - title: Leadership
     body: A welcome area for school leadership.
@@ -15,4 +14,4 @@ sections:
 nav: about
 
 seo:
-  en: ["Leadership and Teachers | Somkidvittaya School Rayong", "A people-first team page for photos, roles, and short bios that build confidence before a family visit."]
+  en: ["Leadership and Teachers | Somkidvittaya School Rayong", "Meet our dedicated leadership and passionate teaching staff who are committed to nurturing every student's potential."]

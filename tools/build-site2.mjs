@@ -45,7 +45,7 @@ const locales = {
     formLevel: "Interested level",
     formMessage: "Message",
     submit: "Submit",
-    footer: "Bilinguals school for Pre-Kindergarten to Primary in Rayong",
+    footer: "Bilingual school for Pre-Kindergarten to Primary in Rayong",
     langTitle: "Language",
     address: "80/5 Lang Wat Pa Rd, Tha Pradu, Mueang Rayong, Rayong 21000, Thailand"
   },
@@ -133,7 +133,7 @@ const pages = Array.from(pageMap.values());
 
 const seoFallback = {
   th: ["โรงเรียนสมคิดวิทยา | Somkidvittaya School", "โรงเรียนสมคิดวิทยา โรงเรียนสองภาษา จ.ระยอง สำหรับเตรียมอนุบาล ปฐมวัย และประถมศึกษา"],
-  en: ["Somkidvittaya School", "Somkidvittaya School is a bilinguals school in Rayong for Pre-Kindergarten, Kindergarten, and Primary."],
+  en: ["Somkidvittaya School", "Somkidvittaya School is a bilingual school in Rayong for Pre-Kindergarten, Kindergarten, and Primary."],
   zh: ["Somkidvittaya学校", "Somkidvittaya学校是罗勇府双语学校，提供幼儿预备班、幼儿园和小学课程。"]
 };
 
@@ -259,10 +259,10 @@ function footer(locale) {
 function hero(page, locale) {
   const l = locales[locale];
   const feature = locale === "th"
-    ? ["Bilinguals Program", "Active Learning", "PBL", "AI Integration"]
+    ? ["Bilingual Program", "Active Learning", "PBL", "AI Integration"]
     : locale === "en"
-      ? ["Bilinguals Program", "Active Learning", "PBL", "AI Integration"]
-      : ["Bilinguals Program", "主动学习", "项目式学习", "AI 应用"];
+      ? ["Bilingual Program", "Active Learning", "PBL", "AI Integration"]
+      : ["Bilingual Program", "主动学习", "项目式学习", "AI 应用"];
 
   const isHome = page.id === "home";
   const slides = ["/assets/images/real-1.jpg","/assets/images/real-2.jpg","/assets/images/real-3.jpg","/assets/images/real-4.jpg","/assets/images/real-5.jpg","/assets/images/real-6.jpg"];
@@ -301,15 +301,11 @@ function hero(page, locale) {
 }
 
 function stats(locale) {
-  return `<section class="stats" aria-label="School highlights" data-animate="fade-up">${globals.stats.map(([nRaw, th, en, zh]) => {
-    const n = typeof nRaw === 'object' && nRaw !== null ? nRaw[locale] : nRaw;
-    const numMatch = n.match(/^(\d+)(.*)$/);
-    if (numMatch) {
-      const num = numMatch[1];
-      const suffix = numMatch[2] || "";
-      return `<div><strong><span class="counter" data-target="${num}">0</span>${suffix}</strong><span>${escapeHtml(locale === "th" ? th : locale === "en" ? en : zh)}</span></div>`;
-    }
-    return `<div><strong>${n}</strong><span>${escapeHtml(locale === "th" ? th : locale === "en" ? en : zh)}</span></div>`;
+  return `<section class="stats" aria-label="School highlights" data-animate="fade-up">${globals.stats.map(([n, th, en, zh]) => {
+    const numMatch = n.match(/^(\\d+)(.*)$/);
+    const num = numMatch ? numMatch[1] : n;
+    const suffix = numMatch ? numMatch[2] : "";
+    return `<div><strong><span class="counter" data-target="${num}">0</span>${suffix}</strong><span>${escapeHtml(locale === "th" ? th : locale === "en" ? en : zh)}</span></div>`;
   }).join("")}</section>`;
 }
 
@@ -790,11 +786,10 @@ function outputPath(path, locale) {
   return clean ? join(dist, clean, "index.html") : join(dist, "index.html");
 }
 
-function writePage(page, locale, cssHash) {
-  const htmlContent = html(page, locale, cssHash);
-  const outPath = join(dist, localizedPath(page.path, locale));
-  mkdirSync(outPath, { recursive: true });
-  writeFileSync(join(outPath, "index.html"), htmlContent);
+function writePage(page, locale) {
+  const file = outputPath(page.path, locale);
+  mkdirSync(dirname(file), { recursive: true });
+  writeFileSync(file, html(page, locale));
 }
 
 function copyAsset(src, destName) {

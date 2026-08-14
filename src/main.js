@@ -1,14 +1,39 @@
 (function () {
   const menuButton = document.querySelector("[data-menu-button]");
   const nav = document.querySelector("[data-site-nav]");
+  const header = document.querySelector(".site-header");
 
   if (menuButton && nav) {
-    menuButton.addEventListener("click", () => {
-      const isOpen = nav.classList.toggle("is-open");
+    const openLabel = menuButton.getAttribute("aria-label") || "Open main menu";
+    const closeLabel = document.documentElement.lang === "th"
+      ? "ปิดเมนูหลัก"
+      : document.documentElement.lang === "zh"
+        ? "关闭主菜单"
+        : "Close main menu";
+
+    const setMenuState = (isOpen) => {
+      nav.classList.toggle("is-open", isOpen);
       menuButton.setAttribute("aria-expanded", String(isOpen));
-      const header = document.querySelector(".site-header");
       if (header) header.classList.toggle("menu-open", isOpen);
       document.body.classList.toggle("lock-scroll", isOpen);
+      menuButton.setAttribute("aria-label", isOpen ? closeLabel : openLabel);
+    };
+
+    menuButton.addEventListener("click", () => {
+      setMenuState(!nav.classList.contains("is-open"));
+    });
+
+    nav.addEventListener("click", (event) => {
+      if (event.target.closest("a")) setMenuState(false);
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") setMenuState(false);
+    });
+
+    document.addEventListener("click", (event) => {
+      if (!header || !nav.classList.contains("is-open")) return;
+      if (!header.contains(event.target)) setMenuState(false);
     });
   }
 
@@ -48,7 +73,7 @@
               if (bg.tagName === 'VIDEO') {
                 stopTimer(); // Let the video dictate the duration
                 bg.currentTime = 0;
-                bg.play().catch(e => console.log('Autoplay prevented', e));
+                bg.play().catch(() => {});
                 
                 // Only attach the event once
                 if (!bg.hasAttribute('data-ended-listener')) {
@@ -93,7 +118,13 @@
         if(pauseBtn) {
           pauseBtn.addEventListener("click", () => {
             isPaused = !isPaused;
-            pauseBtn.innerHTML = isPaused ? `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>` : `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>`;
+            pauseBtn.innerHTML = isPaused ? `<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>` : `<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>`;
+            pauseBtn.setAttribute(
+              "aria-label",
+              isPaused
+                ? (document.documentElement.lang === "th" ? "เล่นสไลด์ต่อ" : document.documentElement.lang === "zh" ? "继续轮播" : "Resume slideshow")
+                : (document.documentElement.lang === "th" ? "หยุดสไลด์ชั่วคราว" : document.documentElement.lang === "zh" ? "暂停轮播" : "Pause slideshow")
+            );
             isPaused ? stopTimer() : startTimer();
           });
         }
@@ -104,7 +135,6 @@
   }
 
   // Sticky Header Scroll
-  const header = document.querySelector(".site-header");
   if (header) {
     window.addEventListener("scroll", () => {
       if (window.scrollY > 50) {

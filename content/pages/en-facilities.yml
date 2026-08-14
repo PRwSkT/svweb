@@ -5,8 +5,7 @@ image: real-4.jpg
 title: Facilities
 eyebrow: About
 summary: >-
-  Learning spaces, classrooms, playgrounds, and activity areas are presented in
-  a clear visual gallery.
+  Explore our purposefully designed learning spaces, modern classrooms, safe playgrounds, and dynamic activity areas that inspire student growth.
 sections:
   - title: Classrooms
     body: Age-appropriate spaces for hands-on learning.
@@ -15,4 +14,4 @@ sections:
 nav: about
 
 seo:
-  en: ["Facilities | Somkidvittaya School Rayong", "Learning spaces, classrooms, playgrounds, and activity areas are presented in a clear visual gallery."]
+  en: ["Facilities | Somkidvittaya School Rayong", "Explore our purposefully designed learning spaces, modern classrooms, safe playgrounds, and dynamic activity areas that inspire student growth."]

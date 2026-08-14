@@ -4,9 +4,9 @@ path: /admissions/apply/
 image: real-3.jpg
 title: Apply Online
 eyebrow: Admissions
-summary: Submit an initial inquiry through Netlify Forms so admissions can follow up.
+summary: Submit an initial inquiry to our admissions team and we will be in touch shortly.
 type: form
 nav: admissions
 
 seo:
-  en: ["Apply Online | Somkidvittaya School Rayong", "Submit an initial inquiry through Netlify Forms so admissions can follow up."]
+  en: ["Apply Online | Somkidvittaya School Rayong", "Submit an initial inquiry to our admissions team and we will be in touch shortly."]
