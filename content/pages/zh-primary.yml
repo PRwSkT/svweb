@@ -5,7 +5,7 @@ image: real-3.jpg
 title: 小学 (Primary School)
 eyebrow: 招收 6 岁及以上学生
 summary: >-
-  小学阶段提供两大课程：双语课程 (Bilinguals Program) 与普通课程 (General Program)，以满足不同学生的学习风格和未来目标。
+  小学阶段提供两大课程：双语课程 (Bilingual Program) 与普通课程 (General Program)，以满足不同学生的学习风格和未来目标。
 chart:
   zh:
     title: "课程比例 (双语课程)"
@@ -20,7 +20,7 @@ chart:
         value: 25
         color: "var(--sv-gold)"
 sections:
-  - title: 双语课程 (Bilinguals Program)
+  - title: 双语课程 (Bilingual Program)
     icon: globe
     body: >-
       延续幼儿园的双语环境，实行 50% 泰语和 50% 英语的教学比例。核心科目（数学、科学、自然拼读、美术）均由英语母语教师授课，确保卓越的国际化学术水平。此外，双语课程的学生也同样参与普通课程中的所有专业活动，包括泰式/西方音乐、视觉艺术、体育（足球、游泳、跆拳道）、机器人与计算机以及珠心算。
@@ -39,4 +39,4 @@ sections:
 nav: academics
 
 seo:
-  zh: ["小学 (Primary School) | Somkidvittaya 学校", "小学阶段提供两大课程：双语课程 (Bilinguals Program) 与普通课程 (General Program)，以满足不同学生的学习风格和未来目标。"]
+  zh: ["小学 (Primary School) | Somkidvittaya 学校", "小学阶段提供两大课程：双语课程 (Bilingual Program) 与普通课程 (General Program)，以满足不同学生的学习风格和未来目标。"]

@@ -2,13 +2,13 @@ stats:
   - ["66", "ปีแห่งความไว้วางใจ", "Years of trust", "年的信任与传承"]
   - ["170+", "นักเรียนในครอบครัว SV", "Students in the SV community", "名 SV 大家庭学子"]
   - [{th: "3 ภาษา", en: "3 Languages", zh: "3 门语言"}, "เปิดโลกกว้างแห่งการเรียนรู้", "Languages for global readiness", "培养全球视野的三语环境"]
-  - ["Bilinguals", "Bilinguals Program", "Bilinguals Program", "双语课程"]
+  - ["Bilingual", "Bilingual Program", "Bilingual Program", "双语课程"]
 
 quickLinks:
   th:
     - ["ผู้ปกครองที่สนใจ", "ข้อมูลหลักสูตร ค่าธรรมเนียมการศึกษา และนัดหมายเยี่ยมชมโรงเรียน", "/admissions/"]
     - ["ผู้ปกครองปัจจุบัน", "เข้าสู่ SV Portal ปฏิทินกิจกรรม และเอกสารสำคัญ", "/parents/"]
-    - ["สำรวจหลักสูตรของเรา", "หลักสูตร Bilinguals, 3 ภาษา, ปฐมวัย และประถมศึกษา", "/academics/"]
+    - ["สำรวจหลักสูตรของเรา", "หลักสูตร Bilingual, 3 ภาษา, ปฐมวัย และประถมศึกษา", "/academics/"]
   en:
     - ["Prospective Parents", "Programs, fees, and campus tours", "/admissions/"]
     - ["Current Parents", "SV Portal, calendar, and documents", "/parents/"]
@@ -22,8 +22,8 @@ programCards:
   th:
     - ["Trilingual Program", "เตรียมพบกับหลักสูตรใหม่เร็ว ๆ นี้ (Coming Soon)", "/academics/trilingual/", "real-1.jpg"]
     - ["เตรียมอนุบาล", "ดูแลก้าวแรกของลูกน้อยอย่างอบอุ่นผ่าน 6 Sensory Play", "/academics/pre-kindergarten/", "pre-k-program.jpg"]
-    - ["ปฐมวัย", "หลักสูตร Bilinguals Program เพื่อส่งเสริมพัฒนาการและทักษะภาษา", "/academics/kindergarten/", "real-2.jpg"]
-    - ["ประถมศึกษา", "หลักสูตร Bilinguals & General Program เพื่อก้าวสู่ความเป็นสากล", "/academics/primary/", "primary-program.jpg"]
+    - ["ปฐมวัย", "หลักสูตร Bilingual Program เพื่อส่งเสริมพัฒนาการและทักษะภาษา", "/academics/kindergarten/", "real-2.jpg"]
+    - ["ประถมศึกษา", "หลักสูตร Bilingual & General Program เพื่อก้าวสู่ความเป็นสากล", "/academics/primary/", "primary-program.jpg"]
   en:
     - ["Trilingual Program", "Coming Soon", "/academics/trilingual/", "real-1.jpg"]
     - ["Pre-Kindergarten", "Gentle first steps through sensory play.", "/academics/pre-kindergarten/", "pre-k-program.jpg"]
@@ -38,7 +38,7 @@ programCards:
 news:
   th:
     - ["เตรียมพื้นที่ข่าวเปิดภาคเรียน", "ข่าวสาร", "ใช้สำหรับสรุปกิจกรรมต้อนรับนักเรียนและผู้ปกครอง", "real-4.jpg"]
-    - ["กิจกรรมภาษาอังกฤษประจำเดือน", "กิจกรรม", "ภาพบรรยากาศและเรื่องราวจากกิจกรรมในหลักสูตร Bilinguals", "real-2.jpg"]
+    - ["กิจกรรมภาษาอังกฤษประจำเดือน", "กิจกรรม", "ภาพบรรยากาศและเรื่องราวจากกิจกรรมในหลักสูตร Bilingual", "real-2.jpg"]
     - ["บทความเลือกโรงเรียนสองภาษา", "บทความ", "คอนเทนต์ SEO สำหรับผู้ปกครองในระยอง", "real-3.jpg"]
   en:
     - ["New Term Updates", "News", "Welcome activities and family updates.", "real-4.jpg"]
@@ -52,7 +52,7 @@ news:
 faq:
   th:
     - ["เปิดรับสมัครนักเรียนช่วงเวลาใดบ้าง?", "โรงเรียนเปิดรับสมัครนักเรียนใหม่ตั้งแต่เดือนมกราคมของทุกปี โดยท่านผู้ปกครองสามารถติดต่อเพื่อนัดหมายเข้าเยี่ยมชมโรงเรียนได้ตลอดปีการศึกษา"]
-    - ["หลักสูตร Bilinguals ของเรามีความโดดเด่นอย่างไร?", "เราเน้นการเรียนการสอนภาษาอังกฤษผ่านกิจกรรม (Active Learning) กับครูชาวต่างชาติ 5-7 คาบต่อสัปดาห์ ควบคู่ไปกับการปูพื้นฐาน Phonics และฝึกทักษะการสื่อสารในสถานการณ์จริง"]
+    - ["หลักสูตร Bilingual ของเรามีความโดดเด่นอย่างไร?", "เราเน้นการเรียนการสอนภาษาอังกฤษผ่านกิจกรรม (Active Learning) กับครูชาวต่างชาติ 5-7 คาบต่อสัปดาห์ ควบคู่ไปกับการปูพื้นฐาน Phonics และฝึกทักษะการสื่อสารในสถานการณ์จริง"]
     - ["ทางโรงเรียนมีบริการรถรับส่งนักเรียนหรือไม่?", "โรงเรียนมีเครือข่ายรถตู้รับส่งที่ได้มาตรฐานความปลอดภัย ครอบคลุมหลายพื้นที่ในจังหวัดระยอง ท่านสามารถสอบถามเส้นทางและรายละเอียดเพิ่มเติมได้ที่ห้องธุรการ"]
     - ["ทางโรงเรียนเปิดสอนในระดับชั้นใดบ้าง?", "เรารับสมัครนักเรียนตั้งแต่ระดับชั้นเตรียมอนุบาล (อายุ 2 ขวบขึ้นไป) จนถึงระดับชั้นประถมศึกษาปีที่ 6"]
   en:
