@@ -6,7 +6,7 @@ import * as yaml from "js-yaml";
 const root = dirname(dirname(fileURLToPath(import.meta.url)));
 const dist = join(root, "dist");
 const siteUrl = (process.env.SITE_URL || "https://somkidvittaya.ac.th").replace(/\/$/, "");
-const defaultPortalUrl = process.env.SV_PORTAL_URL || "https://portal.somkidvittaya.ac.th";
+const defaultPortalUrl = process.env.SV_PORTAL_URL || "https://sv-portal.somkidvittaya.ac.th";
 
 const locales = {
   th: {
