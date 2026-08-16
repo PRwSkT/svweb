@@ -35,6 +35,14 @@
       if (!header || !nav.classList.contains("is-open")) return;
       if (!header.contains(event.target)) setMenuState(false);
     });
+
+    window.matchMedia("(min-width: 1161px)").addEventListener("change", (e) => {
+      if (e.matches && nav.classList.contains("is-open")) {
+        nav.classList.remove("is-open");
+        document.body.classList.remove("lock-scroll");
+        header.classList.remove("menu-open");
+      }
+    });
   }
 
   document.querySelectorAll("[data-faq-trigger]").forEach((button) => {
@@ -46,13 +54,6 @@
       button.setAttribute("aria-expanded", String(!expanded));
       panel.hidden = expanded;
       item.classList.toggle("is-open", !expanded);
-    });
-  });
-
-  document.querySelectorAll("[data-language-select]").forEach((select) => {
-    select.addEventListener("change", (event) => {
-      const next = event.target.value;
-      if (next) window.location.href = next;
     });
   });
 
@@ -87,7 +88,6 @@
               } else {
                 // If it's an image, make sure the timer is running
                 if (!isPaused) {
-                  stopTimer();
                   startTimer();
                 }
               }
@@ -106,14 +106,18 @@
         const nextSlide = () => { currentSlide = (currentSlide + 1) % slides.length; updateSlide(); };
         const prevSlide = () => { currentSlide = (currentSlide - 1 + slides.length) % slides.length; updateSlide(); };
 
-        const startTimer = () => { slideInterval = setInterval(nextSlide, 6000); };
+        const startTimer = () => { stopTimer(); slideInterval = setInterval(nextSlide, 6000); };
         const stopTimer = () => { clearInterval(slideInterval); };
+
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          isPaused = true;
+        }
 
         updateSlide(); // Initialize first slide state
         heroSlider.classList.add("is-animating"); // initial zoom
 
-        document.querySelector(".slider-arrow.next")?.addEventListener("click", () => { nextSlide(); stopTimer(); if(!isPaused) startTimer(); });
-        document.querySelector(".slider-arrow.prev")?.addEventListener("click", () => { prevSlide(); stopTimer(); if(!isPaused) startTimer(); });
+        document.querySelector(".slider-arrow.next")?.addEventListener("click", () => { nextSlide(); });
+        document.querySelector(".slider-arrow.prev")?.addEventListener("click", () => { prevSlide(); });
         const pauseBtn = document.querySelector(".slider-pause");
         if(pauseBtn) {
           pauseBtn.addEventListener("click", () => {
@@ -128,6 +132,23 @@
             isPaused ? stopTimer() : startTimer();
           });
         }
+
+        document.addEventListener("visibilitychange", () => {
+          if (document.hidden) stopTimer();
+          else if (!isPaused) startTimer();
+        });
+
+        let touchStartX = 0;
+        heroSlider.addEventListener('touchstart', (e) => {
+          touchStartX = e.changedTouches[0].screenX;
+        }, { passive: true });
+        heroSlider.addEventListener('touchend', (e) => {
+          const diff = touchStartX - e.changedTouches[0].screenX;
+          if (Math.abs(diff) > 40) {
+            if (diff > 0) nextSlide();
+            else prevSlide();
+          }
+        }, { passive: true });
       }
     } catch (e) {
       console.error("Slideshow error:", e);
@@ -147,6 +168,11 @@
 
   // Reveal Animations
   const animateCounter = (el, target, duration) => {
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReduced) {
+      el.textContent = target;
+      return;
+    }
     const easeOutExpo = t => t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
     let startTime = null;
     const step = (timestamp) => {

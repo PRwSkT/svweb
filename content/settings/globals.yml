@@ -37,15 +37,15 @@ programCards:
 
 news:
   th:
-    - ["เตรียมพื้นที่ข่าวเปิดภาคเรียน", "ข่าวสาร", "ใช้สำหรับสรุปกิจกรรมต้อนรับนักเรียนและผู้ปกครอง", "real-4.jpg"]
+    - ["ยินดีต้อนรับเปิดภาคเรียน", "ข่าวสาร", "ประมวลภาพบรรยากาศเปิดภาคเรียนและกิจกรรมปฐมนิเทศ", "real-4.jpg"]
     - ["กิจกรรมภาษาอังกฤษประจำเดือน", "กิจกรรม", "ภาพบรรยากาศและเรื่องราวจากกิจกรรมในหลักสูตร Bilingual", "real-2.jpg"]
     - ["บทความเลือกโรงเรียนสองภาษา", "บทความ", "คอนเทนต์ SEO สำหรับผู้ปกครองในระยอง", "real-3.jpg"]
   en:
-    - ["New Term Updates", "News", "Welcome activities and family updates.", "real-4.jpg"]
+    - ["Welcome to the New Term", "News", "Highlights from our welcome and orientation activities.", "real-4.jpg"]
     - ["Monthly English Activities", "Events", "Stories from the Bilingual classroom.", "real-2.jpg"]
     - ["Choosing a Bilingual School", "Article", "SEO content for families in Rayong.", "real-3.jpg"]
   zh:
-    - ["新学期动态", "新闻", "了解迎新活动与家校最新资讯。", "real-4.jpg"]
+    - ["欢迎新学期", "新闻", "回顾开学迎新与相关活动的精彩瞬间。", "real-4.jpg"]
     - ["每月英语活动", "活动", "分享双语课堂的精彩点滴。", "real-2.jpg"]
     - ["如何选择双语学校", "文章", "专为罗勇府家庭打造的择校指南。", "real-3.jpg"]
 
@@ -86,12 +86,12 @@ lifeCards:
   th:
     - ["A Day at SV", "บรรยากาศยามเช้าที่อบอุ่น ห้องเรียนที่เน้นการมีส่วนร่วม และกิจกรรมเสริมทักษะหลังเลิกเรียน"]
     - ["ชมรมและกิจกรรม", "เรียนรู้ผ่านกิจกรรมชมรมที่หลากหลาย ทั้งภาษา ศิลปะ กีฬา วิทยาศาสตร์ และกิจกรรมเพื่อสังคม"]
-    - ["แกลเลอรี", "รวบรวมภาพแห่งความประทับใจและวิดีโอบรรยากาศจริงของโรงเรียน (Phase 2)"]
+    - ["แกลเลอรี", "รวบรวมภาพแห่งความประทับใจและบรรยากาศจริงของโรงเรียน"]
   en:
     - ["A Day at SV", "Warm mornings, active classrooms, and after-school activities."]
     - ["Clubs", "Languages, arts, sports, science, and community."]
-    - ["Gallery", "A future home for real photos and short videos."]
+    - ["Gallery", "A collection of memorable photos and moments from our school."]
   zh:
     - ["SV 的一天", "温馨的早晨、互动式课堂与丰富的课后活动。"]
     - ["社团活动", "涵盖语言、艺术、体育、科学及社区实践。"]
-    - ["图库", "记录校园真实影像与精彩瞬间。"]
+    - ["图库", "精选珍贵照片，记录校园真实与精彩的瞬间。"]

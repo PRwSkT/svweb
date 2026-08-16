@@ -186,10 +186,10 @@ function languageSelect(page, locale) {
   }).join("");
   
   return `
-    <button class="language-switch" type="button" popovertarget="lang-menu" aria-label="${escapeHtml(locales[locale].langTitle)}" style="anchor-name: --lang-btn;">
+    <button class="language-switch" type="button" popovertarget="lang-menu" aria-label="${escapeHtml(locales[locale].langTitle)}">
       ${globeIcon} <span>${locale.toUpperCase()}</span>
     </button>
-    <div id="lang-menu" popover style="position-anchor: --lang-btn; margin: 0; left: anchor(right); top: anchor(bottom); margin-top: 8px; margin-left: -100px;">
+    <div id="lang-menu" popover style="position: absolute; top: 100%; right: 0; margin-top: 8px;">
       <div class="lang-dropdown">
         ${options}
       </div>
@@ -216,7 +216,7 @@ function header(page, locale) {
         <img src="/assets/images/logo.png" alt="Somkidvittaya School Logo" class="brand-logo" width="60" height="60">
       </a>
       <nav id="site-nav" class="site-nav" data-site-nav>${navLinks}</nav>
-      <div class="header-actions">${languageSelect(page, locale)}${button(l.ctaTour, localizedPath("/contact/", locale), "primary small")}</div>
+      <div class="header-actions" style="position: relative;">${languageSelect(page, locale)}${button(l.ctaTour, localizedPath("/contact/", locale), "primary small")}</div>
       <button class="menu-button" type="button" data-menu-button aria-expanded="false" aria-controls="site-nav" aria-label="${locale === "th" ? "เปิดเมนูหลัก" : locale === "en" ? "Open main menu" : "打开主菜单"}"><span></span><span></span><span></span></button>
     </div>
   </header>`;
@@ -240,7 +240,7 @@ function footer(locale) {
     </div>
     <div class="footer-grid">
       <div class="footer-col">
-        <img src="/assets/images/logo-white.png" alt="Somkidvittaya School" height="55" style="height: 55px; width: auto; margin-bottom: 15px;">
+        <img src="/assets/images/logo-white.png" alt="Somkidvittaya School" width="55" height="55" style="height: 55px; width: auto; margin-bottom: 15px;">
         <strong>${locale === "th" ? "โรงเรียนสมคิดวิทยา" : locale === "zh" ? "Somkidvittaya学校" : "Somkidvittaya School"}</strong>
         <p>${escapeHtml(schoolAddress)}<br>Tel: <a href="tel:${siteSettings.phone.replace(/[^0-9+]/g, '')}">${escapeHtml(siteSettings.phone)}</a><br>Email: <a href="mailto:${siteSettings.email}">${escapeHtml(siteSettings.email)}</a></p>
         <div class="footer-social" style="margin-top: 20px;">
@@ -251,7 +251,7 @@ function footer(locale) {
       </div>
       <div class="footer-col">
         <a href="https://siritham.com" target="_blank" rel="noopener noreferrer">
-          <img src="/assets/images/siritham-logo.png" alt="Siritham Co., Ltd." height="55" style="height: 55px; width: auto; margin-bottom: 15px;">
+          <img src="/assets/images/siritham-logo.png" alt="Siritham Co., Ltd." width="120" height="55" style="height: 55px; width: auto; margin-bottom: 15px;">
         </a>
         <strong>${locale === "th" ? "บริษัท ศิริธรรม จำกัด" : "Siritham Co., Ltd."}</strong>
         <p>${companyAddressLine}<br>Email: <a href="mailto:mail@siritham.com">mail@siritham.com</a></p>
@@ -263,7 +263,7 @@ function footer(locale) {
     </div>
     
     <div class="footer-giant-graphic">
-      <img src="/assets/images/sv-graphic.png" alt="" aria-hidden="true">
+      <img src="/assets/images/sv-graphic.png" alt="" aria-hidden="true" width="500" height="500">
     </div>
   </footer>
   <div class="mobile-cta">${button(locale === "th" ? "โทร" : locale === "en" ? "Call" : "电话", `tel:${siteSettings.phone.replace(/[^0-9+]/g, '')}`, "ghost")}${button(l.ctaApply, localizedPath("/admissions/apply/", locale), "primary")}${button(l.ctaTour, localizedPath("/contact/", locale), "secondary")}</div>`;
@@ -461,7 +461,7 @@ function textSections(page, locale) {
 
 function programCards(locale) {
   return `<section class="section" data-animate="fade-up"><div class="section-heading"><p class="eyebrow">Academics</p><h2>${locale === "th" ? "เลือกดูหลักสูตรตามช่วงวัย" : locale === "en" ? "Explore by Program" : "按学段了解课程"}</h2></div><div class="card-grid programs-grid reveal-stagger" data-animate="reveal-stagger">${globals.programCards[locale].map(([title, body, href, image]) => `<a class="program-card" href="${localizedPath(href, locale)}">
-  <div class="program-card-img"><img src="/assets/images/${image || 'real-1.jpg'}" alt="${escapeHtml(title)}" loading="lazy"></div>
+  <div class="program-card-img"><img src="/assets/images/${image || 'real-1.jpg'}" alt="${escapeHtml(title)}" loading="lazy" width="600" height="400"></div>
   <div class="program-card-content">
     <h3>${escapeHtml(title)}</h3>
     <p>${escapeHtml(body)}</p>
@@ -534,7 +534,8 @@ function life(page, locale) {
 
 function formSection(locale, name = "contact") {
   const l = locales[locale];
-  return `<section class="section form-section"><div><p class="eyebrow">${locale === "th" ? "ส่งข้อความ" : locale === "en" ? "Send Inquiry" : "发送咨询"}</p><h2>${locale === "th" ? "ให้ทีมโรงเรียนติดต่อกลับ" : locale === "en" ? "Let the School Team Follow Up" : "让学校团队联系您"}</h2></div><form name="${name}" method="POST" data-netlify="true" action="${localizedPath('/success/', locale)}" netlify>
+  return `<section class="section form-section"><div><p class="eyebrow">${locale === "th" ? "ส่งข้อความ" : locale === "en" ? "Send Inquiry" : "发送咨询"}</p><h2>${locale === "th" ? "ให้ทีมโรงเรียนติดต่อกลับ" : locale === "en" ? "Let the School Team Follow Up" : "让学校团队联系您"}</h2></div><form name="${name}" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="${localizedPath('/success/', locale)}" netlify>
+    <p style="display:none;"><label>Don't fill this out: <input name="bot-field"></label></p>
     <input type="hidden" name="form-name" value="${name}">
     <div><label for="${name}-name">${l.formName}</label><input id="${name}-name" name="name" required autocomplete="name"></div>
     <div><label for="${name}-phone">${l.formPhone}</label><input id="${name}-phone" name="phone" required autocomplete="tel"></div>
@@ -550,7 +551,7 @@ function contact(locale) {
   return `<section class="section contact-grid">
     <div class="contact-card"><h2>${locale === "th" ? "ข้อมูลติดต่อ" : locale === "en" ? "Contact Information" : "联系方式"}</h2><p>${locale === "th" ? "โรงเรียนสมคิดวิทยา" : locale === "zh" ? "Somkidvittaya学校" : "Somkidvittaya School"}<br>${escapeHtml(l.address || siteSettings.address).replace(/\n/g, "<br>")}<br>Tel: ${escapeHtml(siteSettings.phone)}<br>Email: ${escapeHtml(siteSettings.email)}</p><div class="hero-actions">${button(locales[locale].ctaTour, "#contact-form", "primary")}${button(locale === "th" ? "โทรหาเรา" : locale === "en" ? "Call Us" : "致电", `tel:${siteSettings.phone.replace(/[^0-9+]/g, '')}`, "secondary")}</div></div>
     <div class="map-wrapper" style="width: 100%; height: 100%; min-height: 400px; background: #e0e0e0; border-radius: 12px; overflow: hidden; box-shadow: var(--shadow);">
-      <iframe title="Map to Somkidvittaya School Rayong" loading="lazy" style="width:100%; height:100%; border:0;" src="https://maps.google.com/maps?q=โรงเรียนสมคิดวิทยา&t=&z=16&ie=UTF8&iwloc=B&output=embed" allowfullscreen="" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      <iframe title="Map to Somkidvittaya School Rayong" loading="lazy" style="width:100%; height:100%; border:0;" src="https://maps.google.com/maps?q=${encodeURIComponent('โรงเรียนสมคิดวิทยา')}&t=&z=16&ie=UTF8&iwloc=B&output=embed" allowfullscreen="" referrerpolicy="no-referrer-when-downgrade"></iframe>
     </div>
   </section><div id="contact-form">${formSection(locale, "contact")}</div>`;
 }
@@ -564,7 +565,7 @@ function directorQuote(locale) {
   return `<section class="director-quote-section" data-animate="fade-up">
     <div class="director-quote-container">
       <div class="director-image-wrapper">
-        <img src="/assets/images/director.png" alt="${name}" class="director-img">
+        <img src="/assets/images/director.png" alt="${name}" class="director-img" width="400" height="400">
         <div class="director-gradient-fade"></div>
       </div>
       <div class="director-quote-content">
@@ -596,7 +597,7 @@ function directorFullMessage(page, locale) {
         if (!signoff) return "";
         return `
       <div class="message-signoff" style="animation-delay: ${sections.length * 0.1}s">
-        <img src="${assetPath(signoff.image, "director.png")}" alt="${escapeHtml(signoff.name)}" class="signoff-avatar">
+        <img src="${assetPath(signoff.image, "director.png")}" alt="${escapeHtml(signoff.name)}" class="signoff-avatar" width="64" height="64">
         <div class="signoff-details">
           <strong>${escapeHtml(signoff.name)}</strong>
           <span>${escapeHtml(signoff.title)}</span>
@@ -639,7 +640,7 @@ function parentVoices(locale) {
   return `<section class="director-quote-section" data-animate="fade-up" style="background: var(--sv-stone); padding: 4rem 0;">
     <div class="director-quote-container reversed">
       <div class="director-image-wrapper">
-        <img src="/assets/images/real-3.jpg" alt="${eyebrow}" class="director-img" style="border-radius: 50%; max-width: 280px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); object-fit: cover; aspect-ratio: 1/1;">
+        <img src="/assets/images/real-3.jpg" alt="${eyebrow}" class="director-img" width="280" height="280" style="border-radius: 50%; max-width: 280px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); object-fit: cover; aspect-ratio: 1/1;">
       </div>
       <div class="director-quote-content">
         <p class="eyebrow">${eyebrow}</p>
@@ -750,7 +751,7 @@ function aboutSections(page, locale) {
     ${epilogue ? `
     <div class="epilogue-section">
       <div class="epilogue-giant-graphic">
-        <img src="/assets/images/epilogue-graphic.png" alt="Epilogue Graphic">
+        <img src="/assets/images/epilogue-graphic.png" alt="Epilogue Graphic" width="800" height="800">
       </div>
       <div class="epilogue-text" style="position: relative; z-index: 2; text-align: center;">
         <svg class="quote-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" style="margin: 0 auto 24px auto;"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
@@ -804,6 +805,7 @@ function structuredData(page, locale) {
   const scripts = [`<script type="application/ld+json">${JSON.stringify(org)}</script>`];
   
   if (page.id !== "home") {
+    const homePage = pages.find(p => p.id === "home") || pages[0];
     const breadcrumb = {
       "@context": "https://schema.org",
       "@type": "BreadcrumbList",
@@ -811,7 +813,7 @@ function structuredData(page, locale) {
         {
           "@type": "ListItem",
           position: 1,
-          name: t(pages[0], "title", locale),
+          name: t(homePage, "title", locale),
           item: pageUrl("/", locale)
         },
         {
@@ -885,6 +887,7 @@ function html(page, locale, cssHash) {
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/styles.css?v=${cssHash}">
   ${structuredData(page, locale)}
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 </head>
 <body class="${page.path === '/' ? 'is-home' : ''}">
   ${header(page, locale)}
