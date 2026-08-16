@@ -186,12 +186,14 @@ function languageSelect(page, locale) {
   }).join("");
   
   return `
-    <button class="language-switch" type="button" popovertarget="lang-menu" aria-label="${escapeHtml(locales[locale].langTitle)}">
-      ${globeIcon} <span>${locale.toUpperCase()}</span>
-    </button>
-    <div id="lang-menu" popover style="position: absolute; top: 100%; right: 0; margin-top: 8px;">
-      <div class="lang-dropdown">
-        ${options}
+    <div class="lang-wrapper" style="position: relative; display: inline-flex;">
+      <button class="language-switch" type="button" aria-haspopup="true" aria-label="${escapeHtml(locales[locale].langTitle)}">
+        ${globeIcon} <span>${locale.toUpperCase()}</span>
+      </button>
+      <div id="lang-menu" style="position: absolute; top: 100%; right: 0; margin-top: 8px; z-index: 100;">
+        <div class="lang-dropdown">
+          ${options}
+        </div>
       </div>
     </div>
   `;
