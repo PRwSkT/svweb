@@ -212,6 +212,11 @@
             const text = el.textContent;
             const num = parseInt(text, 10);
             if (!isNaN(num)) {
+              const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+              if (prefersReduced) {
+                el.textContent = num + "%";
+                return;
+              }
               el.textContent = "0%";
               setTimeout(() => {
                 const easeOutExpo = t => t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
