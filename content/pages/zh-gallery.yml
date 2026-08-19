@@ -1,0 +1,9 @@
+id: gallery
+path: /student-life/gallery
+lang: zh
+type: gallery
+title: 照片库
+eyebrow: Somkidvittaya School
+summary: 学校活动和生活照片。
+seo:
+  zh: ["照片库 — Somkidvittaya学校", "学校活动和生活照片"]

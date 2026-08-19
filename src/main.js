@@ -24,7 +24,10 @@
     });
 
     nav.addEventListener("click", (event) => {
-      if (event.target.closest("a")) setMenuState(false);
+      const link = event.target.closest("a");
+      if (link && !link.classList.contains("has-dropdown")) {
+        setMenuState(false);
+      }
     });
 
     document.addEventListener("keydown", (event) => {
@@ -40,7 +43,7 @@
       if (e.matches && nav.classList.contains("is-open")) {
         nav.classList.remove("is-open");
         document.body.classList.remove("lock-scroll");
-        header.classList.remove("menu-open");
+        if(header) header.classList.remove("menu-open");
       }
     });
   }
@@ -52,7 +55,7 @@
       const expanded = button.getAttribute("aria-expanded") === "true";
 
       button.setAttribute("aria-expanded", String(!expanded));
-      panel.hidden = expanded;
+      
       item.classList.toggle("is-open", !expanded);
     });
   });
@@ -67,7 +70,7 @@
         let isPaused = false;
         
         const updateSlide = () => {
-          const bgs = heroSlider.querySelectorAll('.hero-bg');
+          const bgs = heroBgs;
           bgs.forEach((bg, i) => {
             if (i === currentSlide) {
               bg.classList.add('active');
@@ -99,7 +102,7 @@
             }
           });
           
-          const indicator = document.querySelector(".slider-indicator");
+          const indicator = heroIndicator;
           if(indicator) indicator.textContent = `0${currentSlide + 1} / 0${slides.length}`;
         };
 
@@ -139,11 +142,12 @@
         });
 
         let touchStartX = 0;
+let touchStartY = 0;
         heroSlider.addEventListener('touchstart', (e) => {
-          touchStartX = e.changedTouches[0].screenX;
+          touchStartX = e.changedTouches[0].clientX;
         }, { passive: true });
         heroSlider.addEventListener('touchend', (e) => {
-          const diff = touchStartX - e.changedTouches[0].screenX;
+          const diff = touchStartX - e.changedTouches[0].clientX;
           if (Math.abs(diff) > 40) {
             if (diff > 0) nextSlide();
             else prevSlide();
@@ -252,5 +256,74 @@
         });
       }
     });
+  }
+
+  
+  // Cookie Banner
+  const cookieBanner = document.getElementById("cookie-banner");
+  if (cookieBanner) {
+    if (!localStorage.getItem("cookieConsent")) {
+      setTimeout(() => cookieBanner.classList.add("show"), 1000);
+    }
+    const acceptBtn = document.getElementById("accept-cookies");
+    if (acceptBtn) {
+      acceptBtn.addEventListener("click", () => {
+        localStorage.setItem("cookieConsent", "true");
+        cookieBanner.classList.remove("show");
+      });
+    }
+  }
+
+  // Initialize Feather Icons
+
+  // Mobile & Touch Dropdown Toggle
+  const dropdownToggles = document.querySelectorAll('.has-dropdown');
+  dropdownToggles.forEach(toggle => {
+    toggle.addEventListener('click', (e) => {
+      if (window.innerWidth <= 1160) {
+        e.preventDefault();
+        toggle.parentElement.classList.toggle('is-expanded');
+      } else if (window.matchMedia('(any-pointer: coarse)').matches) {
+        // iPad / Touch landscape
+        if (!toggle.parentElement.classList.contains('is-expanded')) {
+          e.preventDefault(); // prevent navigation on first tap
+          // close others
+          navDropdowns.forEach(d => d.classList.remove('is-expanded'));
+          toggle.parentElement.classList.add('is-expanded');
+        }
+      }
+    });
+  });
+
+  // Language Switcher Toggle for Mobile/Touch
+  const langSwitch = document.querySelector('.language-switch');
+  const langWrapper = document.querySelector('.lang-wrapper');
+  if (langSwitch && langWrapper) {
+    langSwitch.addEventListener('click', (e) => {
+      e.preventDefault();
+      if (langWrapper.classList.contains('is-active')) {
+        langWrapper.classList.remove('is-active');
+        langSwitch.blur();
+      } else {
+        langWrapper.classList.add('is-active');
+      }
+    });
+  }
+
+  // Close dropdowns on outside click
+  document.addEventListener('click', (e) => {
+    if (langWrapper && !langWrapper.contains(e.target)) {
+      langWrapper.classList.remove('is-active');
+    }
+    if (window.innerWidth > 1160 && window.matchMedia('(any-pointer: coarse)').matches) {
+      if (!e.target.closest('.nav-item-dropdown')) {
+        navDropdowns.forEach(d => d.classList.remove('is-expanded'));
+      }
+    }
+  });
+
+  if (window.feather) {
+
+    feather.replace();
   }
 })();

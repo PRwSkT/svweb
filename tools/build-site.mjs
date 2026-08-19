@@ -1,4 +1,5 @@
 import { mkdirSync, copyFileSync, writeFileSync, existsSync, rmSync, readFileSync, readdirSync, statSync } from "node:fs";
+import { createClient } from '@supabase/supabase-js';
 import crypto from "node:crypto";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -7,6 +8,33 @@ const root = dirname(dirname(fileURLToPath(import.meta.url)));
 const dist = join(root, "dist");
 const siteUrl = (process.env.SITE_URL || "https://somkidvittaya.ac.th").replace(/\/$/, "");
 const defaultPortalUrl = process.env.SV_PORTAL_URL || "https://sv-portal.somkidvittaya.ac.th";
+
+const supabaseUrl = process.env.SUPABASE_URL || 'https://ufsqavndpjphowuacxfi.supabase.co';
+const supabaseKey = process.env.SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVmc3Fhdm5kcGpwaG93dWFjeGZpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODExMTM4NzgsImV4cCI6MjA5NjY4OTg3OH0.fpaVZY8i7YQLRewcv3cuEZR_P9wNz1rWs5Q1UOk3Hz0';
+const supabase = createClient(supabaseUrl, supabaseKey);
+
+// Fetch dynamic data for build
+let dynamicData = { personnel: [], news: [], albums: [], calendar: [], documents: [] };
+try {
+  console.log("Fetching dynamic data from Supabase...");
+  const results = await Promise.allSettled([
+    supabase.from('personnel').select('*').eq('is_active', true).order('sort_order', { ascending: true }),
+    supabase.from('news').select('*').eq('is_published', true).order('published_at', { ascending: false }).limit(20),
+    supabase.from('albums').select('*, album_photos(*)').order('event_date', { ascending: false }).limit(20),
+    supabase.from('calendar_events').select('*').order('start_date', { ascending: true }),
+    supabase.from('documents').select('*').order('created_at', { ascending: false })
+  ]);
+  
+  if (results[0].status === 'fulfilled' && results[0].value.data) dynamicData.personnel = results[0].value.data;
+  if (results[1].status === 'fulfilled' && results[1].value.data) dynamicData.news = results[1].value.data;
+  if (results[2].status === 'fulfilled' && results[2].value.data) dynamicData.albums = results[2].value.data;
+  if (results[3].status === 'fulfilled' && results[3].value.data) dynamicData.calendar = results[3].value.data;
+  if (results[4].status === 'fulfilled' && results[4].value.data) dynamicData.documents = results[4].value.data;
+  console.log(`Fetched ${dynamicData.personnel.length} personnel, ${dynamicData.news.length} news, ${dynamicData.albums.length} albums, ${dynamicData.calendar.length} events, ${dynamicData.documents.length} docs.`);
+} catch (e) {
+  console.error("Failed to fetch Supabase data:", e.message);
+}
+
 
 const locales = {
   th: {
@@ -20,7 +48,7 @@ const locales = {
     portal: "เข้าสู่ SV Portal",
     readMore: "อ่านเพิ่มเติม",
     formName: "ชื่อ-นามสกุล",
-    formPhone: "เบอร์โทร",
+    formPhone: "หมายเลขโทรศัพท์",
     formEmail: "อีเมล",
     formLevel: "ระดับชั้นที่สนใจ",
     formMessage: "ข้อความ",
@@ -42,7 +70,7 @@ const locales = {
     formName: "Full name",
     formPhone: "Phone",
     formEmail: "Email",
-    formLevel: "Interested level",
+    formLevel: "Grade Level of Interest",
     formMessage: "Message",
     submit: "Submit",
     footer: "Bilingual school for Pre-Kindergarten to Primary in Rayong",
@@ -67,7 +95,7 @@ const locales = {
     submit: "提交",
     footer: "位于罗勇府的双语学校，涵盖幼儿预备班至小学",
     langTitle: "语言",
-    address: "泰国罗勇府罗勇直辖县 Tha Pradu 区 Lang Wat Pa 路 80/5 号，邮政编码：21000，泰国"
+    address: "泰国罗勇市 Tha Pradu 区 Lang Wat Pa 路 80/5 号，邮政编码：21000"
   }
 };
 
@@ -106,7 +134,7 @@ for (const file of readdirSync(join(root, 'content/pages'))) {
   }
   
   const p = pageMap.get(data.id);
-  const l = data.lang;
+  const l = data.lang || 'th';
   
   if (data.title) p.title[l] = data.title;
   if (data.eyebrow) p.eyebrow[l] = data.eyebrow;
@@ -153,8 +181,8 @@ function pageUrl(path, locale) {
 
 function assetPath(value, fallback = "real-1.jpg") {
   const image = String(value || fallback);
-  if (image.startsWith("http://") || image.startsWith("https://") || image.startsWith("/")) return image;
-  return `/assets/images/${image}`;
+  if (image.startsWith("http://") || image.startsWith("https://") || image.startsWith("/")) return validateUrl(image);
+  return validateUrl(`/assets/images/${image}`);
 }
 
 function absoluteAssetUrl(value, fallback = "real-1.jpg") {
@@ -168,7 +196,18 @@ function escapeHtml(value) {
     .replaceAll("&", "&amp;")
     .replaceAll("<", "&lt;")
     .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;");
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#x27;")
+    .replaceAll("`", "&#x60;");
+}
+
+function validateUrl(url) {
+  if (!url) return "";
+  const trimmed = String(url).trim();
+  if (trimmed.toLowerCase().startsWith("javascript:")) {
+    return "#";
+  }
+  return escapeHtml(trimmed);
 }
 
 function button(label, href, variant = "primary") {
@@ -203,6 +242,92 @@ function header(page, locale) {
   const l = locales[locale];
   const navLinks = navItems.map(([key, href], index) => {
     const active = page.nav === key ? " aria-current=\"page\"" : "";
+    
+    
+    if (key === "student-life") {
+      return `<div class="nav-item-dropdown">
+        <a href="${localizedPath(href, locale)}"${active} class="has-dropdown"><span>${escapeHtml(l.nav[index])}</span> <i data-feather="chevron-down" class="dropdown-icon"></i></a>
+        <div class="mega-menu">
+          <div class="mega-menu-content">
+            <div class="mega-column">
+              <h4>${locale === 'th' ? 'ชีวิตในโรงเรียน' : locale === 'zh' ? '校园生活' : 'Student Life'}</h4>
+              <ul>
+                <li><a href="${localizedPath('/student-life/', locale)}">${locale === 'th' ? 'กิจกรรมและสิ่งแวดล้อม' : locale === 'zh' ? '活动与环境' : 'Activities & Environment'}</a></li>
+                <li><a href="${localizedPath('/student-life/gallery/', locale)}">${locale === 'th' ? 'แกลเลอรีภาพกิจกรรม' : locale === 'zh' ? '活动图库' : 'Photo Gallery'}</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>`;
+    }
+
+    if (key === "parents") {
+      return `<div class="nav-item-dropdown">
+        <a href="${localizedPath(href, locale)}"${active} class="has-dropdown"><span>${escapeHtml(l.nav[index])}</span> <i data-feather="chevron-down" class="dropdown-icon"></i></a>
+        <div class="mega-menu">
+          <div class="mega-menu-content">
+            <div class="mega-column">
+              <h4>${locale === 'th' ? 'สำหรับผู้ปกครอง' : locale === 'zh' ? '家长专区' : 'For Parents'}</h4>
+              <ul>
+                <li><a href="${localizedPath('/parents/', locale)}">${locale === 'th' ? 'คำแนะนำสำหรับผู้ปกครอง' : locale === 'zh' ? '家长指南' : 'Parent Guide'}</a></li>
+                <li><a href="${localizedPath('/parents/documents/', locale)}">${locale === 'th' ? 'ศูนย์ดาวน์โหลดเอกสาร' : locale === 'zh' ? '文档下载中心' : 'Document Hub'}</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>`;
+    }
+    if (key === "about") {
+      return `<div class="nav-item-dropdown">
+        <a href="${localizedPath(href, locale)}"${active} class="has-dropdown"><span>${escapeHtml(l.nav[index])}</span> <i data-feather="chevron-down" class="dropdown-icon"></i></a>
+        <div class="mega-menu">
+          <div class="mega-menu-content">
+            <div class="mega-column">
+              <h4>${locale === 'th' ? 'เกี่ยวกับโรงเรียน' : locale === 'zh' ? '关于学校' : 'About the School'}</h4>
+              <ul>
+                <li><a href="${localizedPath('/about/', locale)}">${locale === 'th' ? 'ประวัติโรงเรียน' : locale === 'zh' ? '学校历史' : 'Our History'}</a></li>
+                <li><a href="${localizedPath('/director/', locale)}">${locale === 'th' ? 'สารจากผู้บริหาร' : locale === 'zh' ? '校长致辞' : 'Message from the Director'}</a></li>
+                <li><a href="${localizedPath('/about/faculty/', locale)}">${locale === 'th' ? 'ทำเนียบบุคลากร' : locale === 'zh' ? '教职员工' : 'Faculty Directory'}</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>`;
+    }
+    if (key === "academics") {
+      return `<div class="nav-item-dropdown">
+        <a href="${localizedPath(href, locale)}"${active} class="has-dropdown"><span>${escapeHtml(l.nav[index])}</span> <i data-feather="chevron-down" class="dropdown-icon"></i></a>
+        <div class="mega-menu">
+          <div class="mega-menu-content">
+            <div class="mega-column">
+              <h4>${locale === 'th' ? 'หลักสูตรทั้งหมด' : locale === 'zh' ? '所有课程' : 'All Programs'}</h4>
+              <ul>
+                <li><a href="${localizedPath('/academics/', locale)}">${locale === 'th' ? 'ข้อมูลหลักสูตรทั้งหมด' : locale === 'zh' ? '所有课程信息' : 'All Programs'}</a></li>
+                <li><a href="${localizedPath('/academics/', locale)}#pre-k">${locale === 'th' ? 'เตรียมอนุบาล' : locale === 'zh' ? '学前班' : 'Pre-Kindergarten'}</a></li>
+                <li><a href="${localizedPath('/academics/', locale)}#kindergarten">${locale === 'th' ? 'อนุบาล' : locale === 'zh' ? '幼儿园' : 'Kindergarten'}</a></li>
+                <li><a href="${localizedPath('/academics/', locale)}#primary">${locale === 'th' ? 'ประถมศึกษา' : locale === 'zh' ? '小学' : 'Primary'}</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>`;
+    } else if (key === "admissions") {
+      return `<div class="nav-item-dropdown">
+        <a href="${localizedPath(href, locale)}"${active} class="has-dropdown"><span>${escapeHtml(l.nav[index])}</span> <i data-feather="chevron-down" class="dropdown-icon"></i></a>
+        <div class="mega-menu">
+          <div class="mega-menu-content">
+            <div class="mega-column">
+              <h4>${locale === 'th' ? 'การรับสมัคร' : locale === 'zh' ? '招生' : 'Admissions'}</h4>
+              <ul>
+                <li><a href="${localizedPath('/admissions/', locale)}">${locale === 'th' ? 'ข้อมูลการรับสมัคร' : locale === 'zh' ? '招生信息' : 'Admissions Info'}</a></li>
+                <li><a href="${localizedPath('/admissions/apply/', locale)}">${locale === 'th' ? 'กรอกใบสมัคร' : locale === 'zh' ? '立即申请' : 'Apply Now'}</a></li>
+                <li><a href="${localizedPath('/admissions/fees/', locale)}">${locale === 'th' ? 'ค่าธรรมเนียม' : locale === 'zh' ? '学费' : 'Fees'}</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>`;
+    }
     return `<a href="${localizedPath(href, locale)}"${active}>${escapeHtml(l.nav[index])}</a>`;
   }).join("");
 
@@ -242,20 +367,22 @@ function footer(locale) {
     </div>
     <div class="footer-grid">
       <div class="footer-col">
-        <img src="/assets/images/logo-white.png" alt="Somkidvittaya School" width="55" height="55" style="height: 55px; width: auto; margin-bottom: 15px;">
+        <img src="/assets/images/logo-white.png" loading="lazy" alt="Somkidvittaya School" width="55" height="55" style="height: 55px; width: auto; margin-bottom: 15px;">
         <strong>${locale === "th" ? "โรงเรียนสมคิดวิทยา" : locale === "zh" ? "Somkidvittaya学校" : "Somkidvittaya School"}</strong>
         <p>${escapeHtml(schoolAddress)}<br>Tel: <a href="tel:${siteSettings.phone.replace(/[^0-9+]/g, '')}">${escapeHtml(siteSettings.phone)}</a><br>Email: <a href="mailto:${siteSettings.email}">${escapeHtml(siteSettings.email)}</a></p>
         <div class="footer-social" style="margin-top: 20px;">
           <a href="${escapeHtml(siteSettings.facebook)}" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg></a>
           <a href="${escapeHtml(siteSettings.instagram)}" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a>
           ${siteSettings.youtube ? `<a href="${escapeHtml(siteSettings.youtube)}" target="_blank" rel="noopener noreferrer" aria-label="YouTube"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33 2.78 2.78 0 0 0 1.94 2c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.33 29 29 0 0 0-.46-5.33z"></path><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon></svg></a>` : ''}
+          ${siteSettings.tiktok ? `<a href="${escapeHtml(siteSettings.tiktok)}" target="_blank" rel="noopener noreferrer" aria-label="TikTok"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"></path></svg></a>` : ''}
+          ${siteSettings.line ? `<a href="https://line.me/R/ti/p/${siteSettings.line.startsWith('@') ? siteSettings.line : '@' + siteSettings.line}" target="_blank" rel="noopener noreferrer" aria-label="LINE"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M19.365 9.863c0-3.968-3.961-7.228-8.851-7.228-4.89 0-8.852 3.26-8.852 7.228 0 3.567 3.123 6.608 7.391 7.152.288.062.68.179.778.435.09.231.029.588-.037.818-.112.387-.528 2.062-.647 2.585-.152.658.337.859.852.545.986-.6 5.311-3.269 7.288-5.385C18.665 14.195 19.365 12.186 19.365 9.863zM9.467 11.233H7.815V8.125c0-.236-.182-.418-.418-.418s-.418.182-.418.418v3.526c0 .236.182.418.418.418h2.07c.236 0 .418-.182.418-.418s-.182-.418-.418-.418zm1.942.418H10.57v-3.526c0-.236.182-.418.418-.418s.418.182.418.418v3.526zM15.42 8.125c0-.236-.182-.418-.418-.418h-1.637c-.236 0-.418.182-.418.418v3.526c0 .236.182.418.418.418h1.637c.236 0 .418-.182.418-.418s-.182-.418-.418-.418h-1.219v-1.139h1.219c.236 0 .418-.182.418-.418s-.182-.418-.418-.418h-1.219V8.543h1.219c.236 0 .418-.182.418-.418zm4.61-3.957H20.03v3.526c0 .236-.182.418-.418.418h-2.07c-.236 0-.418-.182-.418-.418s.182-.418.418-.418h1.652V8.125c0-.236.182-.418.418-.418s.418.182.418.418z"/></svg></a>` : ''}
         </div>
       </div>
       <div class="footer-col">
         <a href="https://siritham.com" target="_blank" rel="noopener noreferrer">
-          <img src="/assets/images/siritham-logo.png" alt="Siritham Co., Ltd." width="120" height="55" style="height: 55px; width: auto; margin-bottom: 15px;">
+          <img src="/assets/images/siritham-logo.png" loading="lazy" alt="Siritham Co., Ltd." width="120" height="55" style="height: 55px; width: auto; margin-bottom: 15px;">
         </a>
-        <strong>${locale === "th" ? "บริษัท ศิริธรรม จำกัด" : "Siritham Co., Ltd."}</strong>
+        <strong>${locale === "th" ? "บริษัท ศิริธรรม จำกัด" : locale === "zh" ? "Siritham 有限公司" : "Siritham Co., Ltd."}</strong>
         <p>${companyAddressLine}<br>Email: <a href="mailto:mail@siritham.com">mail@siritham.com</a></p>
       </div>
     </div>
@@ -265,7 +392,7 @@ function footer(locale) {
     </div>
     
     <div class="footer-giant-graphic">
-      <img src="/assets/images/sv-graphic.png" alt="" aria-hidden="true" width="500" height="500">
+      <img src="/assets/images/sv-graphic.png" loading="lazy" alt="" aria-hidden="true" width="500" height="500">
     </div>
   </footer>
   <div class="mobile-cta">${button(locale === "th" ? "โทร" : locale === "en" ? "Call" : "电话", `tel:${siteSettings.phone.replace(/[^0-9+]/g, '')}`, "ghost")}${button(l.ctaApply, localizedPath("/admissions/apply/", locale), "primary")}${button(l.ctaTour, localizedPath("/contact/", locale), "secondary")}</div>`;
@@ -277,7 +404,7 @@ function hero(page, locale) {
     ? ["Bilingual Program", "Active Learning", "PBL", "AI Integration"]
     : locale === "en"
       ? ["Bilingual Program", "Active Learning", "PBL", "AI Integration"]
-      : ["Bilingual Program", "主动学习", "项目式学习", "AI 应用"];
+      : ["双语课程", "主动学习", "项目式学习", "AI 应用"];
 
   const isHome = page.id === "home";
   const slides = ["/assets/images/real-1.jpg","/assets/images/real-2.jpg","/assets/images/real-3.jpg","/assets/images/real-4.jpg","/assets/images/real-5.jpg","/assets/images/real-6.jpg"];
@@ -463,51 +590,78 @@ function textSections(page, locale) {
 
 function programCards(locale) {
   return `<section class="section" data-animate="fade-up"><div class="section-heading"><p class="eyebrow">Academics</p><h2>${locale === "th" ? "เลือกดูหลักสูตรตามช่วงวัย" : locale === "en" ? "Explore by Program" : "按学段了解课程"}</h2></div><div class="card-grid programs-grid reveal-stagger" data-animate="reveal-stagger">${globals.programCards[locale].map(([title, body, href, image]) => `<a class="program-card" href="${localizedPath(href, locale)}">
-  <div class="program-card-img"><img src="/assets/images/${image || 'real-1.jpg'}" alt="${escapeHtml(title)}" loading="lazy" width="600" height="400"></div>
+  <div class="program-card-img"><img src="${assetPath(image)}" alt="${escapeHtml(title)}" loading="lazy" width="600" height="400"></div>
   <div class="program-card-content">
     <h3>${escapeHtml(title)}</h3>
     <p>${escapeHtml(body)}</p>
-    <span>${locale === "th" ? "ดูรายละเอียด →" : locale === "en" ? "Learn More →" : "了解更多 →"}</span>
+    <span>${locale === 'th' ? 'ดูรายละเอียด →' : locale === 'zh' ? '了解更多 →' : 'Learn More →'}</span>
   </div>
 </a>`).join("")}</div></section>`;
 }
 
 function admissions(locale) {
-  const cta = button(locale === "th" ? "ดูโครงสร้างค่าธรรมเนียม" : locale === "en" ? "View Tuition & Fees" : "查看学费", localizedPath("/admissions/fees/", locale), "secondary");
-  return `<section class="section"><div class="section-heading"><p class="eyebrow">Admissions</p><h2>${locale === "th" ? "สมัครง่ายใน 4 ขั้นตอน" : locale === "en" ? "Apply in Four Steps" : "四步完成申请"}</h2></div><div class="steps">${globals.admissionsSteps[locale].map((s, i) => `<div><strong>${i + 1}</strong><span>${escapeHtml(s)}</span></div>`).join("")}</div><div style="margin-top: 40px; text-align: center;">${cta}</div></section>${formSection(locale, "admissions-inquiry")}`;
+  const cta = button(locale === 'th' ? 'ดูโครงสร้างค่าธรรมเนียม' : locale === 'zh' ? '查看学费' : 'View Tuition & Fees', localizedPath("/admissions/fees/", locale), "secondary");
+  return `<section class="section"><div class="section-heading"><p class="eyebrow">Admissions</p><h2>${locale === 'th' ? 'สมัครง่ายใน 4 ขั้นตอน' : locale === 'zh' ? '四步完成申请' : 'Apply in Four Steps'}</h2></div><div class="steps">${globals.admissionsSteps[locale].map((s, i) => `<div><strong>${i + 1}</strong><span>${escapeHtml(s)}</span></div>`).join("")}</div><div style="margin-top: 40px; text-align: center;">${cta}</div></section>${formSection(locale, "admissions-inquiry")}`;
 }
 
 function fees(locale) {
   const heads = globals.fees[locale].heads;
   const rows = globals.fees[locale].rows;
-  return `<section class="section"><div class="table-wrap"><table><thead><tr>${heads.map((h) => `<th>${h}</th>`).join("")}</tr></thead><tbody>${rows.map((r) => `<tr><td>${r}</td><td>${locale === "th" ? "รออัปเดตจากฝ่ายทะเบียน" : "To be updated by admissions"}</td><td>${locale === "th" ? "โปรดติดต่อโรงเรียนเพื่อข้อมูลล่าสุด" : "Please contact the school for the latest information."}</td></tr>`).join("")}</tbody></table></div></section>`;
+  return `<section class="section"><div class="table-wrap"><table><thead><tr>${heads.map((h) => `<th>${escapeHtml(h)}</th>`).join("")}</tr></thead><tbody>${rows.map((r) => `<tr><td>${escapeHtml(r)}</td><td>${locale === "th" ? "รออัปเดตจากฝ่ายทะเบียน" : locale === "zh" ? "待招生办更新" : "To be updated by Admissions"}</td><td>${locale === "th" ? "โปรดติดต่อโรงเรียนเพื่อข้อมูลล่าสุด" : locale === "zh" ? "请联系学校获取最新信息。" : "Please contact the school for the latest information."}</td></tr>`).join("")}</tbody></table></div></section>`;
 }
 
 function faq(locale) {
-  return `<section class="section faq-list">${globals.faq[locale].map(([q, a], i) => `<article class="faq-item${i === 0 ? " is-open" : ""}" data-faq-item><button data-faq-trigger aria-expanded="${i === 0 ? "true" : "false"}">${escapeHtml(q)}<span>+</span></button><p data-faq-panel${i === 0 ? "" : " hidden"}>${escapeHtml(a)}</p></article>`).join("")}</section>`;
+  return `<section class="section faq-list">${globals.faq[locale].map(([q, a], i) => `<article class="faq-item${i === 0 ? " is-open" : ""}" data-faq-item><button data-faq-trigger aria-expanded="${i === 0 ? "true" : "false"}">${escapeHtml(q)}<span>+</span></button><div class="faq-panel" data-faq-panel><div><p>${escapeHtml(a)}</p></div></div></article>`).join("")}</section>`;
 }
 
 function news(locale) {
-  const items = globals.news[locale];
-  const listItems = items.slice(1);
+  let items = dynamicData.news;
+  if (!items || items.length === 0) {
+     // fallback to static globals if db is empty
+     items = globals.news[locale].map(arr => ({
+         title_th: arr[0], title_en: arr[0], title_zh: arr[0],
+         content_th: arr[2], content_en: arr[2], content_zh: arr[2],
+         cover_image_url: assetPath(arr[3], 'real-4.jpg'),
+         published_at: new Date().toISOString()
+     }));
+  }
+  
+  const featured = items[0];
+  const listItems = items.slice(1, 4); // show next 3
+  
+  // Try to find album collage for featured
+  let collageHtml = '';
+  if (featured.album_id) {
+     const album = dynamicData.albums.find(a => a.id === featured.album_id);
+     if (album && album.album_photos && album.album_photos.length > 0) {
+        const photos = album.album_photos.slice(0, 3); // take up to 3 photos
+        collageHtml = `<div class="news-collage" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 15px;">
+           ${photos.map(p => `<img src="${escapeHtml(p.photo_url)}" alt="Album photo" loading="lazy" width="400" height="300" style="width:100%; height:auto; aspect-ratio:4/3; object-fit:cover; border-radius:8px;">`).join('')}
+        </div>
+        <div style="margin-top: 10px; font-size: 0.85rem; color: var(--sv-gold);"><i class="fas fa-images"></i> ${locale === "th" ? "ดูรูปภาพทั้งหมดในอัลบั้ม →" : "View all photos in album →"}</div>`;
+     }
+  }
+
   return `<section class="section" data-animate="fade-up">
     <div class="section-heading">
       <p class="eyebrow">News & Updates</p>
       <h2>${locale === "th" ? "ข่าวสารและกิจกรรม" : locale === "en" ? "Latest Announcements" : "最新动态"}</h2>
     </div>
     <div class="news-board">
-      <a href="${localizedPath("/news/", locale)}" class="news-featured">
-        <img src="/assets/images/${items[0][3] || 'real-4.jpg'}" alt="${escapeHtml(items[0][0])}" width="800" height="500" loading="lazy">
-        <div class="news-featured-content">
-          <span style="font-size: 0.8rem; font-weight: 700; color: var(--sv-gold); letter-spacing: 1px; text-transform: uppercase;">${escapeHtml(items[0][1])}</span>
-          <h3>${escapeHtml(items[0][0])}</h3>
+      <a href="${localizedPath("/news/", locale)}" class="news-featured" style="display:flex; flex-direction:column;">
+        <img src="${featured.cover_image_url || assetPath('', 'real-4.jpg')}" alt="${escapeHtml(featured[`title_${locale}`] || featured.title_th)}" width="800" height="500" loading="lazy" style="height:350px; object-fit:cover;">
+        <div class="news-featured-content" style="position:relative; background: var(--white); padding: 30px; flex-grow: 1;">
+          <span style="font-size: 0.8rem; font-weight: 700; color: var(--sv-gold); letter-spacing: 1px; text-transform: uppercase;">${new Date(featured.published_at).toLocaleDateString(locale === 'th' ? 'th-TH' : 'en-US', {month:'short', day:'numeric'})}</span>
+          <h3 style="margin: 10px 0; color: var(--sv-deep);">${escapeHtml(featured[`title_${locale}`] || featured.title_th)}</h3>
+          <p style="font-size: 0.95rem; color: var(--muted); margin-bottom: 0;">${escapeHtml((featured[`content_${locale}`] || featured.content_th || "").substring(0, 100))}...</p>
+          ${collageHtml}
         </div>
       </a>
       <div class="news-list">
-        ${listItems.map(([title, tag, body]) => `<a href="${localizedPath("/news/", locale)}" class="news-row">
-          <div class="news-date">Jul 15</div>
-          <div class="news-title">${escapeHtml(title)}</div>
-        </a>`).join("")}
+        ${listItems.length > 0 ? listItems.map((item) => `<a href="${localizedPath("/news/", locale)}" class="news-row">
+          <div class="news-date">${new Date(item.published_at).toLocaleDateString(locale === 'th' ? 'th-TH' : 'en-US', {month:'short', day:'numeric'})}</div>
+          <div class="news-title">${escapeHtml(item[`title_${locale}`] || item.title_th)}</div>
+        </a>`).join("") : ""}
         <a href="${localizedPath("/news/", locale)}" class="news-row" style="margin-top: auto; border: none;">
           <div class="news-title" style="color: var(--sv-crimson);">${locales[locale].readMore} &rarr;</div>
         </a>
@@ -517,16 +671,20 @@ function news(locale) {
 }
 
 function parents(page, locale) {
-  const calendarTitle = locale === "th" ? "กรกฎาคม 2026" : locale === "en" ? "July 2026" : "2026年7月";
-  const events = locale === "th" 
-    ? ["ปฐมนิเทศผู้ปกครอง", "วันกิจกรรมภาษาอังกฤษ", "วันตรวจผลงานนักเรียน"] 
-    : locale === "en" 
-      ? ["Parent Orientation", "English Activity Day", "Portfolio Review"] 
-      : ["家长迎新会", "英语活动日", "学生作品审查"];
-      
+  const now = new Date();
+  const currentMonthEvents = dynamicData.calendar ? dynamicData.calendar.filter(e => new Date(e.start_date).getMonth() === now.getMonth()).slice(0, 3) : [];
+  
+  const calendarTitle = locale === "th" 
+    ? now.toLocaleDateString('th-TH', { month: 'long', year: 'numeric' })
+    : now.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+  
+  const eventsHtml = currentMonthEvents.length > 0 
+    ? currentMonthEvents.map(e => `<span>${escapeHtml(locale === "th" ? e.title_th : (e.title_en || e.title_th))}</span>`).join("")
+    : (locale === "th" ? "<span>ไม่มีกิจกรรมในเดือนนี้</span>" : "<span>No events this month</span>");
+
   return `<section class="section split">
     <div><p class="eyebrow">SV Portal</p><h2>${locale === "th" ? "ทุกข้อมูลสำคัญในที่เดียว" : locale === "en" ? "Everything Important in One Place" : "重要信息集中一处"}</h2><p>${locale === "th" ? "ใช้สำหรับประกาศ เอกสาร ปฏิทินกิจกรรม และทางเข้า SV Portal ระบบภายในของโรงเรียน" : locale === "en" ? "Notices, downloads, activity calendar, and a direct link to the school SV Portal." : "用于公告、下载、活动日历以及进入学校 SV Portal。"}</p>${button(locales[locale].portal, portalUrl, "primary")}</div>
-    <div class="mini-calendar"><strong>${calendarTitle}</strong>${events.map(e => `<span>${e}</span>`).join("")}</div>
+    <div class="mini-calendar"><strong>${escapeHtml(calendarTitle)}</strong>${eventsHtml}</div>
   </section>${textSections(page, locale)}`;
 }
 
@@ -536,14 +694,15 @@ function life(page, locale) {
 
 function formSection(locale, name = "contact") {
   const l = locales[locale];
-  return `<section class="section form-section"><div><p class="eyebrow">${locale === "th" ? "ส่งข้อความ" : locale === "en" ? "Send Inquiry" : "发送咨询"}</p><h2>${locale === "th" ? "ให้ทีมโรงเรียนติดต่อกลับ" : locale === "en" ? "Let the School Team Follow Up" : "让学校团队联系您"}</h2></div><form name="${name}" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="${localizedPath('/success/', locale)}" netlify>
-    <p style="display:none;"><label>Don't fill this out: <input name="bot-field"></label></p>
+  return `<section class="section form-section"><div><p class="eyebrow">${locale === "th" ? "ส่งข้อความ" : locale === "en" ? "Send Inquiry" : "发送咨询"}</p><h2>${locale === "th" ? "ให้ทีมโรงเรียนติดต่อกลับ" : locale === "en" ? "Have Our Team Contact You" : "让学校团队联系您"}</h2></div><form name="${name}" method="POST" data-netlify="true" netlify-honeypot="bot-field" data-netlify-recaptcha="true" action="${localizedPath('/success/', locale)}" netlify>
+    <p class="visually-hidden" style="opacity:0;position:absolute;z-index:-1;height:1px;width:1px;overflow:hidden;pointer-events:none;"><label>Don't fill this out: <input name="bot-field" tabindex="-1" aria-hidden="true"></label></p>
     <input type="hidden" name="form-name" value="${name}">
     <div><label for="${name}-name">${l.formName}</label><input id="${name}-name" name="name" required autocomplete="name"></div>
     <div><label for="${name}-phone">${l.formPhone}</label><input id="${name}-phone" name="phone" required autocomplete="tel"></div>
     <div><label for="${name}-email">${l.formEmail}</label><input id="${name}-email" name="email" type="email" autocomplete="email"></div>
-    <div><label for="${name}-level">${l.formLevel}</label><select id="${name}-level" name="level"><option>Pre-Kindergarten</option><option>Kindergarten</option><option>Primary</option></select></div>
+    <div><label for="${name}-level">${l.formLevel}</label><select id="${name}-level" name="level">${locale === 'th' ? '<option>เตรียมอนุบาล</option><option>อนุบาล</option><option>ประถมศึกษา</option>' : locale === 'zh' ? '<option>学前班</option><option>幼儿园</option><option>小学</option>' : '<option>Pre-Kindergarten</option><option>Kindergarten</option><option>Primary</option>'}</select></div>
     <div class="full"><label for="${name}-message">${l.formMessage}</label><textarea id="${name}-message" name="message" rows="4"></textarea></div>
+    <div data-netlify-recaptcha="true"></div>
     <button class="button primary" type="submit">${l.submit}</button>
   </form></section>`;
 }
@@ -551,9 +710,9 @@ function formSection(locale, name = "contact") {
 function contact(locale) {
   const l = locales[locale];
   return `<section class="section contact-grid">
-    <div class="contact-card"><h2>${locale === "th" ? "ข้อมูลติดต่อ" : locale === "en" ? "Contact Information" : "联系方式"}</h2><p>${locale === "th" ? "โรงเรียนสมคิดวิทยา" : locale === "zh" ? "Somkidvittaya学校" : "Somkidvittaya School"}<br>${escapeHtml(l.address || siteSettings.address).replace(/\n/g, "<br>")}<br>Tel: ${escapeHtml(siteSettings.phone)}<br>Email: ${escapeHtml(siteSettings.email)}</p><div class="hero-actions">${button(locales[locale].ctaTour, "#contact-form", "primary")}${button(locale === "th" ? "โทรหาเรา" : locale === "en" ? "Call Us" : "致电", `tel:${siteSettings.phone.replace(/[^0-9+]/g, '')}`, "secondary")}</div></div>
+    <div class="contact-card"><h2>${locale === "th" ? "ข้อมูลติดต่อ" : locale === "en" ? "Contact Information" : "联系方式"}</h2><p>${locale === "th" ? "โรงเรียนสมคิดวิทยา" : locale === "zh" ? "Somkidvittaya学校" : "Somkidvittaya School"}<br>${escapeHtml(l.address || siteSettings.address).replace(/\n/g, "<br>")}<br>Tel: ${escapeHtml(siteSettings.phone)}<br>Email: ${escapeHtml(siteSettings.email)}${siteSettings.line ? `<br>LINE: ${escapeHtml(siteSettings.line)}` : ''}</p><div class="hero-actions">${button(locales[locale].ctaTour, "#contact-form", "primary")}${button(locale === "th" ? "โทรหาเรา" : locale === "en" ? "Call Us" : "致电", `tel:${siteSettings.phone.replace(/[^0-9+]/g, '')}`, "secondary")}</div></div>
     <div class="map-wrapper" style="width: 100%; height: 100%; min-height: 400px; background: #e0e0e0; border-radius: 12px; overflow: hidden; box-shadow: var(--shadow);">
-      <iframe title="Map to Somkidvittaya School Rayong" loading="lazy" style="width:100%; height:100%; border:0;" src="https://maps.google.com/maps?q=${encodeURIComponent('โรงเรียนสมคิดวิทยา')}&t=&z=16&ie=UTF8&iwloc=B&output=embed" allowfullscreen="" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      <iframe title="Map to Somkidvittaya School Rayong" loading="lazy" style="width:100%; height:100%; border:0;" src="https://maps.google.com/maps?q=${encodeURIComponent('โรงเรียนสมคิดวิทยา')}&t=&z=16&ie=UTF8&iwloc=B&output=embed" allowfullscreen="" referrerpolicy="no-referrer-when-downgrade" sandbox="allow-scripts allow-same-origin allow-presentation"></iframe>
     </div>
   </section><div id="contact-form">${formSection(locale, "contact")}</div>`;
 }
@@ -562,12 +721,12 @@ function directorQuote(locale) {
   const quote = locale === "th" ? "“ทุกความตั้งใจของเราในวันนี้ คือการสร้างสรรค์พื้นที่แห่งอนาคตที่ดีที่สุดให้กับลูกหลานของเรา เพราะความสำเร็จที่ยิ่งใหญ่ที่สุดของโรงเรียนสมคิดวิทยา คือการได้เห็นเด็ก ๆ เติบโตอย่างงดงามและมีความสุขในทุก ๆ วัน”" : locale === "en" ? "\"Every effort we make today is dedicated to creating the best future environment for our children. The greatest success of Somkidvittaya School is seeing our students grow beautifully and happily every single day.\"" : "“我们今天所付出的每一份努力，都是为了给孩子创造最好的未来空间。Somkidvittaya学校最大的成功，就是看到孩子们每天都在美丽和快乐中成长。”";
   const name = locale === "th" ? "นาย ณัฐวัฒน์ สงเคราะห์ธรรม" : locale === "en" ? "Mr. Nattawat Songkrotham" : "Nattawat Songkrotham 先生";
   const title = locale === "th" ? "ผู้อำนวยการโรงเรียนสมคิดวิทยา" : locale === "en" ? "Director of Somkidvittaya School" : "Somkidvittaya学校校长";
-  const cta = locale === "th" ? "อ่านสาส์นฉบับเต็ม" : locale === "en" ? "Read Full Message" : "阅读全文";
+  const cta = locale === "th" ? "อ่านสารฉบับเต็ม" : locale === "en" ? "Read Full Message" : "阅读全文";
 
   return `<section class="director-quote-section" data-animate="fade-up">
     <div class="director-quote-container">
       <div class="director-image-wrapper">
-        <img src="/assets/images/director.png" alt="${name}" class="director-img" width="400" height="400">
+        <img src="/assets/images/director.png" alt="${escapeHtml(name)}" class="director-img" loading="lazy" width="400" height="400">
         <div class="director-gradient-fade"></div>
       </div>
       <div class="director-quote-content">
@@ -599,7 +758,7 @@ function directorFullMessage(page, locale) {
         if (!signoff) return "";
         return `
       <div class="message-signoff" style="animation-delay: ${sections.length * 0.1}s">
-        <img src="${assetPath(signoff.image, "director.png")}" alt="${escapeHtml(signoff.name)}" class="signoff-avatar" width="64" height="64">
+        <img src="${assetPath(signoff.image, "director.png")}" alt="${escapeHtml(signoff.name)}" class="signoff-avatar" loading="lazy" width="64" height="64">
         <div class="signoff-details">
           <strong>${escapeHtml(signoff.name)}</strong>
           <span>${escapeHtml(signoff.title)}</span>
@@ -624,7 +783,7 @@ function homeVideoSection(locale) {
       <p style="color: var(--muted); line-height: 1.7; font-size: 1.1rem;">${desc}</p>
     </div>
     <div style="border-radius: 12px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.15); position: relative; padding-bottom: 56.25%; height: 0;" data-animate="fade-up" class="video-container">
-      <iframe src="https://www.youtube.com/embed/HBVkXyl8GVw?si=TE8888H4bXtYiacA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe>
+      <iframe src="https://www.youtube-nocookie.com/embed/HBVkXyl8GVw?si=TE8888H4bXtYiacA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" sandbox="allow-scripts allow-same-origin allow-presentation"></iframe>
     </div>
   </div>
 </section>`;
@@ -636,13 +795,13 @@ function parentVoices(locale) {
     : locale === "en" 
       ? "\"We've seen such a positive change since moving our child to Somkidvittaya. They come home excited to share about their day, speak English with much more confidence, and genuinely love going to school. It was the best decision for their future.\"" 
       : "“自从转到Somkidvittaya学校后，我们看到了孩子身上明显的积极变化。孩子每天回家都兴奋地分享学校里的事，更自信地说英语，并且真的很喜欢上学。这是我们为孩子的未来做出的最佳决定。”";
-  const name = locale === "th" ? "คุณแม่น้องวิน (นักเรียนชั้น ป.2)" : locale === "en" ? "Mother of Win (Grade 2)" : "Win的母亲 (小学二年级)";
+  const name = locale === "th" ? "คุณแม่น้องวิน (นักเรียนชั้น ป.2)" : locale === "en" ? "Win's Mother (Grade 2)" : "Win的母亲 (小学二年级)";
   const eyebrow = locale === "th" ? "เสียงจากผู้ปกครอง" : locale === "en" ? "Parent Voices" : "家长心声";
 
   return `<section class="director-quote-section" data-animate="fade-up" style="background: var(--sv-stone); padding: 4rem 0;">
     <div class="director-quote-container reversed">
       <div class="director-image-wrapper">
-        <img src="/assets/images/real-3.jpg" alt="${eyebrow}" class="director-img" width="280" height="280" style="border-radius: 50%; max-width: 280px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); object-fit: cover; aspect-ratio: 1/1;">
+        <img src="/assets/images/real-3.jpg" alt="${escapeHtml(eyebrow)}" class="director-img" loading="lazy" width="280" height="280" style="border-radius: 50%; max-width: 280px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); object-fit: cover; aspect-ratio: 1/1;">
       </div>
       <div class="director-quote-content">
         <p class="eyebrow">${eyebrow}</p>
@@ -672,7 +831,7 @@ function whySV(locale) {
       eyebrow: "Why SV",
       title: "Why Somkidvittaya",
       pillars: [
-        { icon: "message-circle", title: "Natural Bilinguals Environment", body: "Develop English proficiency organically through real-world daily interactions for confident communication." },
+        { icon: "message-circle", title: "Natural Bilingual Environment", body: "Develop English proficiency organically through real-world daily interactions for confident communication." },
         { icon: "users", title: "Project-Based Learning", body: "Active classrooms focused on critical thinking and problem-solving through hands-on, real-world projects." },
         { icon: "pie-chart", title: "Data-Informed Care", body: "We use data to closely monitor and support each student's unique development precisely and effectively." },
         { icon: "trending-up", title: "Seamless Academic Pathways", body: "A secure and connected foundation from Pre-K through Primary, preparing students for future skills." }
@@ -738,11 +897,11 @@ function aboutSections(page, locale) {
           </div>
           <div class="chapter-events">
             ${(sec.events || []).map(ev => `
-              <div class="event-item">
+              <div class="event-item" data-animate="fade-up">
                 <div class="event-year">${escapeHtml(ev.year || "")}</div>
                 <div class="event-content">
                   ${ev.title ? `<h4>${escapeHtml(ev.title)}</h4>` : ""}
-                  <p>${ev.text ? ev.text.replace(/\n/g, "<br>").replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>") : ""}</p>
+                  <p>${ev.text ? escapeHtml(ev.text).replace(/\n/g, "<br>").replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>") : ""}</p>
                 </div>
               </div>
             `).join("")}
@@ -758,10 +917,122 @@ function aboutSections(page, locale) {
       <div class="epilogue-text" style="position: relative; z-index: 2; text-align: center;">
         <svg class="quote-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" style="margin: 0 auto 24px auto;"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
         <h3>${escapeHtml(epilogue.title || "")}</h3>
-        <div class="epilogue-body">${(epilogue.body || "").replace(/\n/g, "<br>").replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")}</div>
+        <div class="epilogue-body">${escapeHtml(epilogue.body || "").replace(/\n/g, "<br>").replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")}</div>
       </div>
     </div>
     ` : ""}
+  </section>`;
+}
+
+
+function facultyDirectory(locale) {
+  const personnel = dynamicData.personnel || [];
+  const execs = personnel.filter(p => p.category === 'executive');
+  const teachers = personnel.filter(p => p.category === 'teacher');
+  const staff = personnel.filter(p => p.category === 'staff');
+  
+  const renderCard = (p) => {
+    const name = locale === 'th' ? p.name_th : (p.name_en || p.name_th);
+    const position = locale === 'th' ? p.position_th : (p.position_en || p.position_th);
+    const bio = locale === 'th' ? p.bio_th : (p.bio_en || p.bio_th);
+    const image = p.image_url || '/assets/images/placeholder.jpg';
+    
+    return `<div class="faculty-card">
+      <div class="faculty-image"><img src="${escapeHtml(image)}" alt="${escapeHtml(name)}" loading="lazy" width="400" height="500" /><div class="faculty-gradient-fade"></div></div>
+      <div class="faculty-info">
+        <h3>${escapeHtml(name)}</h3>
+        <p class="position">${escapeHtml(position)}</p>
+        ${bio ? `<p class="bio">${escapeHtml(bio)}</p>` : ''}
+      </div>
+    </div>`;
+  };
+
+  const renderSection = (title, list) => {
+    if (list.length === 0) return '';
+    return `<div class="faculty-section">
+      <h2 class="text-center">${title}</h2>
+      <div class="faculty-grid">
+        ${list.map(renderCard).join('')}
+      </div>
+    </div>`;
+  };
+
+  const tExecs = locale === 'th' ? 'คณะผู้บริหาร' : (locale === 'en' ? 'Executive Board' : '执行委员会');
+  const tTeachers = locale === 'th' ? 'คณะครู' : (locale === 'en' ? 'Teachers' : '教师');
+  const tStaff = locale === 'th' ? 'บุคลากร' : (locale === 'en' ? 'Staff' : '工作人员');
+
+  return `<section class="section faculty-directory">
+    <div class="container">
+      ${renderSection(tExecs, execs)}
+      ${renderSection(tTeachers, teachers)}
+      ${renderSection(tStaff, staff)}
+    </div>
+  </section>`;
+}
+
+
+function documentHub(locale) {
+  const docs = dynamicData.documents || [];
+  
+  if (docs.length === 0) {
+    return `<section class="section document-hub"><div class="container text-center"><p>${locale === 'th' ? 'ยังไม่มีเอกสารในขณะนี้' : 'No documents available.'}</p></div></section>`;
+  }
+
+  const renderDoc = (doc) => {
+    const title = locale === 'th' ? doc.title_th : (doc.title_en || doc.title_th);
+    const date = new Date(doc.created_at).toLocaleDateString(locale === 'th' ? 'th-TH' : 'en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+    const size = doc.file_size_bytes ? (doc.file_size_bytes / 1024 / 1024).toFixed(2) + ' MB' : '';
+    
+    return `<a href="${escapeHtml(doc.file_url)}" target="_blank" rel="noopener noreferrer" class="document-card">
+      <div class="doc-icon"><i data-feather="file-text"></i></div>
+      <div class="doc-info">
+        <h3>${escapeHtml(title)}</h3>
+        <p class="meta"><span>${escapeHtml(doc.file_type.toUpperCase())}</span> ${size ? `• <span>${size}</span>` : ''} • <span>${date}</span></p>
+      </div>
+      <div class="doc-action"><i data-feather="download"></i></div>
+    </a>`;
+  };
+
+  return `<section class="section document-hub">
+    <div class="container">
+      <div class="document-list">
+        ${docs.map(renderDoc).join('')}
+      </div>
+    </div>
+  </section>`;
+}
+
+
+function photoGallery(locale) {
+  const albums = dynamicData.albums || [];
+  
+  if (albums.length === 0) {
+    return `<section class="section gallery-hub"><div class="container text-center"><p>${locale === 'th' ? 'ยังไม่มีอัลบั้มในขณะนี้' : 'No albums available.'}</p></div></section>`;
+  }
+
+  const renderAlbum = (album) => {
+    const title = locale === 'th' ? album.title_th : (album.title_en || album.title_th);
+    const date = new Date(album.event_date).toLocaleDateString(locale === 'th' ? 'th-TH' : 'en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+    const cover = album.cover_image_url || (album.album_photos?.[0]?.image_url) || '/assets/images/placeholder.jpg';
+    const count = album.album_photos ? album.album_photos.length : 0;
+    
+    // Using a lightbox trick or just displaying it
+    // For a static site, we can just link to a lightbox or expand it. We'll use a simple grid here.
+    return `<div class="album-card">
+      <div class="album-cover"><img src="${cover}" alt="${title}" loading="lazy" width="600" height="400" /></div>
+      <div class="album-info">
+        <h3>${escapeHtml(title)}</h3>
+        <p class="meta"><span>${date}</span> • ${count} ${locale === 'th' ? 'รูปภาพ' : 'Photos'}</p>
+      </div>
+    </div>`;
+  };
+
+  return `<section class="section gallery-hub">
+    <div class="container">
+      <div class="album-grid">
+        ${albums.map(renderAlbum).join('')}
+      </div>
+    </div>
   </section>`;
 }
 
@@ -780,6 +1051,9 @@ function bodyContent(page, locale) {
   if (page.type === "parents") return parents(page, locale);
   if (page.type === "news") return news(locale);
   if (page.type === "contact") return contact(locale);
+  if (page.type === "faculty") return facultyDirectory(locale);
+  if (page.type === "documents") return documentHub(locale);
+  if (page.type === "gallery") return photoGallery(locale);
   return textSections(page, locale);
 }
 
@@ -882,6 +1156,8 @@ function html(page, locale, cssHash) {
   <meta name="twitter:image" content="${absoluteAssetUrl(page.image, "real-1.jpg")}">
   
   <link rel="preload" as="image" href="${assetPath(page.image, "real-1.jpg")}">
+  <link rel="preload" as="font" type="font/ttf" href="/assets/fonts/SukhumvitSet-Text.ttf" crossorigin>
+  <link rel="preload" as="font" type="font/ttf" href="/assets/fonts/SukhumvitSet-SemiBold.ttf" crossorigin>
   <link rel="icon" href="/favicon.ico?v=7">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=7">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -889,7 +1165,6 @@ function html(page, locale, cssHash) {
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/styles.css?v=${cssHash}">
   ${structuredData(page, locale)}
-  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 </head>
 <body class="${page.path === '/' ? 'is-home' : ''}">
   ${header(page, locale)}
@@ -903,9 +1178,14 @@ function html(page, locale, cssHash) {
     </section>` : ""}
   </main>
   ${footer(locale)}
+  <div id="cookie-banner" class="cookie-banner">
+    <div class="cookie-banner-content">
+      <p>${locale === 'th' ? 'เว็บไซต์นี้ใช้คุกกี้เพื่อปรับปรุงประสบการณ์การใช้งาน' : 'We use cookies to improve your experience.'}</p>
+      <button id="accept-cookies" class="button primary small">${locale === 'th' ? 'ยอมรับ' : 'Accept'}</button>
+    </div>
+  </div>
   <script src="/main.js" defer></script>
-  <script src="https://unpkg.com/feather-icons"></script>
-  <script>window.addEventListener('DOMContentLoaded', () => feather.replace());</script>
+  <script src="https://unpkg.com/feather-icons@4.29.2/dist/feather.min.js" integrity="sha384-qEqAs1VsN9WH2myXDbiP2wGGIttL9bMRZBKCl54ZnzpDlVqbYANP9vMaoT/wvQcf" crossorigin="anonymous"></script>
 </body>
 </html>`;
 }
@@ -948,13 +1228,14 @@ for (const file of cssOrder) {
     combinedCss += readFileSync(filePath, "utf8") + "\n";
   }
 }
-const cssHash = crypto.createHash('md5').update(combinedCss).digest('hex').substring(0, 8);
+const minifiedCss = combinedCss.replace(/\/\*[\s\S]*?\*\//g, '').replace(/\s+/g, ' ').replace(/\s*([\{\}\:\;\,])\s*/g, '$1').trim();
+const cssHash = crypto.createHash('md5').update(minifiedCss).digest('hex').substring(0, 8);
 
 for (const page of pages) {
   for (const locale of Object.keys(locales)) writePage(page, locale, cssHash);
 }
   
-writeFileSync(join(dist, "styles.css"), combinedCss);
+writeFileSync(join(dist, "styles.css"), minifiedCss);
 copyAsset("src/main.js", "main.js");
 copyAsset("src/assets/favicon.ico", "favicon.ico");
 copyAsset("src/assets/apple-touch-icon.png", "apple-touch-icon.png");
@@ -962,8 +1243,8 @@ copyAsset("src/assets/apple-touch-icon.png", "apple-touch-icon.png");
 // Copy Fonts
 mkdirSync(join(dist, "assets", "fonts"), { recursive: true });
 for (const font of ['SukhumvitSet-Light.ttf', 'SukhumvitSet-SemiBold.ttf', 'SukhumvitSet-Text.ttf', 'SukhumvitSet-Thin.ttf']) {
-  if (existsSync(join(root, font))) {
-    copyFileSync(join(root, font), join(dist, "assets", "fonts", font));
+  if (existsSync(join(root, 'src', 'assets', 'fonts', font))) {
+    copyFileSync(join(root, 'src', 'assets', 'fonts', font), join(dist, "assets", "fonts", font));
   }
 }
 

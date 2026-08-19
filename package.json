@@ -9,6 +9,7 @@
     "dev": "npm run build && python3 -m http.server 4173 --directory dist"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.112.3",
     "js-yaml": "^5.2.3"
   }
 }

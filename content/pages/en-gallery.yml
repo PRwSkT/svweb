@@ -1,0 +1,9 @@
+id: gallery
+path: /student-life/gallery
+lang: en
+type: gallery
+title: Photo Gallery
+eyebrow: Somkidvittaya School
+summary: Photos of activities and school life.
+seo:
+  en: ["Photo Gallery — Somkidvittaya School", "Photos of activities and school life"]
