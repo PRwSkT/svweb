@@ -2,7 +2,7 @@ lang: th
 id: director
 path: /director/
 image: real-1.jpg
-title: สาส์นจากผู้อำนวยการ
+title: สารจากผู้อำนวยการ
 type: director
 sections:
   - text: >-
