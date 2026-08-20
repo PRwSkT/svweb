@@ -1625,15 +1625,15 @@ p.drop-cap::first-letter { font-size: 4.5rem; font-weight: 700; color: var(--sv-
 .review-carousel-dots .review-dot {
   width: 40px;
   height: 6px;
-  border-radius: 3px;
-  background: rgba(139, 29, 50, 0.2); /* var(--sv-crimson) with opacity */
+  border-radius: 0; /* Square / normal right angle */
+  background: rgba(179, 154, 75, 0.3); /* var(--sv-gold) with opacity */
   border: none;
   cursor: pointer;
   padding: 0;
   transition: all 0.3s ease;
 }
 .review-carousel-dots .review-dot.active {
-  background: var(--sv-crimson);
+  background: var(--sv-gold);
   width: 60px;
 }
 
