@@ -277,6 +277,7 @@ let touchStartY = 0;
   // Initialize Feather Icons
 
   // Mobile & Touch Dropdown Toggle
+  const navDropdowns = document.querySelectorAll('.nav-item-dropdown');
   const dropdownToggles = document.querySelectorAll('.has-dropdown');
   dropdownToggles.forEach(toggle => {
     toggle.addEventListener('click', (e) => {
@@ -329,7 +330,7 @@ let touchStartY = 0;
 })();
 
 // Review Carousel Auto-Play Logic
-(function() {
+function initReviewCarousel() {
   const reviewSections = document.querySelectorAll('.review-carousel-section');
   
   reviewSections.forEach(section => {
@@ -373,4 +374,10 @@ let touchStartY = 0;
 
     startTimer();
   });
-})();
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initReviewCarousel);
+} else {
+  initReviewCarousel();
+}
