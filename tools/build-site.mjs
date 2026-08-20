@@ -1158,8 +1158,8 @@ function html(page, locale, cssHash) {
   <link rel="preload" as="image" href="${assetPath(page.image, "real-1.jpg")}">
   <link rel="preload" as="font" type="font/ttf" href="/assets/fonts/SukhumvitSet-Text.ttf" crossorigin>
   <link rel="preload" as="font" type="font/ttf" href="/assets/fonts/SukhumvitSet-SemiBold.ttf" crossorigin>
-  <link rel="icon" href="/favicon.ico?v=7">
-  <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=7">
+  <link rel="icon" href="/favicon-v3-final.ico">
+  <link rel="apple-touch-icon" href="/apple-touch-icon-v3-final.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700&display=swap" rel="stylesheet">
@@ -1237,8 +1237,8 @@ for (const page of pages) {
   
 writeFileSync(join(dist, "styles.css"), minifiedCss);
 copyAsset("src/main.js", "main.js");
-copyAsset("src/assets/favicon.ico", "favicon.ico");
-copyAsset("src/assets/apple-touch-icon.png", "apple-touch-icon.png");
+copyAsset("src/assets/favicon-v3-final.ico", "favicon-v3-final.ico");
+copyAsset("src/assets/apple-touch-icon-v3-final.png", "apple-touch-icon-v3-final.png");
 
 // Copy Fonts
 mkdirSync(join(dist, "assets", "fonts"), { recursive: true });
