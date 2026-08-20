@@ -341,6 +341,14 @@ function initReviewCarousel() {
 
     if (slides.length <= 1) return;
 
+    const track = section.querySelector('.review-carousel-track');
+    
+    function updateHeight() {
+      if (slides[currentIndex]) {
+        track.style.height = slides[currentIndex].offsetHeight + 'px';
+      }
+    }
+
     function goToSlide(index) {
       slides[currentIndex].classList.remove('active');
       dots[currentIndex].classList.remove('active');
@@ -349,7 +357,15 @@ function initReviewCarousel() {
       
       slides[currentIndex].classList.add('active');
       dots[currentIndex].classList.add('active');
+      
+      track.style.transform = `translateX(-${index * 100}%)`;
+      updateHeight();
     }
+    
+    // Initialize height on load and resize
+    window.addEventListener('resize', updateHeight);
+    setTimeout(updateHeight, 100); // ensure fonts are loaded
+
 
     function nextSlide() {
       const nextIndex = (currentIndex + 1) % slides.length;
