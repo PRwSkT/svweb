@@ -1284,7 +1284,7 @@ input:user-invalid, select:user-invalid, textarea:user-invalid {
 
 /* Director Quote Section (Home Page) */
 .director-quote-section { background: var(--sv-paper); padding: 20px 24px 0 24px; display: flex; justify-content: center; overflow: hidden; position: relative; }
-.director-quote-container { max-width: 1200px; width: 100%; display: flex; align-items: stretch; gap: 60px; position: relative; }
+.director-quote-container { max-width: 1200px; width: 100%; display: flex; align-items: stretch; gap: 60px; position: relative; margin: 0 auto; }
 .director-image-wrapper { flex: 0 0 45%; position: relative; display: flex; align-items: flex-end; justify-content: center; }
 .director-img { width: 100%; max-width: 320px; height: auto; object-fit: contain; position: relative; z-index: 1; }
 .director-gradient-fade { position: absolute; bottom: 0; left: 0; width: 100%; height: 55%; background: linear-gradient(to top, var(--sv-paper) 0%, var(--sv-paper) 20%, rgba(248,247,242,0) 100%); z-index: 2; pointer-events: none; }
@@ -1610,8 +1610,6 @@ p.drop-cap::first-letter { font-size: 4.5rem; font-weight: 700; color: var(--sv-
   visibility: hidden;
   transition: opacity 0.8s ease-in-out, visibility 0.8s ease-in-out;
   pointer-events: none;
-  display: flex;
-  justify-content: center;
   width: 100%;
 }
 .review-slide.active {
@@ -1635,16 +1633,7 @@ p.drop-cap::first-letter { font-size: 4.5rem; font-weight: 700; color: var(--sv-
   width: 60px;
 }
 
-/* Fix for review slider centering */
-.review-slide {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-}
-.review-carousel-track {
-  display: flex;
-  justify-content: center;
-}
+
 
 .director-quote-section.review-carousel-section {
   flex-direction: column;
