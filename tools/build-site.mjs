@@ -729,38 +729,48 @@ function directorQuote(locale) {
   const mTitle = locale === "th" ? "ผู้จัดการโรงเรียนสมคิดวิทยา" : locale === "en" ? "School Manager" : "学校经理";
   const mCta = locale === "th" ? "อ่านสารจากผู้จัดการ" : locale === "en" ? "Read Manager's Message" : "阅读经理致辞";
 
-  return `<section class="director-quote-section" data-animate="fade-up" style="display: flex; flex-direction: column; gap: 80px; padding-bottom: 80px;">
-    <!-- Director -->
-    <div class="director-quote-container">
-      <div class="director-image-wrapper">
-        <img src="/assets/images/director.png" alt="${escapeHtml(dName)}" class="director-img" loading="lazy" width="400" height="400">
-        <div class="director-gradient-fade"></div>
-      </div>
-      <div class="director-quote-content">
-        <svg class="quote-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
-        <blockquote class="director-quote-text">${dQuote}</blockquote>
-        <div class="director-quote-author">
-          <strong>${dName}</strong>
-          <span>${dTitle}</span>
+  return `<section class="director-quote-section review-carousel-section" data-animate="fade-up" style="padding: 40px 0 60px 0; overflow: hidden; position: relative;">
+    <div class="review-carousel-track" style="position: relative; width: 100%;">
+      <!-- Director -->
+      <div class="review-slide active" data-index="0">
+        <div class="director-quote-container">
+          <div class="director-image-wrapper">
+            <img src="/assets/images/director.png" alt="${escapeHtml(dName)}" class="director-img" loading="lazy" width="400" height="400">
+            <div class="director-gradient-fade"></div>
+          </div>
+          <div class="director-quote-content">
+            <svg class="quote-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
+            <blockquote class="director-quote-text">${dQuote}</blockquote>
+            <div class="director-quote-author">
+              <strong>${dName}</strong>
+              <span>${dTitle}</span>
+            </div>
+            ${button(dCta, localizedPath("/director/", locale), "secondary")}
+          </div>
         </div>
-        ${button(dCta, localizedPath("/director/", locale), "secondary")}
+      </div>
+      <!-- Manager -->
+      <div class="review-slide" data-index="1">
+        <div class="director-quote-container reversed">
+          <div class="director-image-wrapper">
+            <img src="/assets/images/manager.png" alt="${escapeHtml(mName)}" class="director-img" loading="lazy" width="400" height="400">
+            <div class="director-gradient-fade"></div>
+          </div>
+          <div class="director-quote-content">
+            <svg class="quote-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
+            <blockquote class="director-quote-text">${mQuote}</blockquote>
+            <div class="director-quote-author">
+              <strong>${mName}</strong>
+              <span>${mTitle}</span>
+            </div>
+            ${button(mCta, localizedPath("/manager/", locale), "secondary")}
+          </div>
+        </div>
       </div>
     </div>
-    <!-- Manager -->
-    <div class="director-quote-container reversed">
-      <div class="director-image-wrapper">
-        <img src="/assets/images/manager.png" alt="${escapeHtml(mName)}" class="director-img" loading="lazy" width="400" height="400">
-        <div class="director-gradient-fade"></div>
-      </div>
-      <div class="director-quote-content">
-        <svg class="quote-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
-        <blockquote class="director-quote-text">${mQuote}</blockquote>
-        <div class="director-quote-author">
-          <strong>${mName}</strong>
-          <span>${mTitle}</span>
-        </div>
-        ${button(mCta, localizedPath("/manager/", locale), "secondary")}
-      </div>
+    <div class="review-carousel-dots" style="display: flex; justify-content: center; gap: 8px; margin-top: 2rem; position: relative; z-index: 10;">
+      <button class="review-dot active" aria-label="Go to slide 1" data-index="0"></button>
+      <button class="review-dot" aria-label="Go to slide 2" data-index="1"></button>
     </div>
   </section>`;
 }
@@ -1246,7 +1256,7 @@ function html(page, locale, cssHash) {
       <button id="accept-cookies" class="button primary small">${locale === 'th' ? 'ยอมรับ' : 'Accept'}</button>
     </div>
   </div>
-  <script src="/main.js?v=1787211590" defer></script>
+  <script src="/main.js?v=1787211781" defer></script>
   <script src="https://unpkg.com/feather-icons@4.29.2/dist/feather.min.js" integrity="sha384-qEqAs1VsN9WH2myXDbiP2wGGIttL9bMRZBKCl54ZnzpDlVqbYANP9vMaoT/wvQcf" crossorigin="anonymous"></script>
 </body>
 </html>`;
