@@ -651,8 +651,8 @@ function news(locale) {
     </div>
     <div class="news-board">
       <a href="${localizedPath("/news/", locale)}" class="news-featured" style="display:flex; flex-direction:column;">
-        <img src="${featured.cover_image_url || assetPath('', 'real-4.jpg')}" alt="${escapeHtml(featured[`title_${locale}`] || featured.title_th)}" width="800" height="500" loading="lazy" style="height:350px; object-fit:cover;">
-        <div class="news-featured-content" style="position:relative; background: var(--white); padding: 30px; flex-grow: 1;">
+        <img src="${featured.cover_image_url || assetPath('', 'real-4.jpg')}" alt="${escapeHtml(featured[`title_${locale}`] || featured.title_th)}" width="800" height="500" loading="lazy" style="height:240px; object-fit:cover;">
+        <div class="news-featured-content" style="position:relative; background: var(--white); padding: 24px 30px; flex-grow: 1;">
           <span style="font-size: 0.8rem; font-weight: 700; color: var(--sv-gold); letter-spacing: 1px; text-transform: uppercase;">${new Date(featured.published_at).toLocaleDateString(locale === 'th' ? 'th-TH' : 'en-US', {month:'short', day:'numeric'})}</span>
           <h3 style="margin: 10px 0; color: var(--sv-deep);">${escapeHtml(featured[`title_${locale}`] || featured.title_th)}</h3>
           <p style="font-size: 0.95rem; color: var(--muted); margin-bottom: 0;">${escapeHtml((featured[`content_${locale}`] || featured.content_th || "").substring(0, 100))}...</p>
@@ -1257,7 +1257,7 @@ function html(page, locale, cssHash) {
       <button id="accept-cookies" class="button primary small">${locale === 'th' ? 'ยอมรับ' : 'Accept'}</button>
     </div>
   </div>
-  <script src="/main.js?v=1787212460" defer></script>
+  <script src="/main.js?v=1787212822" defer></script>
   <script src="https://unpkg.com/feather-icons@4.29.2/dist/feather.min.js" integrity="sha384-qEqAs1VsN9WH2myXDbiP2wGGIttL9bMRZBKCl54ZnzpDlVqbYANP9vMaoT/wvQcf" crossorigin="anonymous"></script>
 </body>
 </html>`;
