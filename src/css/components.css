@@ -1312,7 +1312,7 @@ input:user-invalid, select:user-invalid, textarea:user-invalid {
 p.drop-cap::first-letter { font-size: 4.5rem; font-weight: 700; color: var(--sv-crimson); float: left; margin: 10px 16px -10px 0; line-height: 0.8; }
 .message-highlight { font-size: 1.6rem; font-style: italic; font-weight: 600; color: var(--sv-deep); border-left: 6px solid var(--sv-gold); padding: 24px 32px; margin: 48px 0; background: var(--sv-paper); border-radius: 0 8px 8px 0; line-height: 1.6; }
 .message-signoff { display: flex; align-items: center; gap: 24px; margin-top: 64px; padding-top: 32px; border-top: 1px solid rgba(0,0,0,0.1); }
-.signoff-avatar { width: 120px; height: 120px; object-fit: contain; /* Removed circular background to match home page */ }
+.signoff-avatar { width: 120px; height: 120px; object-fit: contain; -webkit-mask-image: linear-gradient(to top, transparent 0%, black 25%); mask-image: linear-gradient(to top, transparent 0%, black 25%); }
 .signoff-details { display: flex; flex-direction: column; }
 .signoff-details strong { font-size: 1.3rem; color: var(--sv-deep); }
 .signoff-details span { font-size: 1.1rem; color: var(--muted); }
