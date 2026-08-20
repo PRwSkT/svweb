@@ -1631,3 +1631,20 @@ p.drop-cap::first-letter { font-size: 4.5rem; font-weight: 700; color: var(--sv-
   background: var(--sv-crimson);
   transform: scale(1.2);
 }
+
+/* Fix for review slider centering */
+.review-slide {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+.review-carousel-track {
+  display: flex;
+  justify-content: center;
+}
+
+.director-quote-section.review-carousel-section {
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 24px 60px 24px !important;
+}
