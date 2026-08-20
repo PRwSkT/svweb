@@ -1,0 +1,24 @@
+lang: en
+id: manager
+path: /manager/
+type: director
+title: Message from the Manager
+sections:
+  - text: >-
+      At Somkidvittaya, we believe that the foundation of high-quality education begins with the readiness of a strong Learning Ecosystem. Our crucial role in holistic management is to intentionally design and integrate every component of the school so they work in harmony, driving our educational vision into reality.
+  - text: >-
+      We care and closely oversee everything to make sure this ecosystem is fully prepared in every dimension:
+  - text: >-
+      Physical Environment: We are committed to developing the school into a flexible Safe Zone. We provide facilities and open activity areas to support every imagination and comprehensively answer children's interests, allowing them to learn and freely explore new things under the highest safety standards.
+  - text: >-
+      System & Management: We bring in technology and digital platforms to increase efficiency in our management system, reducing workflow and elevating communication. We aim to build a transparent and accessible system to provide a seamless experience and peace of mind for parents every day.
+  - text: >-
+      Holistic Support: A good ecosystem must empower all personnel. We focus on supporting resources and the working environment so that teachers can reduce system-related workloads and channel all their dedication into drawing out the full potential of our students.
+  - highlight: >-
+      We believe that a high-quality educational foundation stems from a well-prepared Learning Ecosystem. We prioritize readiness in every component to answer every child's interests. The SV team is dedicated to co-creating this learning ecosystem to truly meet all needs.
+  - text: >-
+      Readiness in all these aspects is the vital gear that drives Somkidvittaya School to be a learning space ready for the modern world.
+signoff:
+  name: Miss Atipa Sooksiri
+  title: School Manager
+  image: manager.png

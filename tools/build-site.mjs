@@ -141,6 +141,7 @@ for (const file of readdirSync(join(root, 'content/pages'))) {
   if (data.summary) p.summary[l] = data.summary;
   if (data.seo) p.seo[l] = data.seo;
   if (data.sections) p.sections[l] = data.sections;
+  if (data.signoff) { p.signoff = p.signoff || {}; p.signoff[l] = data.signoff; }
   if (data.epilogue) p.epilogue = p.epilogue || {};
   if (data.epilogue) p.epilogue[l] = data.epilogue;
   if (data.intro) p.intro = p.intro || {};
