@@ -790,27 +790,66 @@ function homeVideoSection(locale) {
 }
 
 function parentVoices(locale) {
-  const quote = locale === "th" 
-    ? "“เห็นความเปลี่ยนแปลงของลูกชัดเจนมากตั้งแต่ย้ายมาเรียนที่สมคิดวิทยา ลูกกลับบ้านมาเล่าเรื่องโรงเรียนด้วยความสนุกสนาน กล้าสื่อสารภาษาอังกฤษมากขึ้น และมีความสุขกับการไปโรงเรียนทุกวัน เป็นการตัดสินใจที่คุ้มค่าที่สุดสำหรับอนาคตของลูกค่ะ”" 
-    : locale === "en" 
-      ? "\"We've seen such a positive change since moving our child to Somkidvittaya. They come home excited to share about their day, speak English with much more confidence, and genuinely love going to school. It was the best decision for their future.\"" 
-      : "“自从转到Somkidvittaya学校后，我们看到了孩子身上明显的积极变化。孩子每天回家都兴奋地分享学校里的事，更自信地说英语，并且真的很喜欢上学。这是我们为孩子的未来做出的最佳决定。”";
-  const name = locale === "th" ? "คุณแม่น้องวิน (นักเรียนชั้น ป.2)" : locale === "en" ? "Win's Mother (Grade 2)" : "Win的母亲 (小学二年级)";
+  const reviews = [
+    {
+      img: "Baibua.png",
+      quote: {
+        th: "“ตอนแรกที่เข้าโรงเรียน แม่มีความกังวลมาก ว่าน้องจะปรับตัวได้ไหม ร้องไห้ทุกวันรึเปล่า แต่ปรากฏว่าคุณครูที่นี่ทำให้แม่ประทับใจมาก เพราะมีความใส่ใจเด็ก จำรายละเอียดเล็กๆน้อยๆของเด็กได้ และตัวน้องเองก็มีความสุขในการไปโรงเรียนทุกวัน มีพัฒนาการที่ดีขึ้นเรื่อยๆ ช่วยเหลือตัวเองได้ และมีสังคมที่ดี ประทับใจคุณครูและโรงเรียนมากๆค่ะ”",
+        en: "\"At first, I was very worried if my child would adapt or cry every day. However, the teachers here impressed me immensely with their attentiveness. They remember every little detail about the kids. My child is happy going to school every day, shows continuous development, has become more self-reliant, and enjoys a good social environment. I am deeply impressed with the teachers and the school.\"",
+        zh: "“刚入学时，我非常担心孩子能否适应，会不会每天哭闹。但结果这里的老师让我印象深刻，因为他们对孩子非常用心，能记住孩子的每一个小细节。孩子每天都很开心地去上学，各方面都在不断进步，不仅能照顾自己，还拥有了很好的社交环境。我对老师和学校感到非常满意。”"
+      },
+      name: { th: "คุณแม่น้องใจบุญ", en: "Jaiboon's Mother", zh: "Jaiboon的母亲" },
+      grade: { th: "อนุบาล 3", en: "Kindergarten 3", zh: "幼儿园大班" }
+    },
+    {
+      img: "Phoenix.png",
+      quote: {
+        th: "“มีความเปลี่ยนแปลงไปในทางที่ดีขึ้นในหลายๆด้าน ตั้งแต่ย้ายมาเรียนที่สมคิดวิทยา ลูกมีความสุขในการไปโรงเรียนทุกวัน ลูกกลับบ้านมาเล่าเรื่องโรงเรียนด้วยความสนุกสนาน กล้าคิด กล้าแสดงออก มีความชอบและอยากทำกิจกรรมกับทางโรงเรียนทุกกิจกรรม เป็นการตัดสินใจที่ดีและคุ้มค่าที่สุดในการหาสังคมโรงเรียนที่ดี สำหรับอนาคตของลูกค่ะ”",
+        en: "\"We have seen positive changes in many aspects since moving to Somkidvittaya. My child is happy to go to school every day, comes home excitedly sharing stories, and has become more confident in expressing thoughts. They are eager to participate in every school activity. Choosing this school was the best and most worthwhile decision to provide a great social environment for my child's future.\"",
+        zh: "“自从转到Somkidvittaya学校后，我们在很多方面都看到了积极的变化。孩子每天都很开心地去上学，回家后总是兴奋地分享学校里的趣事，变得更加自信，勇于表达自己的想法，并且渴望参与学校的各项活动。为了孩子未来的良好社交环境，选择这所学校是我们做出的最明智、最有价值的决定。”"
+      },
+      name: { th: "คุณแม่น้องฟินิกซ์", en: "Phoenix's Mother", zh: "Phoenix的母亲" },
+      grade: { th: "อนุบาล 3", en: "Kindergarten 3", zh: "幼儿园大班" }
+    },
+    {
+      img: "Rakaeoy.png",
+      quote: {
+        th: "“ตั้งแต่ตัดสินใจส่งลูกสาวมาเรียนที่โรงเรียนสมคิดวิทยา รู้สึกได้ถึงการเปลี่ยนแปลงในทางที่ดีขึ้นอย่างชัดเจน ลูกมีความสุขกับการไปโรงเรียนทุกวัน กลับมาเล่าเรื่องราวต่าง ๆ ด้วยความสนุกสนาน และมีความมั่นใจ กล้าคิด กล้าแสดงออกมากขึ้น ลูกเป็นเด็กขยัน ตั้งใจเรียน และมีผลการเรียนที่ดีขึ้นอย่างต่อเนื่อง ที่สำคัญคือคุณครูทุกท่านตั้งใจสอน ดูแล และอบรมนักเรียนด้วยความเอาใจใส่ ทำให้ผู้ปกครองรู้สึกมั่นใจและประทับใจเป็นอย่างมาก การตัดสินใจเลือกโรงเรียนสมคิดวิทยาให้ลูก ถือเป็นการตัดสินใจที่ดีและคุ้มค่าที่สุด เพราะได้เห็นลูกมีความสุข เติบโตอย่างมีคุณภาพ และมีพัฒนาการที่ดีขึ้นในทุก ๆ ด้านค่ะ”",
+        en: "\"Since we decided to enroll our daughter at Somkidvittaya School, we've clearly noticed positive changes. She is happy going to school every day, enthusiastically shares stories, and has grown more confident and expressive. She is diligent, attentive in class, and her academic performance keeps improving. Most importantly, all the teachers are dedicated, caring, and nurture the students with great attention, giving parents immense confidence and satisfaction. Choosing Somkidvittaya was the best and most rewarding decision, as we see our child happy, growing with quality, and developing well in every aspect.\"",
+        zh: "“自从决定把女儿送到Somkidvittaya学校以来，我们清楚地感受到了积极的变化。她每天都很开心地去上学，回家后兴高采烈地分享各种故事，变得更加自信和敢于表达。她现在很勤奋，学习专心，成绩也在不断进步。最重要的是，所有的老师都非常尽责，用心教导和照顾学生，这让家长感到无比安心和满意。选择Somkidvittaya是我们做出的最好、最值得的决定，因为我们看到孩子不仅快乐，而且在各方面都得到了高质量的成长和发展。”"
+      },
+      name: { th: "คุณแม่น้องรักเอย", en: "Rakaeoy's Mother", zh: "Rakaeoy的母亲" },
+      grade: { th: "ประถมศึกษาปีที่ 6", en: "Grade 6", zh: "小学六年级" }
+    }
+  ];
+
   const eyebrow = locale === "th" ? "เสียงจากผู้ปกครอง" : locale === "en" ? "Parent Voices" : "家长心声";
 
-  return `<section class="director-quote-section" data-animate="fade-up" style="background: var(--sv-stone); padding: 4rem 0;">
-    <div class="director-quote-container reversed">
-      <div class="director-image-wrapper">
-        <img src="/assets/images/real-3.jpg" alt="${escapeHtml(eyebrow)}" class="director-img" loading="lazy" width="280" height="280" style="border-radius: 50%; max-width: 280px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); object-fit: cover; aspect-ratio: 1/1;">
-      </div>
-      <div class="director-quote-content">
-        <p class="eyebrow">${eyebrow}</p>
-        <svg class="quote-icon" style="color: var(--sv-gold); margin-top: 1rem;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
-        <blockquote class="director-quote-text" style="font-size: 1.4rem;">${quote}</blockquote>
-        <div class="director-quote-author">
-          <strong>${name}</strong>
+  const slidesHtml = reviews.map((r, i) => `
+    <div class="review-slide ${i === 0 ? 'active' : ''}" data-index="${i}">
+      <div class="director-quote-container reversed">
+        <div class="director-image-wrapper">
+          <img src="/assets/images/${r.img}" alt="${escapeHtml(r.name[locale])}" class="director-img" width="280" height="280" loading="lazy" style="border-radius: 50%; max-width: 280px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); object-fit: cover; aspect-ratio: 1/1;">
+        </div>
+        <div class="director-quote-content">
+          <p class="eyebrow">${eyebrow}</p>
+          <svg class="quote-icon" style="color: var(--sv-gold); margin-top: 1rem;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
+          <blockquote class="director-quote-text" style="font-size: 1.25rem;">${escapeHtml(r.quote[locale])}</blockquote>
+          <div class="director-quote-author">
+            <strong>${escapeHtml(r.name[locale])}</strong>
+            <span style="font-size: 0.9rem; color: var(--muted);">${escapeHtml(r.grade[locale])}</span>
+          </div>
         </div>
       </div>
+    </div>
+  `).join("");
+
+  return `<section class="director-quote-section review-carousel-section" data-animate="fade-up" style="background: var(--sv-stone); padding: 4rem 0; overflow: hidden; position: relative;">
+    <div class="review-carousel-track" style="position: relative; width: 100%; min-height: 500px;">
+      ${slidesHtml}
+    </div>
+    <div class="review-carousel-dots" style="display: flex; justify-content: center; gap: 8px; margin-top: 2rem; position: relative; z-index: 10;">
+      ${reviews.map((_, i) => `<button class="review-dot ${i === 0 ? 'active' : ''}" aria-label="Go to slide ${i+1}" data-index="${i}"></button>`).join("")}
     </div>
   </section>`;
 }

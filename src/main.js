@@ -327,3 +327,50 @@ let touchStartY = 0;
     feather.replace();
   }
 })();
+
+// Review Carousel Auto-Play Logic
+document.addEventListener('DOMContentLoaded', () => {
+  const reviewSections = document.querySelectorAll('.review-carousel-section');
+  
+  reviewSections.forEach(section => {
+    const slides = section.querySelectorAll('.review-slide');
+    const dots = section.querySelectorAll('.review-dot');
+    let currentIndex = 0;
+    let timer;
+
+    if (slides.length <= 1) return;
+
+    function goToSlide(index) {
+      slides[currentIndex].classList.remove('active');
+      dots[currentIndex].classList.remove('active');
+      
+      currentIndex = index;
+      
+      slides[currentIndex].classList.add('active');
+      dots[currentIndex].classList.add('active');
+    }
+
+    function nextSlide() {
+      const nextIndex = (currentIndex + 1) % slides.length;
+      goToSlide(nextIndex);
+    }
+
+    function startTimer() {
+      timer = setInterval(nextSlide, 7000); // 7 seconds per slide
+    }
+
+    function resetTimer() {
+      clearInterval(timer);
+      startTimer();
+    }
+
+    dots.forEach((dot, index) => {
+      dot.addEventListener('click', () => {
+        goToSlide(index);
+        resetTimer();
+      });
+    });
+
+    startTimer();
+  });
+});

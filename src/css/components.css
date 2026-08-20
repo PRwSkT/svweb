@@ -1594,3 +1594,40 @@ p.drop-cap::first-letter { font-size: 4.5rem; font-weight: 700; color: var(--sv-
   transform: translateY(0);
   pointer-events: auto;
 }
+
+/* Review Carousel */
+.review-carousel-track {
+  position: relative;
+  width: 100%;
+}
+.review-slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s ease, visibility 0.5s ease;
+  pointer-events: none;
+}
+.review-slide.active {
+  position: relative;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.review-carousel-dots .review-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(139, 29, 50, 0.2); /* var(--sv-crimson) with opacity */
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: all 0.3s ease;
+}
+.review-carousel-dots .review-dot.active {
+  background: var(--sv-crimson);
+  transform: scale(1.2);
+}
