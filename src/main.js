@@ -174,7 +174,7 @@ let touchStartY = 0;
   const animateCounter = (el, target, duration) => {
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (prefersReduced) {
-      el.textContent = target;
+      el.textContent = target.toLocaleString('en-US');
       return;
     }
     const easeOutExpo = t => t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
@@ -183,11 +183,11 @@ let touchStartY = 0;
       if (!startTime) startTime = timestamp;
       const progress = Math.min((timestamp - startTime) / duration, 1);
       const value = Math.round(easeOutExpo(progress) * target);
-      el.textContent = value;
+      el.textContent = value.toLocaleString('en-US');
       if (progress < 1) {
         requestAnimationFrame(step);
       } else {
-        el.textContent = target;
+        el.textContent = target.toLocaleString('en-US');
       }
     };
     requestAnimationFrame(step);

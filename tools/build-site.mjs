@@ -448,7 +448,8 @@ function stats(locale) {
     const numMatch = String(numStr).match(/^(\d+)(.*)$/);
     const num = numMatch ? numMatch[1] : numStr;
     const suffix = numMatch ? numMatch[2] : "";
-    return `<div><strong><span class="counter" data-target="${num}">${num}</span>${suffix}</strong><span>${escapeHtml(locale === "th" ? th : locale === "en" ? en : zh)}</span></div>`;
+    const numFmt = !isNaN(Number(num)) ? Number(num).toLocaleString("en-US") : num;
+    return `<div><strong><span class="counter" data-target="${num}">${numFmt}</span>${suffix}</strong><span>${escapeHtml(locale === "th" ? th : locale === "en" ? en : zh)}</span></div>`;
   }).join("")}</section>`;
 }
 
