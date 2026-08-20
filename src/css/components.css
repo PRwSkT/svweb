@@ -1651,3 +1651,32 @@ p.drop-cap::first-letter { font-size: 4.5rem; font-weight: 700; color: var(--sv-
   align-items: center;
   padding: 40px 24px 60px 24px !important;
 }
+
+/* Balancing for Review Carousel */
+.review-carousel-section .director-quote-container {
+  max-width: 1000px; /* Make the container slightly narrower for a cozier feel */
+  gap: 80px; /* Increase gap slightly since width is smaller, gives breathing room */
+  align-items: center; /* Center vertically rather than stretch */
+}
+
+.review-carousel-section .director-quote-content {
+  padding: 0; /* Remove extra vertical padding */
+}
+
+.review-carousel-section .director-quote-text {
+  font-size: 1.15rem; /* Slightly smaller text so long reviews fit better */
+  line-height: 1.7;
+}
+
+.review-carousel-section .director-image-wrapper {
+  flex: 0 0 35%; /* Make image take less structural width so text has more room */
+}
+
+@media (max-width: 900px) {
+  .review-carousel-section .director-quote-container {
+    gap: 40px;
+  }
+  .review-carousel-section .director-image-wrapper {
+    flex: 0 0 auto;
+  }
+}
