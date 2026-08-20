@@ -329,7 +329,7 @@ let touchStartY = 0;
 })();
 
 // Review Carousel Auto-Play Logic
-document.addEventListener('DOMContentLoaded', () => {
+(function() {
   const reviewSections = document.querySelectorAll('.review-carousel-section');
   
   reviewSections.forEach(section => {
@@ -373,4 +373,4 @@ document.addEventListener('DOMContentLoaded', () => {
 
     startTimer();
   });
-});
+})();

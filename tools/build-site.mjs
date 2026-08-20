@@ -845,7 +845,7 @@ function parentVoices(locale) {
   `).join("");
 
   return `<section class="director-quote-section review-carousel-section" data-animate="fade-up" style="background: var(--sv-stone); padding: 4rem 0; overflow: hidden; position: relative;">
-    <div class="review-carousel-track" style="position: relative; width: 100%; min-height: 500px;">
+    <div class="review-carousel-track" style="position: relative; width: 100%; ">
       ${slidesHtml}
     </div>
     <div class="review-carousel-dots" style="display: flex; justify-content: center; gap: 8px; margin-top: 2rem; position: relative; z-index: 10;">
