@@ -36,6 +36,10 @@ sections:
     icon: star
     body: >-
       In primary school, we encourage students to discover themselves and express their ideas through Project-Based Learning, developing critical thinking and real-world problem-solving skills.
+  - title: Close Care & Attention
+    icon: heart
+    body: >-
+      With a commitment to giving every student our full attention, we limit classes to a maximum of 25 students, maintaining a teacher-to-student ratio of 1:12.5. This allows teachers to closely care for, discover the potential of, and support the development of each individual student.
 nav: academics
 
 seo:
