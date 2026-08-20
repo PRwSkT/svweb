@@ -719,25 +719,47 @@ function contact(locale) {
 }
 
 function directorQuote(locale) {
-  const quote = locale === "th" ? "“ทุกความตั้งใจของเราในวันนี้ คือการสร้างสรรค์พื้นที่แห่งอนาคตที่ดีที่สุดให้กับลูกหลานของเรา เพราะความสำเร็จที่ยิ่งใหญ่ที่สุดของโรงเรียนสมคิดวิทยา คือการได้เห็นเด็ก ๆ เติบโตอย่างงดงามและมีความสุขในทุก ๆ วัน”" : locale === "en" ? "\"Every effort we make today is dedicated to creating the best future environment for our children. The greatest success of Somkidvittaya School is seeing our students grow beautifully and happily every single day.\"" : "“我们今天所付出的每一份努力，都是为了给孩子创造最好的未来空间。Somkidvittaya学校最大的成功，就是看到孩子们每天都在美丽和快乐中成长。”";
-  const name = locale === "th" ? "นาย ณัฐวัฒน์ สงเคราะห์ธรรม" : locale === "en" ? "Mr. Nattawat Songkrotham" : "Nattawat Songkrotham 先生";
-  const title = locale === "th" ? "ผู้อำนวยการโรงเรียนสมคิดวิทยา" : locale === "en" ? "Director of Somkidvittaya School" : "Somkidvittaya学校校长";
-  const cta = locale === "th" ? "อ่านสารฉบับเต็ม" : locale === "en" ? "Read Full Message" : "阅读全文";
+  const dQuote = locale === "th" ? "“ทุกความตั้งใจของเราในวันนี้ คือการสร้างสรรค์พื้นที่แห่งอนาคตที่ดีที่สุดให้กับลูกหลานของเรา เพราะความสำเร็จที่ยิ่งใหญ่ที่สุดของโรงเรียนสมคิดวิทยา คือการได้เห็นเด็ก ๆ เติบโตอย่างงดงามและมีความสุขในทุก ๆ วัน”" : locale === "en" ? "\"Every effort we make today is dedicated to creating the best future environment for our children. The greatest success of Somkidvittaya School is seeing our students grow beautifully and happily every single day.\"" : "“我们今天所付出的每一份努力，都是为了给孩子创造最好的未来空间。Somkidvittaya学校最大的成功，就是看到孩子们每天都在美丽和快乐中成长。”";
+  const dName = locale === "th" ? "นาย ณัฐวัฒน์ สงเคราะห์ธรรม" : locale === "en" ? "Mr. Nattawat Songkrotham" : "Nattawat Songkrotham 先生";
+  const dTitle = locale === "th" ? "ผู้อำนวยการโรงเรียนสมคิดวิทยา" : locale === "en" ? "Director of Somkidvittaya School" : "Somkidvittaya学校校长";
+  const dCta = locale === "th" ? "อ่านสารจากผู้อำนวยการ" : locale === "en" ? "Read Director's Message" : "阅读校长致辞";
 
-  return `<section class="director-quote-section" data-animate="fade-up">
+  const mQuote = locale === "th" ? "“เราเชื่อมั่นว่ารากฐานทางการศึกษาที่มีคุณภาพ ย่อมเกิดจากความพร้อมของ 'นิเวศทางการศึกษา' เราจึงให้ความสำคัญกับการเตรียมความพร้อมในทุกองค์ประกอบ เพื่อสนับสนุนการเรียนรู้และตอบโจทย์ในทุกความสนใจของเด็ก ๆ ทีมงาน SV ทุกคนมุ่งมั่นที่จะร่วมกันสร้างสรรค์นิเวศแห่งการเรียนรู้แห่งนี้ ให้พร้อมตอบรับทุกความต้องการ และผลักดันให้ก้าวต่อไปของนักเรียนมั่นคงที่สุด”" : locale === "en" ? "\"We believe that a high-quality educational foundation stems from a well-prepared 'Learning Ecosystem.' We prioritize readiness in every component to support learning and answer every child's interests. The entire SV team is dedicated to co-creating this ecosystem to propel our students' next steps with the utmost stability.\"" : "“我们坚信，高质量教育的基础源于完备的‘学习生态系统’。因此，我们重视所有要素的准备工作，以支持学习并满足孩子们的各种兴趣。SV全体团队致力于共同打造这个学习生态系统，准备好满足一切需求，并极力推动学生迈出最稳健的下一步。”";
+  const mName = locale === "th" ? "นางสาว อติภา สุขศิริ" : locale === "en" ? "Miss Atipa Sooksiri" : "Atipa Sooksiri 女士";
+  const mTitle = locale === "th" ? "ผู้จัดการโรงเรียนสมคิดวิทยา" : locale === "en" ? "School Manager" : "学校经理";
+  const mCta = locale === "th" ? "อ่านสารจากผู้จัดการ" : locale === "en" ? "Read Manager's Message" : "阅读经理致辞";
+
+  return `<section class="director-quote-section" data-animate="fade-up" style="display: flex; flex-direction: column; gap: 80px; padding-bottom: 80px;">
+    <!-- Director -->
     <div class="director-quote-container">
       <div class="director-image-wrapper">
-        <img src="/assets/images/director.png" alt="${escapeHtml(name)}" class="director-img" loading="lazy" width="400" height="400">
+        <img src="/assets/images/director.png" alt="${escapeHtml(dName)}" class="director-img" loading="lazy" width="400" height="400">
         <div class="director-gradient-fade"></div>
       </div>
       <div class="director-quote-content">
         <svg class="quote-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
-        <blockquote class="director-quote-text">${quote}</blockquote>
+        <blockquote class="director-quote-text">${dQuote}</blockquote>
         <div class="director-quote-author">
-          <strong>${name}</strong>
-          <span>${title}</span>
+          <strong>${dName}</strong>
+          <span>${dTitle}</span>
         </div>
-        ${button(cta, localizedPath("/director/", locale), "secondary")}
+        ${button(dCta, localizedPath("/director/", locale), "secondary")}
+      </div>
+    </div>
+    <!-- Manager -->
+    <div class="director-quote-container reversed">
+      <div class="director-image-wrapper">
+        <img src="/assets/images/manager.png" alt="${escapeHtml(mName)}" class="director-img" loading="lazy" width="400" height="400">
+        <div class="director-gradient-fade"></div>
+      </div>
+      <div class="director-quote-content">
+        <svg class="quote-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
+        <blockquote class="director-quote-text">${mQuote}</blockquote>
+        <div class="director-quote-author">
+          <strong>${mName}</strong>
+          <span>${mTitle}</span>
+        </div>
+        ${button(mCta, localizedPath("/manager/", locale), "secondary")}
       </div>
     </div>
   </section>`;
@@ -1224,7 +1246,7 @@ function html(page, locale, cssHash) {
       <button id="accept-cookies" class="button primary small">${locale === 'th' ? 'ยอมรับ' : 'Accept'}</button>
     </div>
   </div>
-  <script src="/main.js?v=1787209527" defer></script>
+  <script src="/main.js?v=1787211590" defer></script>
   <script src="https://unpkg.com/feather-icons@4.29.2/dist/feather.min.js" integrity="sha384-qEqAs1VsN9WH2myXDbiP2wGGIttL9bMRZBKCl54ZnzpDlVqbYANP9vMaoT/wvQcf" crossorigin="anonymous"></script>
 </body>
 </html>`;
