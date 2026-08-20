@@ -691,7 +691,15 @@ function parents(page, locale) {
 }
 
 function life(page, locale) {
-  return `<section class="section"><div class="card-grid">${globals.lifeCards[locale].map(([title, body]) => `<article class="info-card"><h3>${escapeHtml(title)}</h3><p>${escapeHtml(body)}</p></article>`).join("")}</div></section>${textSections(page, locale)}`;
+  const cardsHtml = globals.lifeCards[locale] ? 
+    `<div class="card-grid">${globals.lifeCards[locale].map(([title, body]) => 
+      `<article class="info-card"><h3>${escapeHtml(title)}</h3><p>${escapeHtml(body)}</p></article>`
+    ).join("")}</div>` : '';
+
+  return `<section class="section">
+            ${cardsHtml}
+          </section>
+          ${textSections(page, locale)}`;
 }
 
 function formSection(locale, name = "contact") {
@@ -1257,7 +1265,7 @@ function html(page, locale, cssHash) {
       <button id="accept-cookies" class="button primary small">${locale === 'th' ? 'ยอมรับ' : 'Accept'}</button>
     </div>
   </div>
-  <script src="/main.js?v=1787214029" defer></script>
+  <script src="/main.js?v=1787216720" defer></script>
   <script src="https://unpkg.com/feather-icons@4.29.2/dist/feather.min.js" integrity="sha384-qEqAs1VsN9WH2myXDbiP2wGGIttL9bMRZBKCl54ZnzpDlVqbYANP9vMaoT/wvQcf" crossorigin="anonymous"></script>
 </body>
 </html>`;

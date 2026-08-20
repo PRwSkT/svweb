@@ -11,3 +11,17 @@ nav: student-life
 
 seo:
   en: ["A School Life Children Enjoy | Somkidvittaya School Rayong", "Discover our vibrant campus life, extracurricular activities, and the everyday moments that make learning joyful."]
+
+sections:
+  - title: "A Happy Learning Environment (A Day at SV)"
+    icon: "sun"
+    body: "Start the day with a smile, warm homeroom activities, and hands-on Active Learning."
+  - title: "Safe & Modern Facilities"
+    icon: "shield"
+    body: "Developmentally appropriate classrooms with top-tier security and a standard on-site clinic."
+  - title: "Nutrition & Well-being"
+    icon: "coffee"
+    body: "Clean, safe, and nutritious lunches with strict attention to individual student allergies."
+  - title: "Clubs & Extracurricular Activities"
+    icon: "star"
+    body: "Opportunities for students to discover their passions through art, music, sports, and science clubs."

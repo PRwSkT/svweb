@@ -10,3 +10,17 @@ nav: student-life
 
 seo:
   zh: ["孩子喜欢的校园生活 | Somkidvittaya 学校", "通过活动、社团、日常校园与课外探索呈现真实校园氛围。"]
+
+sections:
+  - title: "快乐的学习氛围 (SV 的一天)"
+    icon: "sun"
+    body: "以微笑开启新的一天，体验温馨的班会活动和实践主导的主动学习 (Active Learning)。"
+  - title: "安全现代的设施 (Facilities)"
+    icon: "shield"
+    body: "专为促进发展设计的教室，配备顶级安保系统和标准化的校园医务室。"
+  - title: "营养与健康 (Nutrition & Well-being)"
+    icon: "coffee"
+    body: "提供干净、安全、营养均衡的午餐，并严格关注每位学生的食物过敏情况。"
+  - title: "社团与课外活动 (Clubs & Activities)"
+    icon: "star"
+    body: "为学生提供通过艺术、音乐、体育和科学社团发现自身兴趣的绝佳机会。"
