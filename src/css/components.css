@@ -1134,7 +1134,9 @@ input:user-invalid, select:user-invalid, textarea:user-invalid {
 }
 .news-row:hover {
   transform: translateX(10px);
-  background: rgba(0,0,0,0.015);
+}
+.news-row:hover .news-title {
+  color: var(--sv-crimson);
 }
 .news-date {
   min-width: 100px;
