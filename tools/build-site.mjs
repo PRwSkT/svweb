@@ -827,7 +827,7 @@ function parentVoices(locale) {
 
   const slidesHtml = reviews.map((r, i) => `
     <div class="review-slide ${i === 0 ? 'active' : ''}" data-index="${i}">
-      <div class="director-quote-container reversed">
+      <div class="director-quote-container ${i % 2 === 0 ? 'reversed' : ''}">
         <div class="director-image-wrapper">
           <img src="/assets/images/${r.img}" alt="${escapeHtml(r.name[locale])}" class="director-img" width="280" height="280" loading="lazy" style="border-radius: 50%; max-width: 280px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); object-fit: cover; aspect-ratio: 1/1;">
         </div>
