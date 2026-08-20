@@ -891,7 +891,7 @@ function parentVoices(locale) {
 function whySV(locale) {
   const content = {
     th: {
-      eyebrow: "จุดเด่นของ SV",
+      eyebrow: "จุดเด่นของเรา",
       title: "ทำไมต้องสมคิดวิทยา",
       pillars: [
         { icon: "message-circle", title: "สภาพแวดล้อม 2 ภาษา", body: "พัฒนาทักษะภาษาอังกฤษอย่างเป็นธรรมชาติผ่านการใช้งานจริงในชีวิตประจำวัน สร้างความมั่นใจในการสื่อสาร" },
@@ -901,8 +901,8 @@ function whySV(locale) {
       ]
     },
     en: {
-      eyebrow: "Why SV",
-      title: "Why Somkidvittaya",
+      eyebrow: "Our Highlights",
+      title: "Why Choose Somkidvittaya",
       pillars: [
         { icon: "message-circle", title: "Natural Bilingual Environment", body: "Develop English proficiency organically through real-world daily interactions for confident communication." },
         { icon: "users", title: "Project-Based Learning", body: "Active classrooms focused on critical thinking and problem-solving through hands-on, real-world projects." },
@@ -911,7 +911,7 @@ function whySV(locale) {
       ]
     },
     zh: {
-      eyebrow: "SV 的优势",
+      eyebrow: "我们的特色",
       title: "为什么选择 Somkidvittaya",
       pillars: [
         { icon: "message-circle", title: "自然的双语环境", body: "通过日常生活中的实际运用自然地发展英语技能，实现自信交流。" },
@@ -1257,7 +1257,7 @@ function html(page, locale, cssHash) {
       <button id="accept-cookies" class="button primary small">${locale === 'th' ? 'ยอมรับ' : 'Accept'}</button>
     </div>
   </div>
-  <script src="/main.js?v=1787213141" defer></script>
+  <script src="/main.js?v=1787213755" defer></script>
   <script src="https://unpkg.com/feather-icons@4.29.2/dist/feather.min.js" integrity="sha384-qEqAs1VsN9WH2myXDbiP2wGGIttL9bMRZBKCl54ZnzpDlVqbYANP9vMaoT/wvQcf" crossorigin="anonymous"></script>
 </body>
 </html>`;
