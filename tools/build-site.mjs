@@ -287,7 +287,7 @@ function header(page, locale) {
               <h4>${locale === 'th' ? 'เกี่ยวกับโรงเรียน' : locale === 'zh' ? '关于学校' : 'About the School'}</h4>
               <ul>
                 <li><a href="${localizedPath('/about/', locale)}">${locale === 'th' ? 'ประวัติโรงเรียน' : locale === 'zh' ? '学校历史' : 'Our History'}</a></li>
-                <li><a href="${localizedPath('/director/', locale)}">${locale === 'th' ? 'สารจากผู้บริหาร' : locale === 'zh' ? '校长致辞' : 'Message from the Director'}</a></li>
+                
                 <li><a href="${localizedPath('/about/faculty/', locale)}">${locale === 'th' ? 'ทำเนียบบุคลากร' : locale === 'zh' ? '教职员工' : 'Faculty Directory'}</a></li>
               </ul>
             </div>
@@ -1257,7 +1257,7 @@ function html(page, locale, cssHash) {
       <button id="accept-cookies" class="button primary small">${locale === 'th' ? 'ยอมรับ' : 'Accept'}</button>
     </div>
   </div>
-  <script src="/main.js?v=1787213755" defer></script>
+  <script src="/main.js?v=1787214029" defer></script>
   <script src="https://unpkg.com/feather-icons@4.29.2/dist/feather.min.js" integrity="sha384-qEqAs1VsN9WH2myXDbiP2wGGIttL9bMRZBKCl54ZnzpDlVqbYANP9vMaoT/wvQcf" crossorigin="anonymous"></script>
 </body>
 </html>`;
