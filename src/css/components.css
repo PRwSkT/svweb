@@ -1623,8 +1623,8 @@ p.drop-cap::first-letter { font-size: 4.5rem; font-weight: 700; color: var(--sv-
 }
 
 .review-carousel-dots .review-dot {
-  width: 40px;
-  height: 6px;
+  width: 60px;
+  height: 3px;
   border-radius: 0; /* Square / normal right angle */
   background: rgba(179, 154, 75, 0.3); /* var(--sv-gold) with opacity */
   border: none;
@@ -1634,7 +1634,7 @@ p.drop-cap::first-letter { font-size: 4.5rem; font-weight: 700; color: var(--sv-
 }
 .review-carousel-dots .review-dot.active {
   background: var(--sv-gold);
-  width: 60px;
+  width: 100px;
 }
 
 
