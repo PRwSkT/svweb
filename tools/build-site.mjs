@@ -871,7 +871,7 @@ function parentVoices(locale) {
     <div class="review-slide ${i === 0 ? 'active' : ''}" data-index="${i}">
       <div class="director-quote-container ${i % 2 === 0 ? 'reversed' : ''}">
         <div class="director-image-wrapper">
-          <img src="/assets/images/${r.img}" alt="${escapeHtml(r.name[locale])}" class="director-img" width="280" height="280" loading="lazy" style="border-radius: 50%; max-width: 280px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); object-fit: cover; aspect-ratio: 1/1;">
+          <img src="/assets/images/${r.img}" alt="${escapeHtml(r.name[locale])}" class="director-img" width="280" height="280" loading="lazy" style="border-radius: 50%; max-width: 280px; height: 280px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); object-fit: cover;">
         </div>
         <div class="director-quote-content">
           <p class="eyebrow">${eyebrow}</p>
@@ -1265,7 +1265,7 @@ function html(page, locale, cssHash) {
       <button id="accept-cookies" class="button primary small">${locale === 'th' ? 'ยอมรับ' : 'Accept'}</button>
     </div>
   </div>
-  <script src="/main.js?v=1787301949" defer></script>
+  <script src="/main.js?v=1787302114" defer></script>
   <script src="https://unpkg.com/feather-icons@4.29.2/dist/feather.min.js" integrity="sha384-qEqAs1VsN9WH2myXDbiP2wGGIttL9bMRZBKCl54ZnzpDlVqbYANP9vMaoT/wvQcf" crossorigin="anonymous"></script>
 </body>
 </html>`;
