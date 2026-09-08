@@ -392,8 +392,126 @@ function initReviewCarousel() {
   });
 }
 
+// =========================================================================
+// Real-time Dynamic Hydration for News & Albums (Between Weekly Deploys)
+// =========================================================================
+function initLiveWebsiteSync() {
+  const newsBoard = document.querySelector(".news-board");
+  const albumGrid = document.querySelector(".album-grid");
+
+  if (!newsBoard && !albumGrid) return;
+
+  const SUPABASE_URL = "https://ufsqavndpjphowuacxfi.supabase.co";
+  const SUPABASE_ANON = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVmc3Fhdm5kcGpwaG93dWFjeGZpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODExMTM4NzgsImV4cCI6MjA5NjY4OTg3OH0.fpaVZY8i7YQLRewcv3cuEZR_P9wNz1rWs5Q1UOk3Hz0";
+  const headers = { "apikey": SUPABASE_ANON, "Authorization": "Bearer " + SUPABASE_ANON };
+
+  const htmlLang = document.documentElement.lang || "th";
+  const isTh = htmlLang === "th";
+  const isZh = htmlLang === "zh";
+  const readMoreText = isTh ? "อ่านเพิ่มเติม" : isZh ? "了解更多" : "Read more";
+  const newsPath = isTh ? "/news/" : `/${htmlLang}/news/`;
+
+  function safeText(str) {
+    if (!str) return "";
+    return String(str).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+  }
+
+  // 1. Live Hydrate News
+  if (newsBoard) {
+    fetch(`${SUPABASE_URL}/rest/v1/news?select=*&is_published=eq.true&order=published_at.desc&limit=5`, { headers })
+      .then(res => res.ok ? res.json() : null)
+      .then(async (newsItems) => {
+        if (!Array.isArray(newsItems) || newsItems.length === 0) return;
+
+        const featured = newsItems[0];
+        const listItems = newsItems.slice(1, 4);
+
+        const title = (isZh ? (featured.title_zh || featured.title_en) : isTh ? featured.title_th : (featured.title_en || featured.title_th)) || "";
+        const content = (isZh ? (featured.content_zh || featured.content_en) : isTh ? featured.content_th : (featured.content_en || featured.content_th)) || "";
+        const dateStr = new Date(featured.published_at || featured.created_at).toLocaleDateString(isTh ? 'th-TH' : 'en-US', { month: 'short', day: 'numeric' });
+        const coverImg = featured.cover_image_url || '/assets/images/real-4.jpg';
+
+        let collageHtml = '';
+        if (featured.album_id) {
+          try {
+            const aRes = await fetch(`${SUPABASE_URL}/rest/v1/album_photos?album_id=eq.${featured.album_id}&order=sort_order.asc&limit=3`, { headers });
+            if (aRes.ok) {
+              const photos = await aRes.json();
+              if (Array.isArray(photos) && photos.length > 0) {
+                collageHtml = `<div class="news-collage" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 15px;">
+                  ${photos.map(p => `<img src="${safeText(p.image_url)}" alt="Album photo" loading="lazy" width="400" height="300" style="width:100%; height:auto; aspect-ratio:4/3; object-fit:cover; border-radius:8px;">`).join('')}
+                </div>
+                <div style="margin-top: 10px; font-size: 0.85rem; color: var(--sv-gold);"><i class="fas fa-images"></i> ${isTh ? "ดูรูปภาพทั้งหมดในอัลบั้ม →" : "View all photos in album →"}</div>`;
+              }
+            }
+          } catch(e) {}
+        }
+
+        let listHtml = listItems.map(item => {
+          const itemTitle = (isZh ? (item.title_zh || item.title_en) : isTh ? item.title_th : (item.title_en || item.title_th)) || "";
+          const dStr = new Date(item.published_at || item.created_at).toLocaleDateString(isTh ? 'th-TH' : 'en-US', { month: 'short', day: 'numeric' });
+          return `<a href="${newsPath}" class="news-row">
+            <div class="news-date">${dStr}</div>
+            <div class="news-title">${safeText(itemTitle)}</div>
+          </a>`;
+        }).join("");
+
+        listHtml += `<a href="${newsPath}" class="news-row" style="margin-top: auto; border: none;">
+          <div class="news-title" style="color: var(--sv-crimson);">${readMoreText} &rarr;</div>
+        </a>`;
+
+        newsBoard.innerHTML = `
+          <a href="${newsPath}" class="news-featured" style="position: relative; display: block; height: 380px;">
+            <img src="${safeText(coverImg)}" alt="${safeText(title)}" width="800" height="500" loading="lazy" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1; margin: 0;">
+            <div class="news-featured-content" style="position: absolute; bottom: 0; left: 0; width: 100%; z-index: 2; padding: 60px 30px 30px; background: linear-gradient(to top, rgba(9, 27, 48, 0.95) 0%, rgba(9, 27, 48, 0.6) 60%, transparent 100%); display: flex; flex-direction: column; justify-content: flex-end;">
+              <span style="font-size: 0.8rem; font-weight: 700; color: var(--sv-gold); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px;">${dateStr}</span>
+              <h3 style="margin: 0 0 10px 0; color: #ffffff; font-size: 1.5rem;">${safeText(title)}</h3>
+              <p style="font-size: 0.95rem; color: rgba(255,255,255,0.8); margin-bottom: 0;">${safeText(content.substring(0, 100))}...</p>
+              ${collageHtml}
+            </div>
+          </a>
+          <div class="news-list">${listHtml}</div>
+        `;
+      })
+      .catch(err => {
+        // Fallback gracefully to pre-rendered static build content
+      });
+  }
+
+  // 2. Live Hydrate Albums (Gallery)
+  if (albumGrid) {
+    fetch(`${SUPABASE_URL}/rest/v1/albums?select=*,album_photos(*)&order=event_date.desc&limit=20`, { headers })
+      .then(res => res.ok ? res.json() : null)
+      .then(albums => {
+        if (!Array.isArray(albums) || albums.length === 0) return;
+
+        albumGrid.innerHTML = albums.map(album => {
+          const title = (isZh ? (album.title_zh || album.title_en) : isTh ? album.title_th : (album.title_en || album.title_th)) || "";
+          const dStr = new Date(album.event_date).toLocaleDateString(isTh ? 'th-TH' : 'en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+          const cover = album.cover_image_url || album.album_photos?.[0]?.image_url || '/assets/images/placeholder.jpg';
+          const count = album.album_photos ? album.album_photos.length : 0;
+          const countLabel = isTh ? 'รูปภาพ' : 'Photos';
+          return `<div class="album-card">
+            <div class="album-cover"><img src="${safeText(cover)}" alt="${safeText(title)}" loading="lazy" width="600" height="400" /></div>
+            <div class="album-info">
+              <h3>${safeText(title)}</h3>
+              <p class="meta"><span>${dStr}</span> • ${count} ${countLabel}</p>
+            </div>
+          </div>`;
+        }).join("");
+      })
+      .catch(err => {
+        // Fallback gracefully to pre-rendered static build content
+      });
+  }
+}
+
 if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', initReviewCarousel);
+  document.addEventListener('DOMContentLoaded', () => {
+    initReviewCarousel();
+    initLiveWebsiteSync();
+  });
 } else {
   initReviewCarousel();
+  initLiveWebsiteSync();
 }
