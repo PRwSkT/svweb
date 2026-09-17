@@ -616,25 +616,45 @@ function faq(locale) {
   return `<section class="section faq-list">${globals.faq[locale].map(([q, a], i) => `<article class="faq-item${i === 0 ? " is-open" : ""}" data-faq-item><button data-faq-trigger aria-expanded="${i === 0 ? "true" : "false"}">${escapeHtml(q)}<span>+</span></button><div class="faq-panel" data-faq-panel><div><p>${escapeHtml(a)}</p></div></div></article>`).join("")}</section>`;
 }
 
-function news(locale) {
-  let items = dynamicData.news;
-  if (!items || items.length === 0) {
-     items = globals.news[locale].map((arr, idx) => ({
-         id: 'static-' + idx,
-         title_th: arr[0], title_en: arr[0], title_zh: arr[0],
-         content_th: arr[2], content_en: arr[2], content_zh: arr[2],
-         cover_image_url: assetPath(arr[3], 'real-4.jpg'),
-         published_at: new Date().toISOString()
-     }));
+function getMergedNews(locale) {
+  const dynamicItems = Array.isArray(dynamicData.news) ? dynamicData.news : [];
+  const staticItems = (globals.news[locale] || []).map((arr, idx) => ({
+    id: 'static-' + idx,
+    title_th: arr[0],
+    title_en: (globals.news.en && globals.news.en[idx] ? globals.news.en[idx][0] : arr[0]),
+    title_zh: (globals.news.zh && globals.news.zh[idx] ? globals.news.zh[idx][0] : arr[0]),
+    content_th: arr[2],
+    content_en: (globals.news.en && globals.news.en[idx] ? globals.news.en[idx][2] : arr[2]),
+    content_zh: (globals.news.zh && globals.news.zh[idx] ? globals.news.zh[idx][2] : arr[2]),
+    cover_image_url: assetPath(arr[3], 'real-4.jpg'),
+    published_at: new Date(Date.now() - (idx + 1) * 86400000 * 7).toISOString()
+  }));
+
+  const merged = [...dynamicItems];
+  for (const s of staticItems) {
+    if (merged.length >= 6) break;
+    if (!merged.some(m => m.id === s.id || m.title_th === s.title_th)) {
+      merged.push(s);
+    }
   }
-  
-  const featured = items[0];
+  return merged;
+}
+
+function news(locale) {
+  const items = getMergedNews(locale);
+  const featured = items[0] || {
+    id: 'empty',
+    title_th: 'ข่าวสารและกิจกรรม',
+    content_th: 'ติดตามข่าวสารและกิจกรรมจากทางโรงเรียน',
+    cover_image_url: assetPath('', 'real-4.jpg'),
+    published_at: new Date().toISOString()
+  };
   const listItems = items.slice(1, 4); // show next 3
   
   // Try to find album collage for featured
   let collageHtml = '';
   if (featured.album_id) {
-     const album = dynamicData.albums.find(a => a.id === featured.album_id);
+     const album = (dynamicData.albums || []).find(a => a.id === featured.album_id);
      if (album && album.album_photos && album.album_photos.length > 0) {
         const photos = album.album_photos.slice(0, 3); // take up to 3 photos
         collageHtml = `<div class="news-collage" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 15px;">
@@ -673,16 +693,7 @@ function news(locale) {
 }
 
 function newsArchive(locale) {
-  let items = dynamicData.news;
-  if (!items || items.length === 0) {
-    items = globals.news[locale].map((arr, idx) => ({
-      id: 'static-' + idx,
-      title_th: arr[0], title_en: arr[0], title_zh: arr[0],
-      content_th: arr[2], content_en: arr[2], content_zh: arr[2],
-      cover_image_url: assetPath(arr[3], 'real-4.jpg'),
-      published_at: new Date().toISOString()
-    }));
-  }
+  const items = getMergedNews(locale);
 
   const renderCard = (item) => {
     const title = item[`title_${locale}`] || item.title_th || "";
@@ -706,10 +717,12 @@ function newsArchive(locale) {
   };
 
   return `<section class="section news-archive-section" data-animate="fade-up">
-    <div class="container">
-      <div class="news-grid">
-        ${items.map(renderCard).join('')}
-      </div>
+    <div class="section-heading">
+      <p class="eyebrow">${locale === 'th' ? 'ข่าวสารล่าสุด' : locale === 'zh' ? '最新动态' : 'Latest Announcements'}</p>
+      <h2>${locale === 'th' ? 'บทความ ข่าวประชาสัมพันธ์ และกิจกรรมทั้งหมด' : locale === 'zh' ? '学校新闻、公告与精彩活动' : 'All News, Announcements & Activities'}</h2>
+    </div>
+    <div class="news-grid">
+      ${items.map(renderCard).join('')}
     </div>
   </section>`;
 }
@@ -1229,7 +1242,7 @@ function structuredData(page, locale) {
   return scripts.join("\n  ");
 }
 
-function html(page, locale, cssHash) {
+function html(page, locale, cssHash, jsHash) {
   let fallbackSuffix = " | Somkidvittaya School";
   if (locale === "th") fallbackSuffix = " | โรงเรียนสมคิดวิทยา";
   else if (locale === "zh") fallbackSuffix = " | Somkidvittaya学校";
@@ -1309,9 +1322,9 @@ function html(page, locale, cssHash) {
   </div>
     <!-- News Reader Modal -->
   <div id="news-modal" class="news-modal-overlay" aria-hidden="true" role="dialog" aria-modal="true">
-    <div class="news-modal-backdrop" onclick="closeNewsModal()"></div>
+    <div class="news-modal-backdrop" data-close-modal></div>
     <div class="news-modal-dialog">
-      <button class="news-modal-close" onclick="closeNewsModal()" aria-label="Close modal">&times;</button>
+      <button class="news-modal-close" data-close-modal aria-label="Close modal">&times;</button>
       <div class="news-modal-media" id="modal-news-media"></div>
       <div class="news-modal-content">
         <div class="news-modal-meta">
@@ -1321,14 +1334,17 @@ function html(page, locale, cssHash) {
         <h2 class="news-modal-title" id="modal-news-title"></h2>
         <div class="news-modal-body" id="modal-news-body"></div>
         <div class="news-modal-gallery" id="modal-news-gallery"></div>
+        <div class="news-modal-footer">
+          <button type="button" class="button secondary small" data-close-modal>${locale === 'th' ? 'ปิดหน้าต่าง' : locale === 'zh' ? '关闭窗口' : 'Close'}</button>
+        </div>
       </div>
     </div>
   </div>
   <script>
-    window.__SV_NEWS__ = ${JSON.stringify(dynamicData.news || [])};
+    window.__SV_NEWS__ = ${JSON.stringify(getMergedNews(locale))};
     window.__SV_ALBUMS__ = ${JSON.stringify(dynamicData.albums || [])};
   </script>
-  <script src="/main.js?v=1789629182" defer></script>
+  <script src="/main.js?v=${jsHash}" defer></script>
   <script src="https://unpkg.com/feather-icons@4.29.2/dist/feather.min.js" integrity="sha384-qEqAs1VsN9WH2myXDbiP2wGGIttL9bMRZBKCl54ZnzpDlVqbYANP9vMaoT/wvQcf" crossorigin="anonymous"></script>
 </body>
 </html>`;
@@ -1339,10 +1355,10 @@ function outputPath(path, locale) {
   return clean ? join(dist, clean, "index.html") : join(dist, "index.html");
 }
 
-function writePage(page, locale, cssHash) {
+function writePage(page, locale, cssHash, jsHash) {
   const file = outputPath(page.path, locale);
   mkdirSync(dirname(file), { recursive: true });
-  writeFileSync(file, html(page, locale, cssHash));
+  writeFileSync(file, html(page, locale, cssHash, jsHash));
 }
 
 function copyAsset(src, destName) {
@@ -1375,8 +1391,11 @@ for (const file of cssOrder) {
 const minifiedCss = combinedCss.replace(/\/\*[\s\S]*?\*\//g, '').replace(/\s+/g, ' ').replace(/\s*([\{\}\:\;\,])\s*/g, '$1').trim();
 const cssHash = crypto.createHash('md5').update(minifiedCss).digest('hex').substring(0, 8);
 
+const jsContent = readFileSync(join(root, "src/main.js"), "utf8");
+const jsHash = crypto.createHash('md5').update(jsContent).digest('hex').substring(0, 8);
+
 for (const page of pages) {
-  for (const locale of Object.keys(locales)) writePage(page, locale, cssHash);
+  for (const locale of Object.keys(locales)) writePage(page, locale, cssHash, jsHash);
 }
   
 writeFileSync(join(dist, "styles.css"), minifiedCss);

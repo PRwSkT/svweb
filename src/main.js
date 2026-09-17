@@ -449,7 +449,7 @@ window.openNewsModal = function(newsId) {
           <div class="news-modal-gallery-grid">
             ${photos.map(p => {
               const url = p.image_url || p.photo_url;
-              return `<img src="${url}" alt="Album photo" loading="lazy" onclick="window.open('${url}', '_blank')">`;
+              return `<a href="${url}" target="_blank" rel="noopener noreferrer"><img src="${url}" alt="Album photo" loading="lazy"></a>`;
             }).join("")}
           </div>
         `;
@@ -479,10 +479,18 @@ window.closeNewsModal = function() {
   } catch (e) {}
 };
 
-// Global click and key listener for news reader
+// Global click and key listener for news reader & modal close (CSP safe)
 document.addEventListener("click", function(e) {
+  // 1. Close modal triggers
+  if (e.target.closest("[data-close-modal]") || e.target.classList.contains("news-modal-backdrop")) {
+    e.preventDefault();
+    closeNewsModal();
+    return;
+  }
+
+  // 2. Open news reader
   const target = e.target.closest("[data-news-id]");
-  if (target && !e.target.closest(".news-more-link")) {
+  if (target && !e.target.closest(".news-more-link") && !e.target.closest("[data-close-modal]")) {
     const newsId = target.getAttribute("data-news-id");
     if (newsId) {
       e.preventDefault();
@@ -526,12 +534,22 @@ function initLiveWebsiteSync() {
       .then(async (newsItems) => {
         if (!Array.isArray(newsItems) || newsItems.length === 0) return;
 
-        window.__SV_NEWS__ = newsItems;
+        // Merge with existing pre-rendered news to keep UI rich if fewer than 4 dynamic items
+        let allNews = [...newsItems];
+        if (Array.isArray(window.__SV_NEWS__)) {
+          for (const s of window.__SV_NEWS__) {
+            if (allNews.length >= 6) break;
+            if (!allNews.some(n => String(n.id) === String(s.id) || n.title_th === s.title_th)) {
+              allNews.push(s);
+            }
+          }
+        }
+        window.__SV_NEWS__ = allNews;
 
         // If on homepage news-board
         if (newsBoard) {
-          const featured = newsItems[0];
-          const listItems = newsItems.slice(1, 4);
+          const featured = allNews[0];
+          const listItems = allNews.slice(1, 4);
 
           const title = (isZh ? (featured.title_zh || featured.title_en) : isTh ? featured.title_th : (featured.title_en || featured.title_th)) || "";
           const content = (isZh ? (featured.content_zh || featured.content_en) : isTh ? featured.content_th : (featured.content_en || featured.content_th)) || "";
@@ -583,7 +601,7 @@ function initLiveWebsiteSync() {
 
         // If on /news/ archive page
         if (newsGrid) {
-          newsGrid.innerHTML = newsItems.map(item => {
+          newsGrid.innerHTML = allNews.map(item => {
             const title = (isZh ? (item.title_zh || item.title_en) : isTh ? item.title_th : (item.title_en || item.title_th)) || "";
             const content = (isZh ? (item.content_zh || item.content_en) : isTh ? item.content_th : (item.content_en || item.content_th)) || "";
             const date = new Date(item.published_at || item.created_at).toLocaleDateString(isTh ? 'th-TH' : 'en-US', { year: 'numeric', month: 'short', day: 'numeric' });
