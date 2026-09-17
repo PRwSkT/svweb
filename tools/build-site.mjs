@@ -619,8 +619,8 @@ function faq(locale) {
 function news(locale) {
   let items = dynamicData.news;
   if (!items || items.length === 0) {
-     // fallback to static globals if db is empty
-     items = globals.news[locale].map(arr => ({
+     items = globals.news[locale].map((arr, idx) => ({
+         id: 'static-' + idx,
          title_th: arr[0], title_en: arr[0], title_zh: arr[0],
          content_th: arr[2], content_en: arr[2], content_zh: arr[2],
          cover_image_url: assetPath(arr[3], 'real-4.jpg'),
@@ -638,7 +638,7 @@ function news(locale) {
      if (album && album.album_photos && album.album_photos.length > 0) {
         const photos = album.album_photos.slice(0, 3); // take up to 3 photos
         collageHtml = `<div class="news-collage" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 15px;">
-           ${photos.map(p => `<img src="${escapeHtml(p.photo_url)}" alt="Album photo" loading="lazy" width="400" height="300" style="width:100%; height:auto; aspect-ratio:4/3; object-fit:cover; border-radius:8px;">`).join('')}
+           ${photos.map(p => `<img src="${escapeHtml(p.image_url || p.photo_url)}" alt="Album photo" loading="lazy" width="400" height="300" style="width:100%; height:auto; aspect-ratio:4/3; object-fit:cover; border-radius:8px;">`).join('')}
         </div>
         <div style="margin-top: 10px; font-size: 0.85rem; color: var(--sv-gold);"><i class="fas fa-images"></i> ${locale === "th" ? "ดูรูปภาพทั้งหมดในอัลบั้ม →" : "View all photos in album →"}</div>`;
      }
@@ -650,23 +650,65 @@ function news(locale) {
       <h2>${locale === "th" ? "ข่าวสารและกิจกรรม" : locale === "en" ? "Latest Announcements" : "最新动态"}</h2>
     </div>
     <div class="news-board">
-      <a href="${localizedPath("/news/", locale)}" class="news-featured" style="position: relative; display: block; height: 380px;">
+      <div class="news-featured" data-news-id="${escapeHtml(featured.id || '')}" role="button" tabindex="0" style="position: relative; display: block; height: 380px;">
         <img src="${featured.cover_image_url || assetPath('', 'real-4.jpg')}" alt="${escapeHtml(featured[`title_${locale}`] || featured.title_th)}" width="800" height="500" loading="lazy" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1; margin: 0;">
         <div class="news-featured-content" style="position: absolute; bottom: 0; left: 0; width: 100%; z-index: 2; padding: 60px 30px 30px; background: linear-gradient(to top, rgba(9, 27, 48, 0.95) 0%, rgba(9, 27, 48, 0.6) 60%, transparent 100%); display: flex; flex-direction: column; justify-content: flex-end;">
-          <span style="font-size: 0.8rem; font-weight: 700; color: var(--sv-gold); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px;">${new Date(featured.published_at).toLocaleDateString(locale === 'th' ? 'th-TH' : 'en-US', {month:'short', day:'numeric'})}</span>
+          <span style="font-size: 0.8rem; font-weight: 700; color: var(--sv-gold); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px;">${new Date(featured.published_at || featured.created_at).toLocaleDateString(locale === 'th' ? 'th-TH' : 'en-US', {month:'short', day:'numeric'})}</span>
           <h3 style="margin: 0 0 10px 0; color: #ffffff; font-size: 1.5rem;">${escapeHtml(featured[`title_${locale}`] || featured.title_th)}</h3>
           <p style="font-size: 0.95rem; color: rgba(255,255,255,0.8); margin-bottom: 0;">${escapeHtml((featured[`content_${locale}`] || featured.content_th || "").substring(0, 100))}...</p>
           ${collageHtml}
         </div>
-      </a>
+      </div>
       <div class="news-list">
-        ${listItems.length > 0 ? listItems.map((item) => `<a href="${localizedPath("/news/", locale)}" class="news-row">
-          <div class="news-date">${new Date(item.published_at).toLocaleDateString(locale === 'th' ? 'th-TH' : 'en-US', {month:'short', day:'numeric'})}</div>
+        ${listItems.length > 0 ? listItems.map((item) => `<div class="news-row" data-news-id="${escapeHtml(item.id || '')}" role="button" tabindex="0">
+          <div class="news-date">${new Date(item.published_at || item.created_at).toLocaleDateString(locale === 'th' ? 'th-TH' : 'en-US', {month:'short', day:'numeric'})}</div>
           <div class="news-title">${escapeHtml(item[`title_${locale}`] || item.title_th)}</div>
-        </a>`).join("") : ""}
-        <a href="${localizedPath("/news/", locale)}" class="news-row" style="margin-top: auto; border: none;">
-          <div class="news-title" style="color: var(--sv-crimson);">${locales[locale].readMore} &rarr;</div>
+        </div>`).join("") : ""}
+        <a href="${localizedPath("/news/", locale)}" class="news-row news-more-link" style="margin-top: auto; border: none;">
+          <div class="news-title" style="color: var(--sv-crimson); font-weight: 700;">${locales[locale].readMore} &rarr;</div>
         </a>
+      </div>
+    </div>
+  </section>`;
+}
+
+function newsArchive(locale) {
+  let items = dynamicData.news;
+  if (!items || items.length === 0) {
+    items = globals.news[locale].map((arr, idx) => ({
+      id: 'static-' + idx,
+      title_th: arr[0], title_en: arr[0], title_zh: arr[0],
+      content_th: arr[2], content_en: arr[2], content_zh: arr[2],
+      cover_image_url: assetPath(arr[3], 'real-4.jpg'),
+      published_at: new Date().toISOString()
+    }));
+  }
+
+  const renderCard = (item) => {
+    const title = item[`title_${locale}`] || item.title_th || "";
+    const content = item[`content_${locale}`] || item.content_th || "";
+    const date = new Date(item.published_at || item.created_at).toLocaleDateString(locale === 'th' ? 'th-TH' : 'en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+    const cover = item.cover_image_url || assetPath('', 'real-4.jpg');
+
+    return `<article class="news-card" data-news-id="${escapeHtml(item.id || '')}" role="button" tabindex="0">
+      <div class="news-card-img">
+        <img src="${cover}" alt="${escapeHtml(title)}" loading="lazy" width="600" height="380">
+        <span class="news-card-date">${date}</span>
+      </div>
+      <div class="news-card-body">
+        <h3>${escapeHtml(title)}</h3>
+        <p>${escapeHtml(content.substring(0, 120))}${content.length > 120 ? '...' : ''}</p>
+        <div class="news-card-action">
+          <span class="news-read-btn">${locale === 'th' ? 'อ่านข่าวฉบับเต็ม' : locale === 'zh' ? '阅读全文' : 'Read full story'} &rarr;</span>
+        </div>
+      </div>
+    </article>`;
+  };
+
+  return `<section class="section news-archive-section" data-animate="fade-up">
+    <div class="container">
+      <div class="news-grid">
+        ${items.map(renderCard).join('')}
       </div>
     </div>
   </section>`;
@@ -1130,7 +1172,7 @@ function bodyContent(page, locale) {
   if (page.type === "faq") return faq(locale);
   if (page.type === "life") return life(page, locale);
   if (page.type === "parents") return parents(page, locale);
-  if (page.type === "news") return news(locale);
+  if (page.type === "news") return newsArchive(locale);
   if (page.type === "contact") return contact(locale);
   if (page.type === "faculty") return facultyDirectory(locale);
   if (page.type === "documents") return documentHub(locale);
@@ -1265,7 +1307,28 @@ function html(page, locale, cssHash) {
       <button id="accept-cookies" class="button primary small">${locale === 'th' ? 'ยอมรับ' : 'Accept'}</button>
     </div>
   </div>
-  <script src="/main.js?v=1788829981" defer></script>
+    <!-- News Reader Modal -->
+  <div id="news-modal" class="news-modal-overlay" aria-hidden="true" role="dialog" aria-modal="true">
+    <div class="news-modal-backdrop" onclick="closeNewsModal()"></div>
+    <div class="news-modal-dialog">
+      <button class="news-modal-close" onclick="closeNewsModal()" aria-label="Close modal">&times;</button>
+      <div class="news-modal-media" id="modal-news-media"></div>
+      <div class="news-modal-content">
+        <div class="news-modal-meta">
+          <span class="news-modal-date" id="modal-news-date"></span>
+          <span class="news-modal-badge" id="modal-news-badge"></span>
+        </div>
+        <h2 class="news-modal-title" id="modal-news-title"></h2>
+        <div class="news-modal-body" id="modal-news-body"></div>
+        <div class="news-modal-gallery" id="modal-news-gallery"></div>
+      </div>
+    </div>
+  </div>
+  <script>
+    window.__SV_NEWS__ = ${JSON.stringify(dynamicData.news || [])};
+    window.__SV_ALBUMS__ = ${JSON.stringify(dynamicData.albums || [])};
+  </script>
+  <script src="/main.js?v=1789629182" defer></script>
   <script src="https://unpkg.com/feather-icons@4.29.2/dist/feather.min.js" integrity="sha384-qEqAs1VsN9WH2myXDbiP2wGGIttL9bMRZBKCl54ZnzpDlVqbYANP9vMaoT/wvQcf" crossorigin="anonymous"></script>
 </body>
 </html>`;
