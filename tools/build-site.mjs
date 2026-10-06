@@ -1242,7 +1242,7 @@ function structuredData(page, locale) {
   return scripts.join("\n  ");
 }
 
-function html(page, locale, cssHash, jsHash) {
+function html(page, locale, cssHash, jsHash, faviconHash) {
   let fallbackSuffix = " | Somkidvittaya School";
   if (locale === "th") fallbackSuffix = " | โรงเรียนสมคิดวิทยา";
   else if (locale === "zh") fallbackSuffix = " | Somkidvittaya学校";
@@ -1294,8 +1294,14 @@ function html(page, locale, cssHash, jsHash) {
   <link rel="preload" as="image" href="${assetPath(page.image, "real-1.jpg")}">
   <link rel="preload" as="font" type="font/ttf" href="/assets/fonts/SukhumvitSet-Text.ttf" crossorigin>
   <link rel="preload" as="font" type="font/ttf" href="/assets/fonts/SukhumvitSet-SemiBold.ttf" crossorigin>
-  <link rel="icon" href="/favicon-v3-final.ico">
-  <link rel="apple-touch-icon" href="/apple-touch-icon-v3-final.png">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico?v=${faviconHash}">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v=${faviconHash}">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png?v=${faviconHash}">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=${faviconHash}">
+  <link rel="apple-touch-icon-precomposed" href="/apple-touch-icon-precomposed.png?v=${faviconHash}">
+  <link rel="shortcut icon" href="/favicon.ico?v=${faviconHash}">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#091b30">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700&display=swap" rel="stylesheet">
@@ -1355,10 +1361,10 @@ function outputPath(path, locale) {
   return clean ? join(dist, clean, "index.html") : join(dist, "index.html");
 }
 
-function writePage(page, locale, cssHash, jsHash) {
+function writePage(page, locale, cssHash, jsHash, faviconHash) {
   const file = outputPath(page.path, locale);
   mkdirSync(dirname(file), { recursive: true });
-  writeFileSync(file, html(page, locale, cssHash, jsHash));
+  writeFileSync(file, html(page, locale, cssHash, jsHash, faviconHash));
 }
 
 function copyAsset(src, destName) {
@@ -1394,14 +1400,34 @@ const cssHash = crypto.createHash('md5').update(minifiedCss).digest('hex').subst
 const jsContent = readFileSync(join(root, "src/main.js"), "utf8");
 const jsHash = crypto.createHash('md5').update(jsContent).digest('hex').substring(0, 8);
 
+const faviconBuffer = readFileSync(join(root, "src/assets/favicon.ico"));
+const faviconHash = crypto.createHash('md5').update(faviconBuffer).digest('hex').substring(0, 8);
+
 for (const page of pages) {
-  for (const locale of Object.keys(locales)) writePage(page, locale, cssHash, jsHash);
+  for (const locale of Object.keys(locales)) writePage(page, locale, cssHash, jsHash, faviconHash);
 }
   
 writeFileSync(join(dist, "styles.css"), minifiedCss);
 copyAsset("src/main.js", "main.js");
-copyAsset("src/assets/favicon-v3-final.ico", "favicon-v3-final.ico");
-copyAsset("src/assets/apple-touch-icon-v3-final.png", "apple-touch-icon-v3-final.png");
+
+// Copy Favicons and Web App Manifest
+const faviconFiles = [
+  'favicon.ico',
+  'favicon-32x32.png',
+  'favicon-16x16.png',
+  'apple-touch-icon.png',
+  'apple-touch-icon-precomposed.png',
+  'android-chrome-192x192.png',
+  'android-chrome-512x512.png',
+  'site.webmanifest',
+  'favicon-v3-final.ico',
+  'apple-touch-icon-v3-final.png'
+];
+for (const file of faviconFiles) {
+  if (existsSync(join(root, "src", "assets", file))) {
+    copyAsset(`src/assets/${file}`, file);
+  }
+}
 
 // Copy Fonts
 mkdirSync(join(dist, "assets", "fonts"), { recursive: true });
