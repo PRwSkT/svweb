@@ -414,7 +414,7 @@ function hero(page, locale) {
   const slidesHtml = isHome 
     ? slides.map((src, i) => {
         const cls = `hero-bg ${i === 0 ? 'active' : ''}`;
-        const loading = i === 0 ? 'fetchpriority="high"' : 'loading="lazy"';
+        const loading = i === 0 ? 'fetchpriority="high"' : 'loading="lazy" fetchpriority="low"';
         return src.endsWith(".mp4")
           ? `<video src="${src}" class="${cls}" muted playsinline ${i === 0 ? 'autoplay' : ''}></video>`
           : `<img src="${src}" class="${cls}" alt="" aria-hidden="true" width="1920" height="1080" ${loading}>`;
@@ -799,7 +799,10 @@ function directorQuote(locale) {
       <div class="review-slide active" data-index="0">
         <div class="director-quote-container">
           <div class="director-image-wrapper">
-            <img src="/assets/images/director.png" alt="${escapeHtml(dName)}" class="director-img" loading="lazy" width="400" height="400">
+            <picture>
+              <source srcset="/assets/images/director.webp" type="image/webp">
+              <img src="/assets/images/director.png" alt="${escapeHtml(dName)}" class="director-img" loading="lazy" width="400" height="400">
+            </picture>
             <div class="director-gradient-fade"></div>
           </div>
           <div class="director-quote-content">
@@ -817,7 +820,10 @@ function directorQuote(locale) {
       <div class="review-slide" data-index="1">
         <div class="director-quote-container reversed">
           <div class="director-image-wrapper">
-            <img src="/assets/images/manager.png" alt="${escapeHtml(mName)}" class="director-img" loading="lazy" width="400" height="400">
+            <picture>
+              <source srcset="/assets/images/manager.webp" type="image/webp">
+              <img src="/assets/images/manager.png" alt="${escapeHtml(mName)}" class="director-img" loading="lazy" fetchpriority="low" width="400" height="400">
+            </picture>
             <div class="director-gradient-fade"></div>
           </div>
           <div class="director-quote-content">
@@ -926,7 +932,10 @@ function parentVoices(locale) {
     <div class="review-slide ${i === 0 ? 'active' : ''}" data-index="${i}">
       <div class="director-quote-container ${i % 2 === 0 ? 'reversed' : ''}">
         <div class="director-image-wrapper">
-          <img src="/assets/images/${r.img}" alt="${escapeHtml(r.name[locale])}" class="director-img" width="280" height="280" loading="lazy" style="border-radius: 50%; max-width: 280px; height: 280px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); object-fit: cover;">
+          <picture>
+            <source srcset="/assets/images/${r.img.replace('.png', '.webp')}" type="image/webp">
+            <img src="/assets/images/${r.img}" alt="${escapeHtml(r.name[locale])}" class="director-img" width="280" height="280" loading="lazy" ${i > 0 ? 'fetchpriority="low"' : ''} style="border-radius: 50%; max-width: 280px; height: 280px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); object-fit: cover;">
+          </picture>
         </div>
         <div class="director-quote-content">
           <p class="eyebrow">${eyebrow}</p>
