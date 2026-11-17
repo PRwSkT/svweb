@@ -13,7 +13,7 @@ const locales = {
     label: "ไทย",
     dir: "",
     home: "/",
-    nav: ["เกี่ยวกับเรา", "หลักสูตร", "รับสมัคร", "ชีวิตในโรงเรียน", "ผู้ปกครอง", "ข่าวสาร", "ติดต่อ"],
+    nav: ["เกี่ยวกับเรา", "หลักสูตร", "รับสมัคร", "ชีวิตในโรงเรียน", "ผู้ปกครอง", "ข่าวสาร", "somkid+", "ติดต่อ"],
     ctaTour: "นัดเยี่ยมชม",
     ctaApply: "สมัครเรียน",
     ctaGuide: "ดาวน์โหลดคู่มือ",
@@ -33,7 +33,7 @@ const locales = {
     label: "English",
     dir: "/en",
     home: "/en/",
-    nav: ["About", "Academics", "Admissions", "Student Life", "Parents", "News", "Contact"],
+    nav: ["About", "Academics", "Admissions", "Student Life", "Parents", "News", "somkid+", "Contact"],
     ctaTour: "Book a Tour",
     ctaApply: "Apply Now",
     ctaGuide: "Download Guide",
@@ -53,7 +53,7 @@ const locales = {
     label: "中文",
     dir: "/zh",
     home: "/zh/",
-    nav: ["关于我们", "课程", "招生", "校园生活", "家长", "新闻", "联系"],
+    nav: ["关于我们", "课程", "招生", "校园生活", "家长", "新闻", "somkid+", "联系"],
     ctaTour: "预约参观",
     ctaApply: "立即申请",
     ctaGuide: "下载手册",
@@ -71,6 +71,10 @@ const locales = {
   }
 };
 
+const siteSettings = yaml.load(readFileSync(join(root, 'content/settings/site.yml'), 'utf8'));
+const globals = yaml.load(readFileSync(join(root, 'content/settings/globals.yml'), 'utf8'));
+const somkidplusUrl = siteSettings.somkidplus_url || "https://somkidplus.somkidvittaya.ac.th";
+
 const navItems = [
   ["about", "/about/"],
   ["academics", "/academics/"],
@@ -78,11 +82,10 @@ const navItems = [
   ["student-life", "/student-life/"],
   ["parents", "/parents/"],
   ["news", "/news/"],
+  ["somkidplus", somkidplusUrl],
   ["contact", "/contact/"]
 ];
 
-const siteSettings = yaml.load(readFileSync(join(root, 'content/settings/site.yml'), 'utf8'));
-const globals = yaml.load(readFileSync(join(root, 'content/settings/globals.yml'), 'utf8'));
 
 const pageMap = new Map();
 for (const file of readdirSync(join(root, 'content/pages'))) {
@@ -142,6 +145,8 @@ function t(page, key, locale) {
 }
 
 function localizedPath(path, locale) {
+  if (!path) return "";
+  if (path.startsWith("http://") || path.startsWith("https://") || path.startsWith("//")) return path;
   if (locale === "th") return path;
   return `${locales[locale].dir}${path === "/" ? "/" : path}`;
 }
@@ -188,7 +193,9 @@ function header(page, locale) {
   const l = locales[locale];
   const navLinks = navItems.map(([key, href], index) => {
     const active = page.nav === key ? " aria-current=\"page\"" : "";
-    return `<a href="${localizedPath(href, locale)}"${active}>${escapeHtml(l.nav[index])}</a>`;
+    const isExternal = href.startsWith("http://") || href.startsWith("https://");
+    const targetRel = isExternal ? ' target="_blank" rel="noopener noreferrer"' : '';
+    return `<a href="${localizedPath(href, locale)}"${active}${targetRel}>${escapeHtml(l.nav[index])}</a>`;
   }).join("");
 
   return `<header class="site-header">
